@@ -6,16 +6,16 @@ import { MenuCard } from "@components/ui/MenuCard"
 import { PATHS } from "@/routers/Paths"
 import { Chat, Home, Menu, Folder } from "@/icons";
 import { useUnreadCount } from "@/hooks/useUnreadCount";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
 
-
-const Logo = "/Logo.PNG";
 
 export function NavLogo() {
+    const { logoUrl } = useSiteSettings();
     return (
         <div className="md:hidden max-md:flex items-center gap-2 md:gap-4 min-w-max">
 
             <div className="content-center w-8 md:w-10 aspect-square">
-                <img src={Logo} alt="logo" height="40" width="40" className="w-full object-cover rounded-lg" loading="lazy" />
+                <img src={logoUrl} alt="logo" height="40" width="40" className="w-full object-cover rounded-lg" loading="lazy" />
             </div>
 
             <div className="flex flex-col">

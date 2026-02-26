@@ -14,18 +14,18 @@ import { allowedLocales } from "@/constants"
 import { useTranslation } from "react-i18next"
 import { ArrowRightEndOnRectangle, ArrowRightStartOnRectangle, Chat, ChevronRight, Folder, Language, Menu, PresentationChartLine, User, UserPlus } from "@/icons";
 import { useUnreadCount } from "@/hooks/useUnreadCount";
-
-const Logo = "/Logo.PNG";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
 
 const UserContext = createContext<any>(null);
 const MenuContext = createContext<any>(undefined);
 
 export function NavLogo() {
     const { t } = useTranslation();
+    const { logoUrl } = useSiteSettings();
     return (
         <div className="flex items-center gap-2 md:gap-4 min-w-max">
             <div className="content-center w-8 md:w-10 aspect-square">
-                <img src={Logo} alt="logo" height="40" width="40" className="w-full object-cover rounded-lg" loading="lazy" />
+                <img src={logoUrl} alt="logo" height="40" width="40" className="w-full object-cover rounded-lg" loading="lazy" />
             </div>
             <div className="flex flex-col">
                 <h3 className="text-sm md:text-base font-medium"> Deco Right </h3>

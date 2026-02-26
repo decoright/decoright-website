@@ -4,13 +4,12 @@ import { SocialMediaPhoneFields, SocialMediaUrlFields } from "@/constants";
 import { useTranslation } from "react-i18next";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 
-const Logo = "/Logo.PNG";
-
 export function Footer() {
     const { t } = useTranslation();
     const {
         settings,
-        companyName
+        companyName,
+        logoUrl,
     } = useSiteSettings();
 
     // Map all social fields to their values and icons
@@ -45,7 +44,7 @@ export function Footer() {
                     {/* Logo */}
                     <div className="w-14 md:w-12">
                         <Link to={'/'}>
-                            <img src={Logo} alt={`${companyName} Logo`} className="w-full h-full" />
+                            <img src={logoUrl} alt={`${companyName} Logo`} className="w-full h-full" />
                         </Link>
                     </div>
 
