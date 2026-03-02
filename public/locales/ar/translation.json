@@ -340,7 +340,7 @@
     "delete_confirm": "سيتم حذف هذه الرسالة نهائياً لجميع الأطراف في هذه المحادثة.",
     "filter_all": "الكل",
     "filter_unread": "غير مقروء",
-    "filter_awaiting": "بانتظار الرد"
+    "filter_awaiting": "تنتظر ردًا"
   },
   "services": {
     "service_list_title": "الخدمات — مساحات مُصمَّمة بعناية",

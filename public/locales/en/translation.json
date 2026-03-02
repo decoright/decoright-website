@@ -350,7 +350,7 @@
     "delete_confirm": "This message will be permanently removed for everyone in this chat.",
     "filter_all": "All",
     "filter_unread": "Unread",
-    "filter_awaiting": "Awaiting"
+    "filter_awaiting": "Needs Reply"
   },
   "services": {
     "service_list_title": "Services — Crafted Spaces, Thoughtful Design",

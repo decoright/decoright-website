@@ -340,7 +340,7 @@
     "delete_confirm": "Ce message sera définitivement supprimé pour tous les participants.",
     "filter_all": "Tout",
     "filter_unread": "Non lus",
-    "filter_awaiting": "En attente"
+    "filter_awaiting": "Sans réponse"
   },
   "services": {
     "service_list_title": "Services — Espaces conçus, design pensé",
