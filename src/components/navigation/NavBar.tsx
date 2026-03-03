@@ -67,16 +67,16 @@ export function AuthenticatedUserActins() {
                 {isAdmin
                     ? <>
                         {/* Request Project */}
-                        <Link to={PATHS.ADMIN.PROJECT_CREATE} title="Create Project" className="max-md:hidden content-center p-2.5 min-w-max font-medium text-sm border border-muted/15 bg-surface/75 rounded-full">
-                            Create a Project
+                        <Link to={PATHS.ADMIN.PROJECT_CREATE} title={t('nav.create_project')} className="max-md:hidden content-center p-2.5 min-w-max font-medium text-sm border border-muted/15 bg-surface/75 rounded-full">
+                            {t('nav.create_project')}
                         </Link>
 
-                        <Link to={PATHS.ADMIN.ANALYTICS} title="Dashboard Panel" className="max-md:hidden content-center p-2 border border-muted/15 bg-surface/75 rounded-full">
+                        <Link to={PATHS.ADMIN.ANALYTICS} title={t('nav.dashboard_panel')} className="max-md:hidden content-center p-2 border border-muted/15 bg-surface/75 rounded-full">
                             <PresentationChartLine className="size-5 md:size-6" />
                         </Link>
 
                         {/* Chat Nav Page */}
-                        <Link to={PATHS.ADMIN.CHAT} title="Chats" className="relative content-center p-1.5 md:p-2 border border-primary/45 border-muted/15 bg-surface/75 rounded-full">
+                        <Link to={PATHS.ADMIN.CHAT} title={t('nav.chats')} className="relative content-center p-1.5 md:p-2 border border-primary/45 border-muted/15 bg-surface/75 rounded-full">
                             <Chat className="size-5 md:size-6" />
 
                             {hasUnread && (
@@ -91,12 +91,12 @@ export function AuthenticatedUserActins() {
                     : <>
 
                         {/* Request Project */}
-                        <Link to={PATHS.CLIENT.REQUEST_SERVICE} title="Request Service" className="max-md:hidden content-center p-2 min-w-max font-medium text-sm border border-primary/45 bg-surface/75 rounded-full">
-                            Request Service
+                        <Link to={PATHS.CLIENT.REQUEST_SERVICE} title={t('nav.request_service')} className="max-md:hidden content-center p-2 min-w-max font-medium text-sm border border-primary/45 bg-surface/75 rounded-full">
+                            {t('nav.request_service')}
                         </Link>
 
                         {/* Chat Nav Page */}
-                        <Link to={PATHS.CLIENT.CHAT} title="Chats" className="relative content-center p-1.5 md:p-2 border border-primary/45 border-muted/15 bg-surface/75 rounded-full">
+                        <Link to={PATHS.CLIENT.CHAT} title={t('nav.chats')} className="relative content-center p-1.5 md:p-2 border border-primary/45 border-muted/15 bg-surface/75 rounded-full">
                             <Chat className="size-5 md:size-6" />
 
                             {hasUnread && (
@@ -116,7 +116,7 @@ export function AuthenticatedUserActins() {
                 </Link>
 
                 {/* Menu Trigger */}
-                <button type="button" title="Menu" onClick={() => setNavMenuOpen(!navMenuOpen)}
+                <button type="button" title={t('common.menu')} onClick={() => setNavMenuOpen(!navMenuOpen)}
                     className="content-center p-1.5 md:p-2 border border-muted/15 bg-surface/75 rounded-full">
                     <Menu className="size-5 md:size-6" />
                 </button>
@@ -162,7 +162,7 @@ export function AnonymousUserActins() {
                 <div className="max-md:hidden flex min-w-max">
                     <SelectDropDownMenu
                         options={languageChoices}
-                        placeholder="Select a Language"
+                        placeholder={t('nav.select_language')}
                         id="select-language"
                         value={languageChoices.find((s: any) => s.value === i18n.language)}
                         onChange={(option: any) => handleChange(option.value)}
