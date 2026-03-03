@@ -85,6 +85,9 @@
     "required": "مطلوب",
     "optional": "اختياري",
     "locked_view_only": "مغلق للعرض فقط",
+    "admin": "مسؤول",
+    "super_admin": "مسؤول رئيسي",
+    "customer": "عميل",
 
     "english": "الإنجليزية",
     "french": "الفرنسية",
@@ -249,7 +252,9 @@
     "error_load": "فشل تحميل الطلبات",
     "status": {
       "pending": "قيد الانتظار",
+      "submitted": "تم الإرسال",
       "under_review": "قيد المراجعة",
+      "waiting_for_client_info": "في انتظار معلومات العميل",
       "approved": "مقبول",
       "in_progress": "قيد التنفيذ",
       "completed": "مكتمل",
@@ -370,7 +375,22 @@
     "delete_confirm": "سيتم حذف هذه الرسالة نهائياً لجميع الأطراف في هذه المحادثة.",
     "filter_all": "الكل",
     "filter_unread": "غير مقروء",
-    "filter_awaiting": "تنتظر ردًا"
+    "filter_awaiting": "تنتظر ردًا",
+    "chat_room": "غرفة الدردشة",
+    "unknown_service": "خدمة غير معروفة",
+    "client_prefix": "العميل:",
+    "view_request": "عرض الطلب",
+    "view_request_details": "عرض تفاصيل الطلب",
+    "getting_ready": "جاري التحضير...",
+    "start_chat_hint": "أرسل رسالة لبدء الدردشة",
+    "recording_voice": "جاري تسجيل رسالة صوتية...",
+    "uploading": "جاري الرفع...",
+    "type_message": "اكتب رسالتك...",
+    "upload_image": "رفع صورة",
+    "record_voice": "تسجيل صوت",
+    "mic_error": "تعذر الوصول إلى الميكروفون.",
+    "yesterday": "أمس",
+    "delete_message": "حذف الرسالة"
   },
   "services": {
     "service_list_title": "الخدمات — مساحات مُصمَّمة بعناية",

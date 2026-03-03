@@ -84,7 +84,10 @@
     "view_all": "View All",
     "required": "Required",
     "optional": "Optional",
-    "locked_view_only": "Locked for viewing only"
+    "locked_view_only": "Locked for viewing only",
+    "admin": "Admin",
+    "super_admin": "Super Admin",
+    "customer": "Customer"
   },
 
   "confirm": {
@@ -244,7 +247,9 @@
     "error_load": "Failed to load requests",
     "status": {
       "pending": "Pending",
+      "submitted": "Submitted",
       "under_review": "Under Review",
+      "waiting_for_client_info": "Waiting for Client Info",
       "approved": "Approved",
       "in_progress": "In Progress",
       "completed": "Completed",
@@ -365,7 +370,22 @@
     "delete_confirm": "This message will be permanently removed for everyone in this chat.",
     "filter_all": "All",
     "filter_unread": "Unread",
-    "filter_awaiting": "Needs Reply"
+    "filter_awaiting": "Needs Reply",
+    "chat_room": "Chat Room",
+    "unknown_service": "Unknown Service",
+    "client_prefix": "Client:",
+    "view_request": "View Request",
+    "view_request_details": "View Request Details",
+    "getting_ready": "Getting Ready...",
+    "start_chat_hint": "Send a message to start a chat",
+    "recording_voice": "Recording voice message...",
+    "uploading": "Uploading...",
+    "type_message": "Type your message...",
+    "upload_image": "Upload Image",
+    "record_voice": "Record Voice",
+    "mic_error": "Could not access microphone.",
+    "yesterday": "Yesterday",
+    "delete_message": "Delete message"
   },
   "services": {
     "service_list_title": "Services — Crafted Spaces, Thoughtful Design",

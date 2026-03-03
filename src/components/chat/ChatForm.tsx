@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { AutoResizeTextarea } from "@components/ui/Input";
 import { useChat } from '@/hooks/useChat';
 import { Photo, Microphone, PaperAirplane } from '@/icons';
+import { useTranslation } from 'react-i18next';
 
 interface ChatFormProps {
     message?: string;
@@ -12,7 +13,7 @@ interface ChatFormProps {
 }
 
 export default function ChatForm({ message, setMessage, onSend, onSendMedia }: ChatFormProps = {}) {
-
+    const { t } = useTranslation();
     const { sendMessage: hookSendMessage, sendMedia: hookSendMedia, messageText: hookMessageText, setMessageText: hookSetMessageText } = useChat();
 
     const displayMessage = message !== undefined ? message : hookMessageText;
@@ -74,7 +75,7 @@ export default function ChatForm({ message, setMessage, onSend, onSendMedia }: C
             setIsRecording(true);
         } catch (err) {
             console.error("Error accessing microphone:", err);
-            alert("Could not access microphone.");
+            alert(t('chat.mic_error'));
         }
     };
 
@@ -110,20 +111,20 @@ export default function ChatForm({ message, setMessage, onSend, onSendMedia }: C
                             <span className="size-2 bg-red-500 rounded-full animate-pulse" />
                             <span className="text-sm font-medium tabular-nums">{formatTime(recordingTime)}</span>
                         </div>
-                        <div className="flex-1 text-sm text-muted animate-pulse">Recording voice message...</div>
+                        <div className="flex-1 text-sm text-muted animate-pulse">{t('chat.recording_voice')}</div>
                         <button
                             type="button"
                             onClick={() => stopRecording(true)}
                             className="p-1 px-2 text-xs font-medium text-red-500 hover:bg-red-50 rounded-md transition-colors"
                         >
-                            Cancel
+                            {t('common.cancel')}
                         </button>
                     </div>
                 ) : (
                     <AutoResizeTextarea
                         value={displayMessage}
                         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleSetMessage(e.target.value)}
-                        placeholder={isUploading ? "Uploading..." : "Type your message..."}
+                        placeholder={isUploading ? t('chat.uploading') as string : t('chat.type_message') as string}
                         disabled={isUploading}
                         minRows={1}
                         maxRows={5}
@@ -153,7 +154,7 @@ export default function ChatForm({ message, setMessage, onSend, onSendMedia }: C
                                 onClick={() => fileInputRef.current?.click()}
                                 disabled={isUploading}
                                 className="p-2 hover:bg-emphasis rounded-lg text-muted transition-colors disabled:opacity-50"
-                                title="Upload Image"
+                                title={t('chat.upload_image') as string}
                             >
                                 <Photo className="size-5" />
                             </button>
@@ -162,7 +163,7 @@ export default function ChatForm({ message, setMessage, onSend, onSendMedia }: C
                                 onClick={startRecording}
                                 disabled={isUploading}
                                 className="p-2 hover:bg-emphasis rounded-lg text-muted transition-colors disabled:opacity-50"
-                                title="Record Voice"
+                                title={t('chat.record_voice') as string}
                             >
                                 <Microphone className="size-5" />
                             </button>

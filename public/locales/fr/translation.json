@@ -85,6 +85,9 @@
     "required": "Requis",
     "optional": "Optionnel",
     "locked_view_only": "Verrouillé pour consultation uniquement",
+    "admin": "Administrateur",
+    "super_admin": "Super Admin",
+    "customer": "Client",
 
     "english": "Anglaise",
     "french": "Français",
@@ -249,7 +252,9 @@
     "error_load": "Échec de chargement des demandes",
     "status": {
       "pending": "En attente",
+      "submitted": "Soumis",
       "under_review": "En cours d'examen",
+      "waiting_for_client_info": "En attente d'infos client",
       "approved": "Approuvée",
       "in_progress": "En cours",
       "completed": "Terminée",
@@ -370,7 +375,22 @@
     "delete_confirm": "Ce message sera définitivement supprimé pour tous les participants.",
     "filter_all": "Tout",
     "filter_unread": "Non lus",
-    "filter_awaiting": "Sans réponse"
+    "filter_awaiting": "Sans réponse",
+    "chat_room": "Salle de discussion",
+    "unknown_service": "Service inconnu",
+    "client_prefix": "Client :",
+    "view_request": "Voir la demande",
+    "view_request_details": "Voir les détails de la demande",
+    "getting_ready": "Préparation en cours...",
+    "start_chat_hint": "Envoyez un message pour commencer",
+    "recording_voice": "Enregistrement du message vocal...",
+    "uploading": "Téléchargement...",
+    "type_message": "Tapez votre message...",
+    "upload_image": "Télécharger une image",
+    "record_voice": "Enregistrer la voix",
+    "mic_error": "Impossible d'accéder au microphone.",
+    "yesterday": "Hier",
+    "delete_message": "Supprimer le message"
   },
   "services": {
     "service_list_title": "Services — Espaces conçus, design pensé",
