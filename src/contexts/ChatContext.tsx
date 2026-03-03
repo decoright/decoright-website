@@ -354,7 +354,13 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         if (!selectedRoom || !user) return;
 
         try {
-            const ext = type === 'IMAGE' ? (file as File).name?.split('.').pop() || 'jpg' : 'webm';
+            let ext = 'bin';
+            if (file instanceof File) {
+                ext = file.name.split('.').pop() || 'bin';
+            } else {
+                ext = type === 'IMAGE' ? 'jpg' : type === 'AUDIO' ? 'webm' : type === 'VIDEO' ? 'mp4' : 'bin';
+            }
+
             const fileName = `${selectedRoom.id}/${Date.now()}.${ext}`;
 
             const { data: uploadData, error: uploadError } = await supabase.storage
@@ -373,7 +379,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
                     chat_room_id: selectedRoom.id,
                     request_id: selectedRoom.service_requests.id,
                     sender_id: user.id,
-                    content: '',
+                    content: type === 'FILE' && file instanceof File ? file.name : '',
                     message_type: type,
                     media_url: publicUrl,
                     is_read: true

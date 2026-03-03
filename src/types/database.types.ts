@@ -814,7 +814,7 @@ export type Database = {
             admin_action: "STATUS_CHANGE" | "PROJECT_PUBLISH" | "SETTINGS_UPDATE"
             contact_status: "NEW" | "READ" | "ARCHIVED"
             file_type_enum: "IMAGE" | "PDF" | "DOCUMENT" | "CAD" | "3D_MODEL"
-            message_type_enum: "TEXT" | "IMAGE" | "AUDIO" | "SYSTEM"
+            message_type_enum: "TEXT" | "IMAGE" | "AUDIO" | "VIDEO" | "FILE" | "SYSTEM"
             project_visibility: "PUBLIC" | "AUTHENTICATED_ONLY" | "HIDDEN"
             request_status:
                 | "Submitted"

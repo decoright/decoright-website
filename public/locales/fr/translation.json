@@ -393,7 +393,11 @@
     "record_voice": "Enregistrer la voix",
     "mic_error": "Impossible d'accéder au microphone.",
     "yesterday": "Hier",
-    "delete_message": "Supprimer le message"
+    "delete_message": "Supprimer le message",
+    "file_too_large": "La taille du fichier dépasse la limite de 20 Mo.",
+    "attach_file": "Joindre un fichier",
+    "video": "Vidéo",
+    "file": "Fichier"
   },
   "services": {
     "service_list_title": "Services — Espaces conçus, design pensé",

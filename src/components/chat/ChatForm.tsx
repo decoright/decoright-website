@@ -2,8 +2,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { AutoResizeTextarea } from "@components/ui/Input";
 import { useChat } from '@/hooks/useChat';
-import { Photo, Microphone, PaperAirplane } from '@/icons';
+import { Microphone, PaperAirplane, PaperClip } from '@/icons';
 import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
 
 interface ChatFormProps {
     message?: string;
@@ -90,9 +91,20 @@ export default function ChatForm({ message, setMessage, onSend, onSendMedia }: C
         const file = e.target.files?.[0];
         if (!file) return;
 
+        // 20MB limit
+        if (file.size > 20 * 1024 * 1024) {
+            toast.error(t('chat.file_too_large'));
+            if (fileInputRef.current) fileInputRef.current.value = '';
+            return;
+        }
+
         setIsUploading(true);
         try {
-            await handleSendMedia(file, 'IMAGE');
+            let type: any = 'FILE';
+            if (file.type.startsWith('image/')) type = 'IMAGE';
+            else if (file.type.startsWith('video/')) type = 'VIDEO';
+            
+            await handleSendMedia(file, type);
         } finally {
             setIsUploading(false);
             if (fileInputRef.current) fileInputRef.current.value = '';
@@ -143,7 +155,7 @@ export default function ChatForm({ message, setMessage, onSend, onSendMedia }: C
                         type="file"
                         ref={fileInputRef}
                         onChange={handleFileChange}
-                        accept="image/*"
+                        accept="*/*"
                         className="hidden"
                     />
 
@@ -154,9 +166,9 @@ export default function ChatForm({ message, setMessage, onSend, onSendMedia }: C
                                 onClick={() => fileInputRef.current?.click()}
                                 disabled={isUploading}
                                 className="p-2 hover:bg-emphasis rounded-lg text-muted transition-colors disabled:opacity-50"
-                                title={t('chat.upload_image') as string}
+                                title={t('chat.attach_file') as string}
                             >
-                                <Photo className="size-5" />
+                                <PaperClip className="size-5" />
                             </button>
                             <button
                                 type="button"

@@ -53,6 +53,8 @@ export default function ChatList({
     if (lastMsg.message_type === 'TEXT') content = lastMsg.content;
     else if (lastMsg.message_type === 'IMAGE') content = `📷 ${t('chat.image')}`;
     else if (lastMsg.message_type === 'AUDIO') content = `🎤 ${t('chat.voice_message')}`;
+    else if (lastMsg.message_type === 'VIDEO') content = `🎥 ${t('chat.video')}`;
+    else if (lastMsg.message_type === 'FILE') content = `📄 ${t('chat.file')}`;
     else if (lastMsg.message_type === 'SYSTEM') content = lastMsg.content;
 
     return (

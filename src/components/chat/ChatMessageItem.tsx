@@ -7,6 +7,7 @@ import useAuth from '@/hooks/useAuth';
 import useConfirm from '@components/confirm/useConfirm';
 import { Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { DocumentText } from '@/icons';
 
 
 // src/utils/formatMessageTime.ts
@@ -145,6 +146,43 @@ export default memo(function MessageItem({ message, currentUserId }:
                                     </div>
                                 )}
                                 {message.content && <p className="text-sm px-1">{message.content}</p>}
+                            </div>
+                        )}
+
+                        {message.message_type === 'VIDEO' && (
+                            <div className="flex flex-col gap-2 p-2">
+                                {message.media_url && (
+                                    <div className="rounded-lg overflow-hidden border border-white/10 bg-black/5 max-w-full">
+                                        <video
+                                            src={message.media_url}
+                                            controls
+                                            className="block w-full h-auto max-h-[400px] object-contain outline-none"
+                                        />
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {message.message_type === 'FILE' && (
+                            <div className="p-2">
+                                <a
+                                    href={message.media_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-3 p-3 rounded-lg bg-emphasis/50 hover:bg-emphasis border border-muted/15 transition-colors group/file"
+                                >
+                                    <div className="p-2 rounded-md bg-primary/10 text-primary">
+                                        <DocumentText className="size-6" />
+                                    </div>
+                                    <div className="flex flex-col min-w-0">
+                                        <span className="text-sm font-medium truncate max-w-48 sm:max-w-64">
+                                            {message.content || t('chat.file')}
+                                        </span>
+                                        <span className="text-3xs text-muted uppercase tracking-tighter">
+                                            {message.media_url?.split('.').pop()?.toUpperCase() || 'FILE'}
+                                        </span>
+                                    </div>
+                                </a>
                             </div>
                         )}
                     </>

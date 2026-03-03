@@ -393,7 +393,11 @@
     "record_voice": "تسجيل صوت",
     "mic_error": "تعذر الوصول إلى الميكروفون.",
     "yesterday": "أمس",
-    "delete_message": "حذف الرسالة"
+    "delete_message": "حذف الرسالة",
+    "file_too_large": "حجم الملف يتجاوز الحد المسموح به (20 ميجابايت).",
+    "attach_file": "إرفاق ملف",
+    "video": "فيديو",
+    "file": "ملف"
   },
   "services": {
     "service_list_title": "الخدمات — مساحات مُصمَّمة بعناية",

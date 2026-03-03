@@ -388,7 +388,11 @@
     "record_voice": "Record Voice",
     "mic_error": "Could not access microphone.",
     "yesterday": "Yesterday",
-    "delete_message": "Delete message"
+    "delete_message": "Delete message",
+    "file_too_large": "File size exceeds 20MB limit.",
+    "attach_file": "Attach File",
+    "video": "Video",
+    "file": "File"
   },
   "services": {
     "service_list_title": "Services — Crafted Spaces, Thoughtful Design",

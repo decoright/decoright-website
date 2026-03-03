@@ -1,6 +1,6 @@
 
 /** ---- Types ---- */
-export type MessageType = 'TEXT' | 'IMAGE' | 'AUDIO' | 'SYSTEM';
+export type MessageType = 'TEXT' | 'IMAGE' | 'AUDIO' | 'VIDEO' | 'FILE' | 'SYSTEM';
 
 export type Message = {
   id: string;
