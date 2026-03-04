@@ -87,7 +87,10 @@
     "locked_view_only": "Locked for viewing only",
     "admin": "Admin",
     "super_admin": "Super Admin",
-    "customer": "Customer"
+    "customer": "Customer",
+    "english": "English",
+    "french": "French",
+    "arabic": "Arabic"
   },
 
   "confirm": {

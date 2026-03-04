@@ -88,11 +88,9 @@
     "admin": "مسؤول",
     "super_admin": "مسؤول رئيسي",
     "customer": "عميل",
-
     "english": "الإنجليزية",
     "french": "الفرنسية",
     "arabic": "العربية",
-
     "views_compact": "{{value, compact}} مشاهدة",
     "views_label": "{{count}} مشاهدة",
     "views_label_plural": "{{count}} مشاهدة",

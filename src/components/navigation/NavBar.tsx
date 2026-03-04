@@ -1,6 +1,5 @@
 
 import useAuth from "@/hooks/useAuth"
-import i18n from "@/utils/i18n"
 import MenuLanguageSelectorModal from "@components/ui/LanguageSelectorModel"
 import { Link } from "react-router-dom"
 import { createContext, useContext, useState } from "react"
@@ -9,10 +8,8 @@ import { publicMenuItems, clientMenuItems } from "@/constants/navigation"
 import { MenuCard } from "@components/ui/MenuCard"
 import { PCTALink, SCTALink } from "@components/ui/CTA"
 import { PATHS } from "@/routers/Paths"
-import { SelectDropDownMenu } from "@components/ui/Select"
-import { allowedLocales } from "@/constants"
 import { useTranslation } from "react-i18next"
-import { ArrowRightEndOnRectangle, ArrowRightStartOnRectangle, Chat, ChevronRight, Folder, Language, Menu, PresentationChartLine, User, UserPlus } from "@/icons";
+import { ArrowRightEndOnRectangle, ArrowRightStartOnRectangle, Chat, Folder, Language, Menu, PresentationChartLine, User, UserPlus } from "@/icons";
 import { useUnreadCount } from "@/hooks/useUnreadCount";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 
@@ -54,6 +51,7 @@ export function NavLinks() {
 export function AuthenticatedUserActins() {
 
     const { user, isAdmin } = useContext(UserContext);
+    const { setLangMenuOpen } = useContext(MenuContext);
     const [navMenuOpen, setNavMenuOpen] = useState<boolean>(false);
     const { t } = useTranslation()
     const hasUnread = useUnreadCount();
@@ -67,16 +65,16 @@ export function AuthenticatedUserActins() {
                 {isAdmin
                     ? <>
                         {/* Request Project */}
-                        <Link to={PATHS.ADMIN.PROJECT_CREATE} title={t('nav.create_project')} className="max-md:hidden content-center p-2.5 min-w-max font-medium text-sm border border-muted/15 bg-surface/75 rounded-full">
+                        <Link to={PATHS.ADMIN.PROJECT_CREATE} title={t('nav.create_project')} className="max-md:hidden content-center p-2.5 min-w-max font-medium text-sm border border-muted/15 bg-surface/75 rounded-full hover:bg-emphasis transition-colors">
                             {t('nav.create_project')}
                         </Link>
 
-                        <Link to={PATHS.ADMIN.ANALYTICS} title={t('nav.dashboard_panel')} className="max-md:hidden content-center p-2 border border-muted/15 bg-surface/75 rounded-full">
+                        <Link to={PATHS.ADMIN.ANALYTICS} title={t('nav.dashboard_panel')} className="max-md:hidden content-center p-2 border border-muted/15 bg-surface/75 rounded-full hover:bg-emphasis transition-colors">
                             <PresentationChartLine className="size-5 md:size-6" />
                         </Link>
 
                         {/* Chat Nav Page */}
-                        <Link to={PATHS.ADMIN.CHAT} title={t('nav.chats')} className="relative content-center p-1.5 md:p-2 border border-primary/45 border-muted/15 bg-surface/75 rounded-full">
+                        <Link to={PATHS.ADMIN.CHAT} title={t('nav.chats')} className="relative content-center p-1.5 md:p-2 border border-muted/15 bg-surface/75 rounded-full hover:bg-emphasis transition-colors">
                             <Chat className="size-5 md:size-6" />
 
                             {hasUnread && (
@@ -91,12 +89,12 @@ export function AuthenticatedUserActins() {
                     : <>
 
                         {/* Request Project */}
-                        <Link to={PATHS.CLIENT.REQUEST_SERVICE} title={t('nav.request_service')} className="max-md:hidden content-center p-2 min-w-max font-medium text-sm border border-primary/45 bg-surface/75 rounded-full">
+                        <Link to={PATHS.CLIENT.REQUEST_SERVICE} title={t('nav.request_service')} className="max-md:hidden content-center p-2 min-w-max font-medium text-sm border border-primary/45 bg-surface/75 rounded-full hover:bg-emphasis transition-colors">
                             {t('nav.request_service')}
                         </Link>
 
                         {/* Chat Nav Page */}
-                        <Link to={PATHS.CLIENT.CHAT} title={t('nav.chats')} className="relative content-center p-1.5 md:p-2 border border-primary/45 border-muted/15 bg-surface/75 rounded-full">
+                        <Link to={PATHS.CLIENT.CHAT} title={t('nav.chats')} className="relative content-center p-1.5 md:p-2 border border-muted/15 bg-surface/75 rounded-full hover:bg-emphasis transition-colors">
                             <Chat className="size-5 md:size-6" />
 
                             {hasUnread && (
@@ -111,13 +109,19 @@ export function AuthenticatedUserActins() {
                 }
 
                 {/* User Profile Nav Page */}
-                <Link to={PATHS.CLIENT.ACCOUNT_PROFILE} title={t('nav.profile')} className="max-md:hidden content-center p-1.5 md:p-2 border border-muted/15 bg-surface/75 rounded-full">
+                <Link to={PATHS.CLIENT.ACCOUNT_PROFILE} title={t('nav.profile')} className="max-md:hidden content-center p-1.5 md:p-2 border border-muted/15 bg-surface/75 rounded-full hover:bg-emphasis transition-colors">
                     <User className="size-5 md:size-6" />
                 </Link>
 
+                {/* Language Button */}
+                <button type="button" title={t('nav.language')} onClick={() => setLangMenuOpen(true)}
+                    className="content-center p-1.5 md:p-2 border border-muted/15 bg-surface/75 rounded-full hover:bg-emphasis transition-colors">
+                    <Language className="size-5 md:size-6" />
+                </button>
+
                 {/* Menu Trigger */}
                 <button type="button" title={t('common.menu')} onClick={() => setNavMenuOpen(!navMenuOpen)}
-                    className="content-center p-1.5 md:p-2 border border-muted/15 bg-surface/75 rounded-full">
+                    className="content-center p-1.5 md:p-2 border border-muted/15 bg-surface/75 rounded-full hover:bg-emphasis transition-colors">
                     <Menu className="size-5 md:size-6" />
                 </button>
 
@@ -143,15 +147,7 @@ export function AnonymousUserActins() {
 
 
     const { t } = useTranslation();
-    const { languageChoices } = useContext(MenuContext)
-
-    function handleChange(value: string) {
-
-        console.log('HELLO ON CHNAGE')
-        if (!allowedLocales.includes(value)) return;
-        i18n.changeLanguage(value); // This is the global trigger
-        // Save it to the db if needed
-    };
+    const { setLangMenuOpen } = useContext(MenuContext)
 
     const [navMenuOpen, setNavMenuOpen] = useState<boolean>(false);
 
@@ -159,17 +155,12 @@ export function AnonymousUserActins() {
 
         <>
             <div className="flex items-center gap-2 md:gap-4">
-                <div className="max-md:hidden flex min-w-max">
-                    <SelectDropDownMenu
-                        options={languageChoices}
-                        placeholder={t('nav.select_language')}
-                        id="select-language"
-                        value={languageChoices.find((s: any) => s.value === i18n.language)}
-                        onChange={(option: any) => handleChange(option.value)}
-                        isSearchable={false}
-                        required
-                    />
-                </div>
+                
+                {/* Language Button */}
+                <button type="button" title={t('nav.language')} onClick={() => setLangMenuOpen(true)}
+                    className="content-center p-1.5 md:p-2 border border-muted/15 bg-surface/75 rounded-full hover:bg-emphasis transition-colors">
+                    <Language className="size-5 md:size-6" />
+                </button>
 
                 {/* Login */}
                 <SCTALink to={PATHS.LOGIN} title={t('auth.login')} className="max-md:hidden"> {t('auth.login')} </SCTALink>
@@ -178,8 +169,8 @@ export function AnonymousUserActins() {
                 <PCTALink to={PATHS.SIGNUP} title={t('auth.signup')} className="max-2xs:hidden"> {t('auth.signup')} </PCTALink>
 
                 {/* Menu Trigger */}
-                <button type="button" title={t('common.menu')} className="content-center p-1.5 border border-emphasis bg-surface rounded-full" onClick={() => setNavMenuOpen(!navMenuOpen)}>
-                    <Menu className="size-6" />
+                <button type="button" title={t('common.menu')} className="content-center p-1.5 border border-muted/15 bg-surface/75 rounded-full hover:bg-emphasis transition-colors" onClick={() => setNavMenuOpen(!navMenuOpen)}>
+                    <Menu className="size-5 md:size-6" />
                 </button>
 
             </div>
@@ -200,7 +191,6 @@ export function AnonymousUserActins() {
 export function PublicMenu() {
 
     const { t } = useTranslation()
-    const { langMenuOpen, setLangMenuOpen } = useContext(MenuContext);
 
     return (
         <>
@@ -220,23 +210,6 @@ export function PublicMenu() {
                     </Link>
                 </li>
             ))}
-
-            <li key="menu_language_settings" className="group/menuitem w-full">
-                {/* Language Menu Trigger */}
-                <button type="button" title={t('nav.language_area')}
-                    onClick={() => setLangMenuOpen(!langMenuOpen)}
-                    className="flex items-center w-full text-start p-2 border-b border-muted/15 group-hover/menuitem:border-primary/75"
-                >
-                    <div className="flex flex-col gap-1 w-full">
-                        <div className="flex gap-2 w-full">
-                            <Language />
-                            <h4 className="font-medium text-sm text-muted group-hover/menuitem:text-foreground"> {t('nav.language')} </h4>
-                        </div>
-                        <p className="text-2xs text-muted group-hover/menuitem:text-foreground"> {t('nav.language_description')} </p>
-                    </div>
-                    <ChevronRight className="rtl:rotate-180 size-4" />
-                </button>
-            </li>
 
             <li key="login" className="group/menuitem w-full">
                 <Link to={PATHS.LOGIN} className="flex flex-col gap-1 w-full h-full p-2 border-b border-muted/15 group-hover/menuitem:border-primary/75">
@@ -273,7 +246,6 @@ export function PublicMenu() {
 export function ClientMenu() {
     const { t } = useTranslation();
     const { isAdmin } = useContext(UserContext);
-    const { langMenuOpen, setLangMenuOpen } = useContext(MenuContext);
 
     return (
 
@@ -313,23 +285,6 @@ export function ClientMenu() {
                     </Link>
                 </li>
             ))}
-
-            <li key="menu_language_settings" className="group/menuitem w-full">
-                {/* Language Menu Trigger */}
-                <button type="button" title={t('nav.language_area')}
-                    onClick={() => setLangMenuOpen(!langMenuOpen)}
-                    className="flex items-center w-full text-start p-2 border-b border-muted/15 group-hover/menuitem:border-primary/75"
-                >
-                    <div className="flex flex-col gap-1 w-full">
-                        <div className="flex gap-2 w-full">
-                            <Language />
-                            <h4 className="font-medium text-sm text-muted group-hover/menuitem:text-foreground"> {t('nav.language')} </h4>
-                        </div>
-                        <p className="text-2xs text-muted group-hover/menuitem:text-foreground"> {t('nav.language_description')} </p>
-                    </div>
-                    <ChevronRight className="rtl:rotate-180 size-4" />
-                </button>
-            </li>
 
             <li id="logout-nav-menu-item" className="group/menuitem w-full">
                 <LogoutButton className="flex w-full h-full px-2 py-4 border-b border-muted/15 group-hover/menuitem:border-primary/75">
