@@ -43,19 +43,19 @@ export default function FileUploadPanel({ stagedFiles }: FileUploadPanelProps) {
   return (
     <div className="flex flex-col">
       <div className="flex flex-col gap-2 w-full h-fit" onDrop={onDrop} onDragOver={onDragOver}>
-        <span className="font-medium text-xs text-muted px-1"> {t('upload.attach_files')} </span>
+        <span className="font-medium text-xs text-muted px-1"> { t('common.upload_attach_files_label') } </span>
         <label htmlFor="filesToUpload" className='flex items-center justify-between gap-4 w-full h-full p-2 border border-muted/25 bg-emphasis/75 rounded-t-lg cursor-pointer'>
           <div className="flex items-center px-2">
             <span> <DocumentArrowUp className='size-5 text-muted' /> </span>
-            <span className="text-2xs md:text-xs text-muted px-2"> {t('upload.upload_hint')} </span>
+            <span className="text-2xs md:text-xs text-muted px-2"> { t('common.upload_files_label') } </span>
           </div>
-          <span className="font-semibold text-sm text-center min-w-max px-3 py-2 text-foreground bg-emphasis border border-muted/25 rounded-lg shadow-xs"> {t('upload.upload_button')} </span>
+          <span className="font-semibold text-sm text-center min-w-max px-3 py-2 text-foreground bg-emphasis border border-muted/25 rounded-lg shadow-xs"> { t('common.upload') } </span>
+
         </label>
         <input type="file" name="filesToUpload" id="filesToUpload" className="hidden" multiple onChange={onInputChange} />
       </div>
 
-        <div className="relative flex w-full md:p-2 z-5">
-            <div className="absolute top-0 left-0 w-full h-full border-x border-muted/15 bg-surface -z-5 mask-b-to-transparent" />
+        <div className="relative flex w-full md:p-2 border border-muted/25 rounded-b-lg bg-surface">
             <FileList files={files} onRemove={removeFile} onRetry={retryFile} />
         </div>
 

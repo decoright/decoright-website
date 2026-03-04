@@ -38,10 +38,11 @@ export default function FileRow({
             <div className="text-xs after:content-['•'] after:mx-2">{niceSize(file.size)}</div>
 
             {/* status text */}
-            {file.status === "uploading" && <div className="text-2xs md:text-xs text-muted w-fit">{t('upload.uploading')}</div>}
-            {file.status === "complete" && <div className="text-2xs md:text-xs text-success w-fit">{t('upload.complete')}</div>}
-            {file.status === "failed" && <div className="text-2xs md:text-xs text-danger w-fit">{t('upload.failed')}</div>}
-            {file.status === "idle" && <div className="text-2xs md:text-xs text-warning w-fit">{t('upload.ready')}</div>}
+            {file.status === "uploading" && <div className="text-2xs md:text-xs text-muted w-fit"> { t('common.uploading') }... </div>}
+            {file.status === "complete" && <div className="text-2xs md:text-xs text-success w-fit"> { t('common.complete') } </div>}
+            {file.status === "failed" && <div className="text-2xs md:text-xs text-danger w-fit"> { t('common.uploading_failed') } </div>}
+            {file.status === "idle" && <div className="text-2xs md:text-xs text-warning w-fit"> { t('common.ready') } </div>}
+
           </div>
         </div>
 

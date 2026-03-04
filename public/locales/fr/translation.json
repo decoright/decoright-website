@@ -81,13 +81,20 @@
     "go_back": "Retour",
     "view_all": "Voir tout",
     "view_all_projects": "Voir tous les projets",
-    "exit": "sortie",
+    "exit": "Sortie",
     "required": "Requis",
     "optional": "Optionnel",
     "locked_view_only": "Verrouillé pour consultation uniquement",
     "admin": "Administrateur",
     "super_admin": "Super Admin",
     "customer": "Client",
+    "upload": "Télécharger",
+    "retry": "Réessayer",
+    "remove": "Supprimer",
+    "add": "Ajouter",
+    "select": "Sélectionner",
+    "complete": "Terminer",
+    "attachments": "Pièces jointes",
     "english": "Anglaise",
     "french": "Français",
     "arabic": "Arabe",
@@ -96,7 +103,13 @@
     "views_label_plural": "{{count}} vues",
 
     "location": "Emplacement",
-    "floor_area": "Surface"
+    "floor_area": "Surface",
+
+    "upload_files_label": "Télécharger des fichiers, images et documents",
+    "uploaded_files_placeholder": "Les fichiers téléchargés apparaîtront ici",
+    "uploading": "Téléchargement en cours",
+    "upload_failed": "Échec du téléchargement",
+    "upload_attach_files_label": "Télécharger des fichiers joints"
   },
 
   "confirm": {
@@ -300,7 +313,13 @@
     "error_uploading": "Veuillez attendre que toutes les pièces jointes aient fini de se charger.",
     "error_submit": "Échec de la soumission de la demande",
     "error_width_negative": "La largeur ne peut pas être négative.",
-    "error_height_negative": "La hauteur ne peut pas être négative."
+    "error_height_negative": "La hauteur ne peut pas être négative.",
+    "additional_details":"Détails supplémentaires",
+    "completion_date_placeholder": "Optionnel — laissez vide si vous êtes flexible sur le timing.",
+    "location_placeholder_label": "Optionnel — laissez vide si non applicable.",
+    "location_and_timeline": "Emplacement et calendrier",
+    "service_and_space": "Service et espace",
+    "required": "Obligatoire"
   },
   "upload": {
     "attach_files": "Joindre des fichiers",

@@ -88,6 +88,13 @@
     "admin": "مسؤول",
     "super_admin": "مسؤول رئيسي",
     "customer": "عميل",
+    "upload": "رفع ملف",
+    "retry": "إعادة المحاولة",
+    "remove": "إزالة",
+    "add": "إضافة",
+    "select": "اختيار",
+    "complete": "إكمال",
+    "attachments": "المرفقات",
     "english": "الإنجليزية",
     "french": "الفرنسية",
     "arabic": "العربية",
@@ -95,8 +102,14 @@
     "views_label": "{{count}} مشاهدة",
     "views_label_plural": "{{count}} مشاهدة",
 
-    "location": "الموقع",
-    "floor_area": "المساحة"
+    "location": "العنوان",
+    "floor_area": "المساحة",
+
+    "upload_files_label": "رفع الملفات والصور والمستندات",
+    "uploaded_files_placeholder": "ستظهر الملفات المرفوعة هنا",
+    "uploading": "جارٍ الرفع",
+    "upload_failed": "فشل الرفع",
+    "upload_attach_files_label": "رفع الملفات المرفقة"
   },
 
   "confirm": {
@@ -283,6 +296,7 @@
     "space_type_placeholder": "اختر نوع المساحة",
     "location_timeline": "الموقع والجدول الزمني",
     "location": "الموقع",
+    "completion_date_label": "متى تحتاج أن يكون المشروع مكتملًا؟",
     "location_placeholder": "أدخل الموقع الفعلي",
     "location_hint": "اختياري — اتركه فارغًا إذا لم يكن قابلاً للتطبيق.",
     "completion_date": "متى تحتاج إلى اكتمال هذا؟",
@@ -292,7 +306,7 @@
     "height": "الطول",
     "additional_details": "تفاصيل إضافية",
     "description": "الوصف",
-    "description_placeholder": "اكتب وصفًا...",
+    "description_placeholder": "اكتب وصفاً...",
     "attachments": "المرفقات",
     "submit": "إرسال الطلب",
     "cancel": "إلغاء",
@@ -300,7 +314,13 @@
     "error_uploading": "يرجى الانتظار حتى ينتهي رفع جميع المرفقات.",
     "error_submit": "فشل إرسال الطلب",
     "error_width_negative": "العرض لا يمكن أن يكون سالباً.",
-    "error_height_negative": "الطول لا يمكن أن يكون سالباً."
+    "error_height_negative": "الطول لا يمكن أن يكون سالباً.",
+    "additional_details": "تفاصيل إضافية",
+    "completion_date_placeholder": "اختياري - اتركه فارغًا إذا كنت مرنًا بشأن التوقيت.",
+    "location_placeholder_label": "اختياري - اتركه فارغًا إذا لم يكن ذلك قابلاً للتطبيق.",
+    "location_and_timeline": "الموقع والجدول الزمني",
+    "service_and_space": "الخدمة والمساحة",
+    "required": "حقل مطلوب"
   },
   "upload": {
     "attach_files": "إرفاق ملفات",

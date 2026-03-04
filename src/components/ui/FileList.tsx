@@ -13,7 +13,14 @@ export default function FileList({
   onRetry: (id: string) => void;
 }) {
   const { t } = useTranslation();
-  if (files.length === 0) return <div className="content-center font-medium text-xs md:text-sm text-muted/75 text-center w-full py-4 md:py-8"> {t('upload.empty_state')} </div>;
+
+  if (files.length === 0)
+    return (
+      <div className="content-center font-medium text-xs md:text-sm text-muted/75 text-center w-full py-4 md:py-8">
+        {t("common.uploaded_files_placeholder")}
+      </div>
+  );
+
 
   return (
     <ul role="list" aria-label="Staged files" className="flex flex-col gap-2 w-full h-fit">

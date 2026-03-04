@@ -186,39 +186,32 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {/* English Name */}
+
                         <div>
                             <label className="block text-sm font-medium text-foreground mb-1">
-                                English Display Name <span className="text-red-500">*</span>
+                                Title (English)  <span className="text-danger-500">*</span>
                             </label>
                             <input
                                 type="text"
                                 value={formData.display_name_en}
-                                onChange={(e) => {
-                                    const val = e.target.value;
-                                    const updates: any = { display_name_en: val };
-                                    if (!spaceType) {
-                                        updates.name = val
-                                            .toUpperCase()
-                                            .replace(/[\s-]/g, '_')
-                                            .replace(/[^A-Z_]/g, '');
-                                    }
-                                    setFormData({ ...formData, ...updates });
-                                }}
+                                onChange={(e) => setFormData({
+                                    ...formData,
+                                    display_name_en: e.target.value,
+                                    name: e.target.value.toUpperCase().replace(/[\s-]/g, '_').replace(/[^A-Z_]/g, '')
+                                })}
                                 placeholder="Kitchen and Bath"
                                 required
                                 className="w-full px-4 py-2 border border-muted/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
                             />
-                            {!spaceType && formData.name && (
-                                <p className="text-xs text-muted mt-1.5 font-mono">
-                                    Generated Code: <span className="text-primary font-bold">{formData.name}</span>
-                                </p>
-                            )}
+                            <p className="text-xs text-muted mt-1">
+                                Note: This field must be unique and cannot be changed after creation!
+                            </p>
                         </div>
 
                         {/* French Name */}
                         <div>
                             <label className="block text-sm font-medium text-foreground mb-1">
-                                French Display Name
+                                Title (French)
                             </label>
                             <input
                                 type="text"
@@ -228,12 +221,13 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
                                 className="w-full px-4 py-2 border border-muted/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
                             />
                         </div>
+
                     </div>
 
                     {/* Arabic Name */}
                     <div>
                         <label className="block text-sm font-medium text-foreground mb-1">
-                            Arabic Display Name
+                            Title (French)
                         </label>
                         <input
                             type="text"
@@ -402,8 +396,11 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
                         disabled={loading || files.some(f => f.status === 'uploading')}
                         className="px-4 py-2 text-sm font-medium text-white bg-primary hover:bg-primary/90 rounded-lg transition-colors disabled:opacity-50 flex items-center gap-2"
                     >
-                        {loading && <Cog className="size-4 animate-spin" />}
-                        {spaceType ? 'Update' : 'Create'}
+
+                        {spaceType
+                        ? 'Update'
+                        :  loading ? <> <Cog className="size-4 animate-spin text-white" /> Creating </> : 'Create'
+                        }
                     </button>
                 </div>
             </div>
