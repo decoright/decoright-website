@@ -269,7 +269,7 @@ export default function ServiceTypeForm({ isOpen, serviceType, onClose, onSucces
                         disabled={loading}
                         className="px-4 py-2 text-sm font-medium text-white bg-primary hover:bg-primary/90 rounded-lg transition-colors disabled:opacity-50 flex items-center gap-2"
                     >
-                        {uploading ? 'Uploading...' : serviceType ? 'Update' : loading || uploading ? <> <Cog className="size-4 animate-spin text-white" /> Creating </> : 'Create'}
+                        {uploading ? 'Uploading...' : loading ? <> <Cog className="size-4 animate-spin text-white" /> {serviceType ? 'Updating' : 'Creating'} </> : serviceType ? 'Update' : 'Create'}
                     </button>
                 </div>
             </div>

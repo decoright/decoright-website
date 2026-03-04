@@ -227,7 +227,7 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
                     {/* Arabic Name */}
                     <div>
                         <label className="block text-sm font-medium text-foreground mb-1">
-                            Title (French)
+                            Title (Arabic)
                         </label>
                         <input
                             type="text"
@@ -397,9 +397,9 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
                         className="px-4 py-2 text-sm font-medium text-white bg-primary hover:bg-primary/90 rounded-lg transition-colors disabled:opacity-50 flex items-center gap-2"
                     >
 
-                        {spaceType
-                        ? 'Update'
-                        :  loading ? <> <Cog className="size-4 animate-spin text-white" /> Creating </> : 'Create'
+                        {loading
+                        ? <> <Cog className="size-4 animate-spin text-white" /> {spaceType ? 'Updating' : 'Creating'} </>
+                        : spaceType ? 'Update' : 'Create'
                         }
                     </button>
                 </div>
