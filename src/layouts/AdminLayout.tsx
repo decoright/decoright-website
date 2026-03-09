@@ -17,7 +17,9 @@ export default function AdminLayout() {
                     <DashboardNavBar />
                 </header>
 
-                <Outlet />
+                <main className="pt-14 lg:pt-16">
+                    <Outlet />
+                </main>
 
             </div>
         </div>
