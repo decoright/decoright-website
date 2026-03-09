@@ -4,6 +4,7 @@ import { useConfirm } from '@/components/confirm';
 import { Cog, Folder, PencilSquare, Photo, Trash } from '@/icons';
 import toast from 'react-hot-toast';
 import ZoomImage from '@/components/ui/ZoomImage';
+import { useTranslation } from 'react-i18next';
 
 
 interface ServiceTypeTableProps {
@@ -13,6 +14,7 @@ interface ServiceTypeTableProps {
 }
 
 export default function ServiceTypeTable({ serviceTypes, onEdit, onRefresh }: ServiceTypeTableProps) {
+    const { t } = useTranslation();
     const [togglingId, setTogglingId] = useState<string | null>(null);
     const confirm = useConfirm();
 
@@ -23,7 +25,7 @@ export default function ServiceTypeTable({ serviceTypes, onEdit, onRefresh }: Se
             onRefresh();
         } catch (error) {
             console.error('Failed to toggle service type status:', error);
-            toast.error('Failed to update status');
+            toast.error(t('common.error'));
         } finally {
             setTogglingId(null);
         }
@@ -35,33 +37,33 @@ export default function ServiceTypeTable({ serviceTypes, onEdit, onRefresh }: Se
 
             if (usage.requests > 0 || usage.projects > 0) {
                 const parts: string[] = []
-                if (usage.requests > 0) parts.push(`${usage.requests} service request${usage.requests > 1 ? 's' : ''}`)
+                if (usage.requests > 0) parts.push(`${usage.requests} ${t('common.service_request')}${usage.requests > 1 ? 's' : ''}`)
                 if (usage.projects > 0) parts.push(`${usage.projects} project${usage.projects > 1 ? 's' : ''}`)
 
-                toast.error(`Cannot delete — this type is used by ${parts.join(' and ')}. Deactivate it instead.`)
+                toast.error(t('admin.service_types.delete_error_usage', { parts: parts.join(' and ') }))
                 return
             }
         } catch (error) {
             console.error('Failed to check service type usage:', error)
-            toast.error('Failed to verify usage. Please try again.')
+            toast.error(t('common.error'))
             return
         }
 
         const isConfirmed = await confirm({
-            title: 'Delete Service Type',
-            description: `Are you sure you want to delete "${serviceType.display_name_en}"? This action cannot be undone.`,
-            confirmText: 'Delete',
+            title: t('admin.service_types.delete_confirm_title'),
+            description: t('admin.service_types.delete_confirm_desc', { name: serviceType.display_name_en }),
+            confirmText: t('common.delete'),
             variant: 'destructive',
         });
 
         if (isConfirmed) {
             try {
                 await ServiceTypesService.delete(serviceType.id);
-                toast.success('Service type deleted successfully');
+                toast.success(t('admin.service_types.delete_success'));
                 onRefresh();
             } catch (error: any) {
                 console.error('Failed to delete service type:', error);
-                toast.error(error.message || 'Failed to delete service type.');
+                toast.error(error.message || t('common.error'));
             }
         }
     };
@@ -72,12 +74,12 @@ export default function ServiceTypeTable({ serviceTypes, onEdit, onRefresh }: Se
 
                 <thead className="bg-emphasis/75 sticky top-0 z-10">
                     <tr className="border-b border-muted/15">
-                        <th className="px-4 py-3 text-xs font-semibold text-muted uppercase tracking-wider">Image</th>
-                        <th className="px-4 py-3 text-xs font-semibold text-muted uppercase tracking-wider">Code</th>
-                        <th className="px-4 py-3 text-xs font-semibold text-muted uppercase tracking-wider">English Name</th>
-                        <th className="px-4 py-3 text-xs font-semibold text-muted uppercase tracking-wider">Arabic Name</th>
-                        <th className="px-4 py-3 text-xs font-semibold text-muted uppercase tracking-wider">Status</th>
-                        <th className="px-4 py-3 text-right text-xs font-semibold text-muted uppercase tracking-wider">Actions</th>
+                        <th className="px-4 py-3 text-xs font-semibold text-muted uppercase tracking-wider">{t('admin.service_types.table_col_image')}</th>
+                        <th className="px-4 py-3 text-xs font-semibold text-muted uppercase tracking-wider">{t('admin.service_types.table_col_code')}</th>
+                        <th className="px-4 py-3 text-xs font-semibold text-muted uppercase tracking-wider">{t('admin.service_types.table_col_name_en')}</th>
+                        <th className="px-4 py-3 text-xs font-semibold text-muted uppercase tracking-wider">{t('admin.service_types.table_col_name_ar')}</th>
+                        <th className="px-4 py-3 text-xs font-semibold text-muted uppercase tracking-wider">{t('admin.service_types.table_col_status')}</th>
+                        <th className="px-4 py-3 text-right text-xs font-semibold text-muted uppercase tracking-wider">{t('admin.service_types.table_col_actions')}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -85,7 +87,7 @@ export default function ServiceTypeTable({ serviceTypes, onEdit, onRefresh }: Se
                         <tr>
                             <td colSpan={6} className="px-4 py-12 text-center text-muted">
                                 <Folder className="size-12 mx-auto mb-2 opacity-50" />
-                                <p>No service types found</p>
+                                <p>{t('admin.service_types.empty_state')}</p>
                             </td>
                         </tr>
                     ) : (
@@ -115,9 +117,9 @@ export default function ServiceTypeTable({ serviceTypes, onEdit, onRefresh }: Se
                                         {togglingId === serviceType.id ? (
                                             <Cog className="size-3 animate-spin inline" />
                                         ) : serviceType.is_active ? (
-                                            'Active'
+                                            t('admin.service_types.status_active')
                                         ) : (
-                                            'Inactive'
+                                            t('admin.service_types.status_inactive')
                                         )}
                                     </button>
                                 </td>
@@ -126,14 +128,14 @@ export default function ServiceTypeTable({ serviceTypes, onEdit, onRefresh }: Se
                                         <button
                                             onClick={() => onEdit(serviceType)}
                                             className="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors"
-                                            title="Edit"
+                                            title={t('common.edit')}
                                         >
                                             <PencilSquare className="size-4" />
                                         </button>
                                         <button
                                             onClick={() => handleDelete(serviceType)}
                                             className="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
-                                            title="Delete"
+                                            title={t('common.delete')}
                                         >
                                             <Trash className="size-4" />
                                         </button>

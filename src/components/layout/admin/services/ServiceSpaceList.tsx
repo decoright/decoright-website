@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import { PATHS } from "@/routers/Paths";
 import { useEffect, useRef, useState } from "react";
 import { AdjustmentsHorizontal, ArrowDownWideShort, ArrowUpWideShort, CaretDown, ChevronUp, EllipsisVertical, InformationCircle, MagnifyingGlass } from "@/icons";
+import { useTranslation } from "react-i18next";
 
 type visibilityStag = {
     id:string;
@@ -20,7 +21,7 @@ type Props = {
 };
 
 export default function ServiceSpaceListLayout ({spaceTypes, onAction, serviceSpaceStatus}: Props) {
-
+    const { t } = useTranslation();
     const [openId, setOpenId] = useState<string | null>(null);
     const rootRef = useRef<HTMLDivElement | null>(null);
     const triggerRef = useRef<HTMLButtonElement | null>(null);
@@ -146,16 +147,16 @@ if (sortDir === "asc") sorted.reverse();
                         <input
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
-                            placeholder="Search portfolios..."
+                            placeholder={t('admin.spaces.search_placeholder')}
                             className="flex-1 w-full py-2 text-sm focus:outline-none"
                         />
 
                     </div>
-                    <button type="button"
-                    onClick={() => {setFiltersOpen(!filtersOpen)}}
-                    area-label="Search filters"
-                    className="md:hidden p-2 w-fit h-fit rounded-full border border-muted/15 bg-surface"
-                    > {filtersOpen ? <ChevronUp/> : <AdjustmentsHorizontal/> } </button>
+                <button type="button"
+                onClick={() => {setFiltersOpen(!filtersOpen)}}
+                area-label="Search filters"
+                className="md:hidden p-2 w-fit h-fit rounded-full border border-muted/15 bg-surface"
+                > {filtersOpen ? <ChevronUp/> : <AdjustmentsHorizontal/> } </button>
                 </div>
 
                 <div
@@ -168,7 +169,7 @@ if (sortDir === "asc") sorted.reverse();
                         onChange={(e) => setStatusFilter((e.target.value as string) || "all")}
                         className="flex appearance-none text-xs md:text-sm py-2 pl-2 pr-12 min-w-max w-full cursor-pointer focus:outline-none"
                         >
-                            <option value="all"> All Status </option>
+                            <option value="all"> {t('admin.services.status_all')} </option>
                             {stageOptions.map((s:any) => (
                                 <option key={s?.value} value={s?.value}>{s?.label}</option>
                             ))}
@@ -185,7 +186,7 @@ if (sortDir === "asc") sorted.reverse();
                         <div className="relative flex items-center w-full">
                             <select value={sortBy} onChange={e => setSortBy(e.target.value as any)}
                             className="flex appearance-none text-xs md:text-sm py-2 pl-2 pr-12 min-w-max w-full cursor-pointer focus:outline-0">
-                                <option value="newest">Newest</option>
+                                <option value="newest">{t('admin.services.sort_newest')}</option>
                             </select>
                             <span className="absolute flex items-center px-2 pointer-events-none inset-y-0 right-0"> <CaretDown className="size-4"/> </span>
                         </div>
@@ -209,7 +210,7 @@ if (sortDir === "asc") sorted.reverse();
                                             <h4 className="text-ellipsis-2line md:text-ellipsis-1line font-medium text-sm md:text-lg text-muted"> {space.display_name_en} </h4>
 
                                             <div className="flex flex-wrap">
-                                                <span className="text-2xs min-w-max after:content-['•'] after:mx-1 last:after:content-none">{space.is_active}</span>
+                                                <span className="text-2xs min-w-max after:content-['•'] after:mx-1 last:after:content-none">{space.is_active ? t('admin.services.status_active') : t('admin.services.status_inactive')}</span>
                                                 <span className="text-2xs min-w-max after:content-['•'] after:mx-1 last:after:content-none">{space.created_at}</span>
                                             </div>
 
@@ -222,7 +223,7 @@ if (sortDir === "asc") sorted.reverse();
                                                 ref={triggerRef}
                                                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleMenu(space.id); }}
                                                 className="relative inline-flex items-center justify-center sm:p-2 rounded-full ring-muted/15 hover:ring-1 focus:ring-1 hover:bg-surface active:bg-surface focus:outline-none"
-                                                title="Actions"
+                                                title={t('admin.services.actions')}
 
                                             >
                                                 <EllipsisVertical/>
@@ -236,29 +237,29 @@ if (sortDir === "asc") sorted.reverse();
                                                         <button role="menuitem"
                                                             onClick={() => handleAction(space.id, "edit")}
                                                             className="w-full text-left px-3 py-2 text-sm hover:bg-gray-50"
-                                                        > Edit </button>
+                                                        > {t('admin.services.action_edit')} </button>
 
                                                         <button role="menuitem"
                                                             onClick={() => handleAction(space.id, "edit")}
                                                             className="w-full text-left px-3 py-2 text-sm hover:bg-gray-50"
-                                                        > Publish </button>
+                                                        > {t('admin.services.action_publish')} </button>
 
                                                         <button role="menuitem"
                                                             onClick={() => handleAction(space.id, "edit")}
                                                             className="w-full text-left px-3 py-2 text-sm hover:bg-gray-50"
-                                                        > Hide </button>
+                                                        > {t('admin.services.action_hide')} </button>
 
                                                         <button role="menuitem"
                                                             onClick={() => handleAction(space.id, "edit")}
                                                             className="w-full text-left px-3 py-2 text-sm hover:bg-gray-50"
-                                                        > Delete </button>
+                                                        > {t('admin.services.action_delete')} </button>
 
                                                         <div className="border-t" />
 
                                                         <button role="menuitem"
                                                             onClick={() => handleAction(space.id, "edit")}
                                                             className="w-full text-left px-3 py-2 text-sm hover:bg-gray-50"
-                                                        > Delete </button>
+                                                        > {t('admin.services.action_delete')} </button>
                                                     </div>
                                                 )}
                                             </button>
@@ -274,11 +275,11 @@ if (sortDir === "asc") sorted.reverse();
                 <div className="flex items-center justify-center gap-2 w-full h-full">
                     <InformationCircle className="size-6" />
                     <p>
-                        No spaces match your current search or filters.
+                        {t('admin.spaces.no_match')}
                     </p>
                     <button type="button" onClick={handleResetFilters}
                     className="font-medium underline"
-                    > Reset filters </button>
+                    > {t('admin.services.reset_filters')} </button>
                 </div>
             }
         </div>

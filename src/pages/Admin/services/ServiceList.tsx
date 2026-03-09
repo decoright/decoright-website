@@ -4,9 +4,10 @@ import ServiceListLayout from "@/components/layout/admin/services/ServiceList";
 import { serviceStatus } from "@/constants";
 import { ServiceTypesService, type ServiceType } from "@/services/service-types.service";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function ServiceList() {
-
+    const { t } = useTranslation();
     const [serviceTypes, setServiceTypes] = useState<ServiceType[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -28,14 +29,14 @@ export default function ServiceList() {
         return (
             <div className="flex flex-col items-center justify-center gap-4 p-8 w-full h-full">
                 <Spinner status={loading} />
-                <span className="text-sm"> Loading Services... </span>
+                <span className="text-sm"> {t('admin.services.loading')} </span>
             </div>
         )
     };
 
-    if (setServiceTypes.length === 0) {
+    if (serviceTypes.length === 0) {
         return (
-            <div className="text-center p-8 text-muted">No services was made yet.</div>
+            <div className="text-center p-8 text-muted">{t('admin.services.empty_state')}</div>
         )
     }
 
@@ -43,7 +44,7 @@ export default function ServiceList() {
         <main>
             <section className="relative flex flex-col w-full mb-20">
                 <div className="relative flex flex-col gap-8 h-full">
-                    <h1 className="font-semibold text-lg md:text-2xl"> Service List </h1>
+                    <h1 className="font-semibold text-lg md:text-2xl"> {t('admin.services.title')} </h1>
                     {/* Service content goes here */}
 
                     <ServiceListLayout serviceTypes={serviceTypes} serviceStatus={serviceStatus} />

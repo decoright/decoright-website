@@ -3,6 +3,7 @@ import { SpaceTypesService, type SpaceTypeWithImages, type SpaceTypeInsert, type
 import { useStagedFiles } from '@/hooks/useStagedFiles';
 import { Cog, Photo, Plus, XMark } from '@/icons';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 const MAX_IMAGES = 5;
 
@@ -14,6 +15,7 @@ interface SpaceTypeFormProps {
 }
 
 export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }: SpaceTypeFormProps) {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         name: '',
         display_name_en: '',
@@ -93,7 +95,7 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
         // Block if any image is still uploading
         const uploading = files.some(f => f.status === 'uploading');
         if (uploading) {
-            toast.error('Please wait for all images to finish uploading.');
+            toast.error(t('admin.space_types.form_wait_upload'));
             return;
         }
 
@@ -132,10 +134,11 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
                 .map(f => f.url as string);
             await SpaceTypesService.setImages(targetId, imageUrls);
 
+            toast.success(t('common.save_success'));
             onSuccess();
         } catch (err: any) {
             console.error('Failed to save space type:', err);
-            setError(err.message || 'Failed to save space type');
+            setError(err.message || t('common.error'));
         } finally {
             setLoading(false);
         }
@@ -153,7 +156,7 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-muted/15">
                     <h2 className="text-xl font-bold text-heading">
-                        {spaceType ? 'Edit Space Type' : 'Add Space Type'}
+                        {spaceType ? t('admin.space_types.form_title_edit') : t('admin.space_types.form_title_add')}
                     </h2>
                     <button onClick={onClose} className="p-2 hover:bg-surface/50 rounded-lg transition-colors">
                         <XMark className="size-5" />
@@ -172,7 +175,7 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
                     {spaceType && (
                         <div>
                             <label className="block text-sm font-medium text-foreground mb-1">
-                                Code (Machine ID)
+                                {t('admin.space_types.table_col_code')} (Machine ID)
                             </label>
                             <input
                                 type="text"
@@ -180,7 +183,7 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
                                 disabled
                                 className="w-full px-4 py-2 border border-muted/30 rounded-lg bg-surface/50 cursor-not-allowed font-mono text-muted"
                             />
-                            <p className="text-xs text-muted mt-1">Code cannot be changed after creation</p>
+                            <p className="text-xs text-muted mt-1">{t('admin.space_types.form_hint_unique')}</p>
                         </div>
                     )}
 
@@ -189,7 +192,7 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
 
                         <div>
                             <label className="block text-sm font-medium text-foreground mb-1">
-                                Title (English)  <span className="text-danger-500">*</span>
+                                {t('admin.space_types.form_label_title_en')}  <span className="text-danger-500">*</span>
                             </label>
                             <input
                                 type="text"
@@ -199,25 +202,25 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
                                     display_name_en: e.target.value,
                                     name: e.target.value.toUpperCase().replace(/[\s-]/g, '_').replace(/[^A-Z_]/g, '')
                                 })}
-                                placeholder="Kitchen and Bath"
+                                placeholder={t('admin.space_types.form_placeholder_en')}
                                 required
                                 className="w-full px-4 py-2 border border-muted/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
                             />
                             <p className="text-xs text-muted mt-1">
-                                Note: This field must be unique and cannot be changed after creation!
+                                {t('admin.space_types.form_hint_unique')}
                             </p>
                         </div>
 
                         {/* French Name */}
                         <div>
                             <label className="block text-sm font-medium text-foreground mb-1">
-                                Title (French)
+                                {t('admin.space_types.form_label_title_fr')}
                             </label>
                             <input
                                 type="text"
                                 value={formData.display_name_fr}
                                 onChange={(e) => setFormData({ ...formData, display_name_fr: e.target.value })}
-                                placeholder="Cuisine et Salle de Bain"
+                                placeholder={t('admin.space_types.form_placeholder_fr')}
                                 className="w-full px-4 py-2 border border-muted/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
                             />
                         </div>
@@ -227,13 +230,13 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
                     {/* Arabic Name */}
                     <div>
                         <label className="block text-sm font-medium text-foreground mb-1">
-                            Title (Arabic)
+                            {t('admin.space_types.form_label_title_ar')}
                         </label>
                         <input
                             type="text"
                             value={formData.display_name_ar}
                             onChange={(e) => setFormData({ ...formData, display_name_ar: e.target.value })}
-                            placeholder="المطبخ والحمام"
+                            placeholder={t('admin.space_types.form_placeholder_ar')}
                             dir="rtl"
                             className="w-full px-4 py-2 border border-muted/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
                         />
@@ -242,12 +245,12 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
                     {/* Description */}
                     <div>
                         <label className="block text-sm font-medium text-foreground mb-1">
-                            Description / Space Info
+                            {t('admin.space_types.form_label_description')}
                         </label>
                         <textarea
                             value={formData.description}
                             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                            placeholder="Brief description of the space type..."
+                            placeholder={t('admin.space_types.form_placeholder_desc')}
                             rows={3}
                             className="w-full px-4 py-2 border border-muted/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
                         />
@@ -257,7 +260,7 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
                     <div>
                         <div className="flex items-center justify-between mb-2">
                             <label className="block text-sm font-medium text-foreground">
-                                Images
+                                {t('admin.space_types.form_label_images')}
                                 <span className="text-xs text-muted font-normal ml-1.5">
                                     ({completeCount}/{MAX_IMAGES})
                                 </span>
@@ -269,7 +272,7 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
                                 className="flex items-center gap-1.5 text-xs font-medium px-2.5 py-1.5 rounded-lg border border-muted/30 hover:bg-emphasis transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                             >
                                 <Plus className="size-3.5" />
-                                Add Image
+                                {t('common.add')}
                             </button>
                             <input
                                 ref={fileInputRef}
@@ -288,7 +291,7 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
                                 className="w-full flex flex-col items-center justify-center gap-2 p-8 border-2 border-dashed border-muted/25 rounded-lg hover:border-primary/40 hover:bg-primary/5 transition-colors text-muted"
                             >
                                 <Photo className="size-8 opacity-40" />
-                                <span className="text-sm">Click to add images (up to {MAX_IMAGES})</span>
+                                <span className="text-sm">{t('admin.space_types.form_click_to_add', { max: MAX_IMAGES })}</span>
                             </button>
                         ) : (
                             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -327,7 +330,7 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
                                         {/* Failed overlay */}
                                         {file.status === 'failed' && (
                                             <div className="absolute inset-0 bg-red-900/60 flex items-center justify-center">
-                                                <span className="text-white text-xs font-medium">Failed</span>
+                                                <span className="text-white text-xs font-medium">{t('common.failed')}</span>
                                             </div>
                                         )}
 
@@ -355,13 +358,13 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
                                         className="aspect-video rounded-lg border-2 border-dashed border-muted/25 hover:border-primary/40 hover:bg-primary/5 flex flex-col items-center justify-center gap-1 transition-colors text-muted"
                                     >
                                         <Plus className="size-5 opacity-50" />
-                                        <span className="text-xs">Add</span>
+                                        <span className="text-xs">{t('common.add')}</span>
                                     </button>
                                 )}
                             </div>
                         )}
                         <p className="text-xs text-muted mt-1.5">
-                            Images display in numbered order. To reorder: remove and re-add.
+                            {t('admin.space_types.form_hint_reorder')}
                         </p>
                     </div>
 
@@ -375,7 +378,7 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
                             className="w-4 h-4 text-primary border-muted/30 rounded focus:ring-2 focus:ring-primary/50"
                         />
                         <label htmlFor="is_active" className="text-sm font-medium text-foreground">
-                            Active (visible to users)
+                            {t('admin.space_types.form_label_active')}
                         </label>
                     </div>
                 </form>
@@ -388,7 +391,7 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
                         disabled={loading}
                         className="px-4 py-2 text-sm font-medium text-foreground hover:bg-surface/50 rounded-lg transition-colors disabled:opacity-50"
                     >
-                        Cancel
+                        {t('common.cancel')}
                     </button>
                     <button
                         type="submit"
@@ -398,8 +401,8 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
                     >
 
                         {loading
-                        ? <> <Cog className="size-4 animate-spin text-white" /> {spaceType ? 'Updating' : 'Creating'} </>
-                        : spaceType ? 'Update' : 'Create'
+                        ? <> <Cog className="size-4 animate-spin text-white" /> {spaceType ? t('common.updating') : t('common.creating')} </>
+                        : spaceType ? t('common.update') : t('common.create')
                         }
                     </button>
                 </div>

@@ -2,6 +2,8 @@
 import { useState, useEffect } from 'react';
 import { ServiceTypesService, type ServiceType, type ServiceTypeInsert, type ServiceTypeUpdate } from '@/services/service-types.service';
 import { Cog, Photo, XMark } from '@/icons';
+import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
 
 interface ServiceTypeFormProps {
     isOpen: boolean;
@@ -11,6 +13,7 @@ interface ServiceTypeFormProps {
 }
 
 export default function ServiceTypeForm({ isOpen, serviceType, onClose, onSuccess }: ServiceTypeFormProps) {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         name: '',
         display_name_en: '',
@@ -104,10 +107,11 @@ export default function ServiceTypeForm({ isOpen, serviceType, onClose, onSucces
                 };
                 await ServiceTypesService.create(insertData);
             }
+            toast.success(t('admin.service_types.save_success'));
             onSuccess();
         } catch (err: any) {
             console.error('Failed to save service type:', err);
-            setError(err.message || 'Failed to save service type');
+            setError(err.message || t('common.error'));
         } finally {
             setLoading(false);
             setUploading(false);
@@ -122,7 +126,7 @@ export default function ServiceTypeForm({ isOpen, serviceType, onClose, onSucces
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-muted/15">
                     <h2 className="text-xl font-bold text-heading">
-                        {serviceType ? 'Edit Service Type' : 'Add Service Type'}
+                        {serviceType ? t('admin.service_types.form_title_edit') : t('admin.service_types.form_title_add')}
                     </h2>
                     <button
                         onClick={onClose}
@@ -144,7 +148,7 @@ export default function ServiceTypeForm({ isOpen, serviceType, onClose, onSucces
                     {/* English Display Name */}
                     <div>
                         <label className="block text-sm font-medium text-foreground mb-1">
-                            Title (English) <span className="text-red-500">*</span>
+                            {t('admin.service_types.form_label_title_en')} <span className="text-red-500">*</span>
                         </label>
                         <input
                             type="text"
@@ -154,12 +158,12 @@ export default function ServiceTypeForm({ isOpen, serviceType, onClose, onSucces
                                 display_name_en: e.target.value,
                                 name: e.target.value.toUpperCase().replace(/[\s-]/g, '_').replace(/[^A-Z_]/g, '')
                             })}
-                            placeholder="Interior Design"
+                            placeholder={t('admin.service_types.form_placeholder_en')}
                             required
                             className="w-full px-4 py-2 border border-muted/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
                         />
                         <p className="text-xs text-muted mt-1">
-                            Note: This field must be unique and cannot be changed after creation!
+                            {t('admin.service_types.form_hint_unique')}
                         </p>
                     </div>
 
@@ -167,13 +171,13 @@ export default function ServiceTypeForm({ isOpen, serviceType, onClose, onSucces
                     {/* French Display Name */}
                     <div>
                         <label className="block text-sm font-medium text-foreground mb-1">
-                            Title (French)
+                            {t('admin.service_types.form_label_title_fr')}
                         </label>
                         <input
                             type="text"
                             value={formData.display_name_fr}
                             onChange={(e) => setFormData({ ...formData, display_name_fr: e.target.value })}
-                            placeholder="Design d'Intérieur"
+                            placeholder={t('admin.service_types.form_placeholder_fr')}
                             className="w-full px-4 py-2 border border-muted/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
                         />
                     </div>
@@ -181,13 +185,13 @@ export default function ServiceTypeForm({ isOpen, serviceType, onClose, onSucces
                     {/* Arabic Display Name */}
                     <div>
                         <label className="block text-sm font-medium text-foreground mb-1">
-                            Title (Arabic)
+                            {t('admin.service_types.form_label_title_ar')}
                         </label>
                         <input
                             type="text"
                             value={formData.display_name_ar}
                             onChange={(e) => setFormData({ ...formData, display_name_ar: e.target.value })}
-                            placeholder="تصميم داخلي"
+                            placeholder={t('admin.service_types.form_placeholder_ar')}
                             dir="rtl"
                             className="w-full px-4 py-2 border border-muted/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
                         />
@@ -196,7 +200,7 @@ export default function ServiceTypeForm({ isOpen, serviceType, onClose, onSucces
                     {/* Image Upload */}
                     <div>
                         <label className="block text-sm font-medium text-foreground mb-1">
-                            Service Image
+                            {t('admin.service_types.form_label_image')}
                         </label>
                         <div className="mt-1 flex items-center gap-4">
                             <div className="size-20 rounded-lg border border-muted/30 overflow-hidden bg-surface flex items-center justify-center">
@@ -219,7 +223,7 @@ export default function ServiceTypeForm({ isOpen, serviceType, onClose, onSucces
                                         hover:file:bg-primary/20 transition-all
                                         cursor-pointer"
                                 />
-                                <p className="text-xs text-muted mt-1">Recommended size: 800x600px. Max 5MB.</p>
+                                <p className="text-xs text-muted mt-1">{t('admin.service_types.form_hint_image')}</p>
                             </div>
                         </div>
                     </div>
@@ -227,12 +231,12 @@ export default function ServiceTypeForm({ isOpen, serviceType, onClose, onSucces
                     {/* Description */}
                     <div>
                         <label className="block text-sm font-medium text-foreground mb-1">
-                            Description / Service Info
+                            {t('admin.service_types.form_label_description')}
                         </label>
                         <textarea
                             value={formData.description}
                             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                            placeholder="Brief description of the service..."
+                            placeholder={t('admin.service_types.form_placeholder_desc')}
                             rows={3}
                             className="w-full px-4 py-2 border border-muted/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
                         />
@@ -248,7 +252,7 @@ export default function ServiceTypeForm({ isOpen, serviceType, onClose, onSucces
                             className="w-4 h-4 text-primary border-muted/30 rounded focus:ring-2 focus:ring-primary/50"
                         />
                         <label htmlFor="is_active" className="text-sm font-medium text-foreground">
-                            Active (visible to users)
+                            {t('admin.service_types.form_label_active')}
                         </label>
                     </div>
                 </form>
@@ -261,7 +265,7 @@ export default function ServiceTypeForm({ isOpen, serviceType, onClose, onSucces
                         disabled={loading}
                         className="px-4 py-2 text-sm font-medium text-foreground hover:bg-surface/50 rounded-lg transition-colors disabled:opacity-50"
                     >
-                        Cancel
+                        {t('common.cancel')}
                     </button>
                     <button
                         type="submit"
@@ -269,7 +273,7 @@ export default function ServiceTypeForm({ isOpen, serviceType, onClose, onSucces
                         disabled={loading}
                         className="px-4 py-2 text-sm font-medium text-white bg-primary hover:bg-primary/90 rounded-lg transition-colors disabled:opacity-50 flex items-center gap-2"
                     >
-                        {uploading ? 'Uploading...' : loading ? <> <Cog className="size-4 animate-spin text-white" /> {serviceType ? 'Updating' : 'Creating'} </> : serviceType ? 'Update' : 'Create'}
+                        {uploading ? t('common.uploading') : loading ? <> <Cog className="size-4 animate-spin text-white" /> {serviceType ? t('common.updating') : t('common.creating')} </> : serviceType ? t('common.update') : t('common.create')}
                     </button>
                 </div>
             </div>

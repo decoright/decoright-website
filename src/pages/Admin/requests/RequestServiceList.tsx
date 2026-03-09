@@ -35,7 +35,7 @@ export default function RequestServiceList() {
     }, []);
 
     return (
-        <main className="w-full">
+        <div className="w-full">
             <section className="flex flex-col pt-4 md:pt-6 w-full h-full mb-40">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                     <div>
@@ -59,6 +59,6 @@ export default function RequestServiceList() {
                     )}
                 </div>
             </section>
-        </main>
+        </div>
     );
 }

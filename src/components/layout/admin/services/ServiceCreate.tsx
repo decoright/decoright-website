@@ -4,8 +4,10 @@ import { SCTALink } from "@/components/ui/CTA";
 import FileUploadPanel from "@/components/ui/FileUploadPanel";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function ServiceCreateLayout() {
+    const { t } = useTranslation();
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -23,7 +25,7 @@ export default function ServiceCreateLayout() {
             navigate(-1); // Go back after success
         } catch (error) {
             console.error("Failed to create service:", error);
-            alert("Failed to create service. Check console for details.");
+            alert(t('common.error'));
         } finally {
             setLoading(false);
         }
@@ -37,14 +39,14 @@ export default function ServiceCreateLayout() {
                 <div className="flex flex-col gap-6 w-full h-full">
 
                     <div className="flex flex-col gap-2 h-full">
-                        <label htmlFor="service-title" className="font-medium text-xs text-muted px-1"> Title </label>
-                        <input type="text" name="service-title" id="service-title" placeholder="Service Title" required
+                        <label htmlFor="service-title" className="font-medium text-xs text-muted px-1"> {t('admin.service_types.form_label_title_en')} </label>
+                        <input type="text" name="service-title" id="service-title" placeholder={t('admin.services.search_placeholder')} required
                             className="w-full p-2.5 text-sm text-muted bg-emphasis/75 rounded-lg cursor-text outline-1 outline-muted/15 hover:outline-muted/35 focus:outline-primary/45" />
                     </div>
 
                     <div className="flex flex-col gap-2 h-full">
-                        <label htmlFor="service-description" className="font-medium text-xs text-muted px-1"> Description </label>
-                        <textarea name="service-description" id="service-description" rows={5} placeholder='Service description...' required
+                        <label htmlFor="service-description" className="font-medium text-xs text-muted px-1"> {t('admin.service_types.form_label_description')} </label>
+                        <textarea name="service-description" id="service-description" rows={5} placeholder={t('admin.service_types.form_placeholder_desc')} required
                             className="w-full h-full p-2.5 text-sm bg-emphasis/75 rounded-lg outline-1 outline-muted/15 hover:outline-muted/35 focus:outline-primary/45">
                         </textarea>
                     </div>
@@ -56,9 +58,9 @@ export default function ServiceCreateLayout() {
             {/* CTA & Submit */}
             <div className="flex max-xs:flex-col md:flex-row gap-3 md:gap-4 w-full md:w-fit">
                 <PButton type="submit" className="w-full" disabled={loading}>
-                    <Spinner status={loading}> Create Service </Spinner>
+                    <Spinner status={loading}> {t('common.create')} </Spinner>
                 </PButton>
-                <SCTALink to={-1} className="w-full"> Cancel </SCTALink>
+                <SCTALink to={-1} className="w-full"> {t('common.cancel')} </SCTALink>
             </div>
         </form>
     )

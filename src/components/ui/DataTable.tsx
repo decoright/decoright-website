@@ -325,9 +325,9 @@ export default function Table<T extends Record<string, any>>(props: {
 
   return (
     <div className={`relative w-full h-full border border-muted/25 bg-surface rounded-xl flex flex-col ${className}`}>
-      <div className="p-3 md:p-4 flex items-center justify-between space-x-4 flex-none border-b border-muted/10">
+      <div className="p-3 md:p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 flex-none border-b border-muted/10">
         {/* Search */}
-        <div className="flex-1 max-w-2xl">
+        <div className="flex-1 w-full md:max-w-2xl">
           <label htmlFor="table-search" className="sr-only">Search</label>
           <div className="relative">
             <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -397,8 +397,8 @@ export default function Table<T extends Record<string, any>>(props: {
         </div>
       </div>
 
-      <div className="flex-1 overflow-x-auto custom-scrollbar">
-        <table className="w-full min-w-[640px] text-sm text-left rtl:text-right text-body">
+      <div className="flex-1 overflow-x-auto custom-scrollbar w-full">
+        <table className="w-full min-w-max text-sm text-left rtl:text-right text-body">
           <thead className="text-sm text-body bg-emphasis border-b border-muted/75 sticky top-0 z-10 shadow-sm">
             <tr>
               {/* selectable header */}

@@ -40,6 +40,7 @@ export default function UserTable() {
       title: t('admin.users.col_identity'),
       searchable: true,
       sortable: true,
+      className: 'min-w-[200px]',
       render: (row: any) => (
         <div className="flex items-center gap-3">
           <div className="size-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
@@ -73,6 +74,7 @@ export default function UserTable() {
       key: 'status',
       title: t('admin.users.col_status'),
       width: '100px',
+      className: 'min-w-[120px]',
       render: (row: any) => (
         <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${row.is_active
           ? 'bg-emerald-500/5 text-emerald-600 border-emerald-500/20'
@@ -86,6 +88,7 @@ export default function UserTable() {
     {
       key: 'contacts',
       title: t('admin.users.col_contacts'),
+      className: 'min-w-[150px]',
       render: (row: any) => (
         <div className="flex flex-col text-sm">
           <span className="text-body font-medium">{row.phone || '-'}</span>
@@ -96,6 +99,7 @@ export default function UserTable() {
       key: 'stats',
       title: t('admin.users.col_requests'),
       width: '100px',
+      className: 'min-w-[100px]',
       render: (row: any) => (
         <div className="flex items-center gap-2">
           <RectangleStack className="size-4 text-muted" />
@@ -107,6 +111,7 @@ export default function UserTable() {
       key: 'created_at',
       title: t('admin.users.col_joined'),
       sortable: true,
+      className: 'min-w-[120px]',
       render: (row: any) => (
         <span className="text-xs text-muted">
           {new Date(row.created_at).toLocaleDateString()}
@@ -125,6 +130,7 @@ export default function UserTable() {
         columns={columns}
         data={users}
         options={{
+          onRefresh: loadUsers,
           onRowClick: handleUserClick,
           selectable: false,
           filterOptions: [
@@ -140,6 +146,7 @@ export default function UserTable() {
             </div>
           )
         }}
+        className="border-0 rounded-none shadow-none"
       />
 
       <UserDetailDrawer

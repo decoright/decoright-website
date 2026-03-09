@@ -59,6 +59,7 @@ export default function ActivityLogPage() {
         {
             key: 'created_at',
             title: t('admin.activity.col_time'),
+            className: 'min-w-[150px]',
             render: (row: any) => (
                 <div className="flex items-center gap-2 text-xs text-muted whitespace-nowrap">
                     <Calendar className="size-3.5 shrink-0" />
@@ -70,6 +71,7 @@ export default function ActivityLogPage() {
             key: 'event_type',
             title: t('admin.activity.col_event'),
             searchable: true,
+            className: 'min-w-[120px]',
             render: (row: any) => (
                 <div className="flex items-center gap-2">
                     <div className="size-8 rounded-lg bg-emphasis flex items-center justify-center shrink-0">
@@ -84,11 +86,13 @@ export default function ActivityLogPage() {
         {
             key: 'details',
             title: t('admin.activity.col_details'),
+            className: 'min-w-[200px]',
             render: (row: any) => renderDetails(row),
         },
         {
             key: 'actor',
             title: t('admin.activity.col_actor'),
+            className: 'min-w-[150px]',
             render: (row: any) => (
                 <div className="flex items-center gap-3">
                     <div className="size-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs shrink-0">
@@ -121,20 +125,21 @@ export default function ActivityLogPage() {
     }, []);
 
     return (
-        <main>
-            <section className="h-hero min-h-hero relative flex flex-col w-full h-full pt-4 md:py-8 mb-40">
-                <div className="flex flex-col gap-6 h-full">
-
-                    <div className="flex items-center justify-between gap-4">
-                        <h1 className="font-semibold text-lg md:text-2xl">{t('admin.activity.title')}</h1>
+        <div className="w-full">
+            <section className="flex flex-col pt-4 md:pt-6 w-full h-full mb-40">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <h1 className="font-medium text-xl md:text-2xl text-heading tracking-tight">{t('admin.activity.title')}</h1>
                     </div>
+                </div>
 
-                    {error && (
-                        <div className="p-4 bg-danger/10 border border-danger/20 rounded-xl text-danger text-sm">
-                            {error}
-                        </div>
-                    )}
+                {error && (
+                    <div className="p-4 bg-danger/10 border border-danger/20 rounded-xl text-danger text-sm mb-4">
+                        {error}
+                    </div>
+                )}
 
+                <div>
                     {loading && logs.length === 0 ? (
                         <div className="p-10 text-center text-muted animate-pulse">{t('admin.activity.loading')}</div>
                     ) : (
@@ -158,11 +163,11 @@ export default function ActivityLogPage() {
                                     </div>
                                 ),
                             }}
+                            className="border-0 rounded-none shadow-none"
                         />
                     )}
-
                 </div>
             </section>
-        </main>
+        </div>
     );
 }

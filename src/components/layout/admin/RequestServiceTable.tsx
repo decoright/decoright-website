@@ -97,6 +97,7 @@ export default function RequestServiceTable({ externalData, onRefresh }: Request
             title: t('admin.requests.col_identity'),
             searchable: true,
             sortable: true,
+            className: 'min-w-[200px]',
             render: (row: any) => (
                 <div className="flex items-center gap-3">
                     <div className="size-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
@@ -148,6 +149,7 @@ export default function RequestServiceTable({ externalData, onRefresh }: Request
         {
             key: 'space_type',
             title: t('admin.requests.col_scope'),
+            className: 'min-w-[120px]',
             render: (row: any) => (
                 <div className="flex flex-col text-xs">
                     <span className="font-medium text-body">{row.space_type || '-'}</span>
@@ -159,7 +161,7 @@ export default function RequestServiceTable({ externalData, onRefresh }: Request
             key: 'chat_action',
             title: t('admin.requests.col_chat'),
             width: '60px',
-            className: 'text-center',
+            className: 'text-center min-w-[80px]',
             render: (row: any) => row.chat_id ? (
                 <Link
                     to={PATHS.ADMIN.chatRoom(row.chat_id)}
@@ -179,7 +181,7 @@ export default function RequestServiceTable({ externalData, onRefresh }: Request
             key: 'date',
             title: t('admin.requests.col_submission'),
             sortable: true,
-            className: 'text-end',
+            className: 'text-end min-w-[120px]',
             render: (row: any) => (
                 <span className="text-xs text-muted">
                     {new Date(row.created_at).toLocaleDateString()}

@@ -4,6 +4,7 @@ import { useConfirm } from '@/components/confirm';
 import { Cog, Folder, PencilSquare, Photo, Trash } from '@/icons';
 import toast from 'react-hot-toast';
 import ZoomImage from '@/components/ui/ZoomImage';
+import { useTranslation } from 'react-i18next';
 
 interface SpaceTypeTableProps {
     spaceTypes: SpaceTypeWithImages[];
@@ -12,6 +13,7 @@ interface SpaceTypeTableProps {
 }
 
 export default function SpaceTypeTable({ spaceTypes, onEdit, onRefresh }: SpaceTypeTableProps) {
+    const { t } = useTranslation();
     const [togglingId, setTogglingId] = useState<string | null>(null);
     const confirm = useConfirm();
 
@@ -19,11 +21,11 @@ export default function SpaceTypeTable({ spaceTypes, onEdit, onRefresh }: SpaceT
         try {
             setTogglingId(spaceType.id);
             await SpaceTypesService.toggleActive(spaceType.id, !spaceType.is_active);
-            toast.success(`Space type ${!spaceType.is_active ? 'activated' : 'deactivated'} successfully`);
+            toast.success(t('common.save_success'));
             onRefresh();
         } catch (error) {
             console.error('Failed to toggle space type status:', error);
-            toast.error('Failed to update status');
+            toast.error(t('common.error'));
         } finally {
             setTogglingId(null);
         }
@@ -31,20 +33,20 @@ export default function SpaceTypeTable({ spaceTypes, onEdit, onRefresh }: SpaceT
 
     const handleDelete = async (spaceType: SpaceTypeWithImages) => {
         const isConfirmed = await confirm({
-            title: 'Delete Space Type',
-            description: `Are you sure you want to delete "${spaceType.display_name_en}"? This action cannot be undone and may fail if the space type is currently in use by any projects.`,
-            confirmText: 'Delete',
+            title: t('admin.space_types.delete_confirm_title'),
+            description: t('admin.space_types.delete_confirm_desc', { name: spaceType.display_name_en }),
+            confirmText: t('common.delete'),
             variant: 'destructive'
         });
 
         if (isConfirmed) {
             try {
                 await SpaceTypesService.delete(spaceType.id);
-                toast.success('Space type deleted successfully');
+                toast.success(t('admin.space_types.delete_success'));
                 onRefresh();
             } catch (error: any) {
                 console.error('Failed to delete space type:', error);
-                toast.error(error.message || 'Failed to delete space type. It might be in use.');
+                toast.error(error.message || t('common.error'));
             }
         }
     };
@@ -54,12 +56,12 @@ export default function SpaceTypeTable({ spaceTypes, onEdit, onRefresh }: SpaceT
             <table className="w-full min-w-[640px] text-left border-collapse">
                 <thead className="bg-emphasis/75 sticky top-0 z-10">
                     <tr className="border-b border-muted/15">
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-muted uppercase tracking-wider">Images</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-muted uppercase tracking-wider">Code</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-muted uppercase tracking-wider">English Name</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-muted uppercase tracking-wider">Arabic Name</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-muted uppercase tracking-wider">Status</th>
-                        <th className="px-4 py-3 text-right text-xs font-semibold text-muted uppercase tracking-wider">Actions</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-muted uppercase tracking-wider">{t('admin.space_types.table_col_images')}</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-muted uppercase tracking-wider">{t('admin.space_types.table_col_code')}</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-muted uppercase tracking-wider">{t('admin.space_types.table_col_name_en')}</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-muted uppercase tracking-wider">{t('admin.space_types.table_col_name_ar')}</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-muted uppercase tracking-wider">{t('admin.space_types.table_col_status')}</th>
+                        <th className="px-4 py-3 text-right text-xs font-semibold text-muted uppercase tracking-wider">{t('admin.space_types.table_col_actions')}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,7 +69,7 @@ export default function SpaceTypeTable({ spaceTypes, onEdit, onRefresh }: SpaceT
                         <tr>
                             <td colSpan={6} className="px-4 py-12 text-center text-muted">
                                 <Folder className="size-12 mx-auto mb-2 opacity-50" />
-                                <p>No space types found</p>
+                                <p>{t('admin.space_types.empty_state')}</p>
                             </td>
                         </tr>
                     ) : (
@@ -126,23 +128,23 @@ export default function SpaceTypeTable({ spaceTypes, onEdit, onRefresh }: SpaceT
                                             {togglingId === spaceType.id ? (
                                                 <Cog className="size-3 animate-spin inline" />
                                             ) : spaceType.is_active ? (
-                                                'Active'
+                                                t('admin.space_types.status_active')
                                             ) : (
-                                                'Inactive'
+                                                t('admin.space_types.status_inactive')
                                             )}
                                         </button>
                                     </td>
                                     <td className="p-4 text-right">
                                         <div className="flex items-center justify-end gap-2">
                                             <button
-                                                title="Edit Space Type"
+                                                title={t('common.edit')}
                                                 onClick={() => onEdit(spaceType)}
                                                 className="inline-flex items-center gap-1 p-2 text-sm font-medium ring-muted/45 rounded-full transition-colors hover:ring-1 hover:bg-emphasis"
                                             >
                                                 <PencilSquare className="size-4" />
                                             </button>
                                             <button
-                                                title="Delete Space Type"
+                                                title={t('common.delete')}
                                                 onClick={() => handleDelete(spaceType)}
                                                 className="group/trash inline-flex items-center gap-1 p-2 text-sm font-medium ring-danger/45 rounded-full transition-colors hover:ring-1 hover:bg-emphasis"
                                             >

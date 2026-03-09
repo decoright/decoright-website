@@ -3,8 +3,10 @@ import { SpaceTypesService, type SpaceTypeWithImages } from '@/services/space-ty
 import SpaceTypeTable from './SpaceTypeTable';
 import SpaceTypeForm from './SpaceTypeForm';
 import { ArrowPath, Cog, MagnifyingGlass, Plus } from '@/icons';
+import { useTranslation } from 'react-i18next';
 
 export default function SpaceTypes() {
+    const { t } = useTranslation();
     const [spaceTypes, setSpaceTypes] = useState<SpaceTypeWithImages[]>([]);
     const [loading, setLoading] = useState(true);
     const [isFormOpen, setIsFormOpen] = useState(false);
@@ -58,8 +60,8 @@ export default function SpaceTypes() {
             <section className="flex flex-col pt-4 md:pt-6 w-full h-full">
                 {/* Header */}
                 <div className="flex flex-col h-fit mb-6">
-                    <h1 className="font-medium text-2xl md:text-3xl text-heading tracking-tight">Space Types</h1>
-                    <p className="text-sm text-muted mt-1">Manage space type categories for projects and requests.</p>
+                    <h1 className="font-medium text-2xl md:text-3xl text-heading tracking-tight">{t('admin.space_types.title')}</h1>
+                    <p className="text-sm text-muted mt-1">{t('admin.space_types.subtitle')}</p>
                 </div>
 
                 {/* Main Content */}
@@ -72,7 +74,7 @@ export default function SpaceTypes() {
                                     <MagnifyingGlass className=" size-4 text-muted" />
                                 </div>
                                 <input
-                                    id="table-search" value={search} onChange={(e) => setSearch(e.target.value)} type="text" placeholder="Search service types..."
+                                    id="table-search" value={search} onChange={(e) => setSearch(e.target.value)} type="text" placeholder={t('admin.space_types.search_placeholder')}
                                     className="block w-full ps-9 pe-3 py-2 bg-surface border border-muted/15 text-heading text-sm rounded-lg focus:outline-1 outline-muted/10 placeholder:text-body focus:bg-emphasis transition-colors"
                                 />
                             </div>
@@ -83,11 +85,11 @@ export default function SpaceTypes() {
                                 className="flex items-center gap-2 font-semibold text-sm text-muted hover:text-foreground active:text-foreground px-3 py-2 border border-muted/15 bg-emphasis rounded-lg hover:bg-emphasis transition-colors"
                             >
                                 <Plus className="size-4" />
-                                Add Space Type
+                                {t('admin.space_types.add_button')}
                             </button>
                             <button
                                 onClick={loadSpaceTypes}
-                                title="Refresh Table"
+                                title={t('admin.service_types.refresh_tooltip')}
                                 className="p-2 border border-muted/15 text-body rounded-lg hover:bg-neutral-tertiary-medium transition-colors flex items-center gap-2 text-sm font-semibold bg-surface hover:bg-emphasis active:bg-emphasis"
                             > <ArrowPath className={`size-4 ${loading ? 'animate-spin' : ''}`} />
                             </button>
@@ -96,7 +98,7 @@ export default function SpaceTypes() {
                     {loading && spaceTypes.length === 0 ? (
                         <div className="h-full flex flex-col items-center justify-center text-muted animate-pulse">
                             <Cog className="size-12 animate-spin mb-4" />
-                            <p className="font-medium">Loading space types...</p>
+                            <p className="font-medium">{t('admin.space_types.loading')}</p>
                         </div>
                     ) : (
                         <SpaceTypeTable

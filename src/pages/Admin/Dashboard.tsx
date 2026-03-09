@@ -2,6 +2,7 @@ import Spinner from "@/components/common/Spinner";
 import { AdminService } from "@/services/admin.service";
 import { useEffect, useRef, useState } from "react";
 import { Calendar, ChartBar, Check, ChevronDown, RectangleStack, UserCircle } from "@/icons";
+import { useTranslation } from "react-i18next";
 import {
     Area,
     AreaChart as RechartsAreaChart,
@@ -44,6 +45,7 @@ function ChartTooltip({ active, payload, label }: any) {
 
 // ─── Main component ─────────────────────────────────────────────────────────────
 export default function Dashboard() {
+    const { t } = useTranslation();
     const [timeframe, setTimeframe] = useState<'30d' | '90d' | 'lifetime'>('30d');
     const [stats, setStats] = useState<any>(null);
     const [chartData, setChartData] = useState<any[]>([]);
@@ -85,16 +87,16 @@ export default function Dashboard() {
     }, [timeframe]);
 
     const topKPICards = [
-        { id: '1', label: 'Total requests', value: stats?.totalRequests ?? '...', icon: RectangleStack, borderColor: 'border-l-blue-500' },
-        { id: '2', label: 'Total completed', value: stats?.completedRequests ?? '...', icon: Check, borderColor: 'border-l-emerald-500' },
-        { id: '3', label: 'Total unique clients', value: stats?.totalUsers ?? '...', icon: UserCircle, borderColor: 'border-l-amber-500' },
-        { id: '4', label: 'Completion rate', value: stats?.completionRate ?? '...', icon: ChartBar, borderColor: 'border-l-purple-500' },
+        { id: '1', label: t('admin.analytics.kpi_total_requests'), value: stats?.totalRequests ?? '...', icon: RectangleStack, borderColor: 'border-l-blue-500' },
+        { id: '2', label: t('admin.analytics.kpi_total_completed'), value: stats?.completedRequests ?? '...', icon: Check, borderColor: 'border-l-emerald-500' },
+        { id: '3', label: t('admin.analytics.kpi_total_clients'), value: stats?.totalUsers ?? '...', icon: UserCircle, borderColor: 'border-l-amber-500' },
+        { id: '4', label: t('admin.analytics.kpi_completion_rate'), value: stats?.completionRate ?? '...', icon: ChartBar, borderColor: 'border-l-purple-500' },
     ];
 
     const timeframeLabels = {
-        '30d': 'Last 30 days',
-        '90d': 'Last 90 days',
-        'lifetime': 'Lifetime'
+        '30d': t('admin.analytics.timeframe_30d'),
+        '90d': t('admin.analytics.timeframe_90d'),
+        'lifetime': t('admin.analytics.timeframe_lifetime')
     };
 
     const isLifetime = timeframe === 'lifetime';
@@ -116,7 +118,7 @@ export default function Dashboard() {
                     <div className="flex items-center justify-between gap-4 flex-wrap">
                         <div className="flex items-center gap-2">
                             <ChartBar className="size-6" />
-                            <h1 className="font-semibold text-xl">Analytics & Overall Performance</h1>
+                            <h1 className="font-semibold text-xl">{t('admin.analytics.title')}</h1>
                         </div>
                         <div className="relative" ref={filterRef}>
                             <button
@@ -169,17 +171,17 @@ export default function Dashboard() {
                             {/* Chart header */}
                             <div className="px-5 py-4 border-b border-muted/10 flex items-start justify-between gap-4 flex-wrap">
                                 <div>
-                                    <h3 className="font-bold text-heading">Requests Volume</h3>
-                                    <p className="text-xs text-muted mt-0.5">Growth of created and completed requests over time.</p>
+                                    <h3 className="font-bold text-heading">{t('admin.analytics.chart_title')}</h3>
+                                    <p className="text-xs text-muted mt-0.5">{t('admin.analytics.chart_subtitle')}</p>
                                 </div>
                                 <div className="flex items-center gap-2 shrink-0">
                                     <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-violet-500/5 border border-violet-500/15 text-[11px] font-semibold text-violet-600">
                                         <span className="size-1.5 rounded-full bg-violet-500 shrink-0" />
-                                        Requests
+                                        {t('admin.analytics.chart_legend_requests')}
                                     </div>
                                     <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-sky-400/5 border border-sky-400/15 text-[11px] font-semibold text-sky-500">
                                         <span className="size-1.5 rounded-full bg-sky-400 shrink-0" />
-                                        Completed
+                                        {t('admin.analytics.chart_legend_completed')}
                                     </div>
                                 </div>
                             </div>
@@ -192,7 +194,7 @@ export default function Dashboard() {
                                     </div>
                                 ) : chartData.length === 0 ? (
                                     <div className="flex items-center justify-center h-full text-muted text-xs">
-                                        No data available for this period.
+                                        {t('admin.analytics.chart_no_data')}
                                     </div>
                                 ) : (
                                     <ResponsiveContainer width="100%" height="100%">
@@ -293,8 +295,8 @@ export default function Dashboard() {
                         {/* Popular Services */}
                         <div className="flex flex-col border border-muted/20 bg-surface rounded-2xl overflow-hidden">
                             <div className="px-5 py-4 border-b border-muted/10">
-                                <h3 className="font-bold text-heading text-sm">Popular Services</h3>
-                                <p className="text-xs text-muted mt-0.5">Distribution by request volume.</p>
+                                <h3 className="font-bold text-heading text-sm">{t('admin.analytics.popular_services_title')}</h3>
+                                <p className="text-xs text-muted mt-0.5">{t('admin.analytics.popular_services_subtitle')}</p>
                             </div>
                             <div className="p-5 flex flex-col gap-4 flex-1 overflow-y-auto">
                                 {loading && topServices.length === 0 ? (
@@ -321,7 +323,7 @@ export default function Dashboard() {
                                         );
                                     })
                                 ) : (
-                                    <div className="py-10 text-center text-muted text-xs">No service data available.</div>
+                                    <div className="py-10 text-center text-muted text-xs">{t('admin.analytics.popular_services_empty')}</div>
                                 )}
                             </div>
                         </div>
