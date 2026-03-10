@@ -149,6 +149,14 @@
     "error_weak_password": "Password must be at least 6 characters long.",
     "error_name_required": "Please enter your first and last name.",
     "error_invalid_phone": "Please enter a valid phone number (e.g. 0550 123 456).",
+    "errors": {
+      "invalid_credentials": "Invalid email or password.",
+      "email_not_confirmed": "Please verify your email address before logging in.",
+      "rate_limit": "Too many attempts. Please try again later.",
+      "link_expired": "This link has expired. Please request a new one.",
+      "user_not_found": "No account found with this email.",
+      "generic": "Authentication failed. Please try again."
+    },
     "phone": "Phone Number",
     "placeholders": {
       "email": "email@example.com",
@@ -463,6 +471,7 @@
     "set_error_link_invalid": "This reset link is invalid or expired — request a new one",
     "set_error_session_invalid": "Session invalid — open the reset link from your email and try again",
     "set_error_failed": "Could not set password — try again or reopen the reset link",
+    "error_same_password": "New password should be different from the old password",
     "change_error_session": "Unable to verify your session — please log in again",
     "change_error_no_user": "No authenticated user — please sign in again",
     "change_error_current_wrong": "Current password is incorrect",

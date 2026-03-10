@@ -141,6 +141,14 @@
     "login_now": "Connexion",
     "error_failed_login": "Échec de la connexion",
     "error_failed_signup": "Échec de l'inscription",
+    "errors": {
+      "invalid_credentials": "Email ou mot de passe incorrect.",
+      "email_not_confirmed": "Veuillez vérifier votre adresse e-mail avant de vous connecter.",
+      "rate_limit": "Trop de tentatives. Veuillez réessayer plus tard.",
+      "link_expired": "Ce lien a expiré. Veuillez en demander un nouveau.",
+      "user_not_found": "Aucun compte trouvé avec cet e-mail.",
+      "generic": "L'authentification a échoué. Veuillez réessayer."
+    },
     "phone": "Numéro de téléphone",
     "placeholders": {
       "email": "email@exemple.com",
@@ -455,6 +463,7 @@
     "set_error_link_invalid": "Ce lien de réinitialisation est invalide ou expiré — demandez-en un nouveau",
     "set_error_session_invalid": "Session invalide — ouvrez le lien reçu par e-mail et réessayez",
     "set_error_failed": "Impossible de définir le mot de passe — réessayez ou rouvrez le lien",
+    "error_same_password": "Le nouveau mot de passe doit être différent de l'ancien mot de passe",
     "change_error_session": "Impossible de vérifier la session — veuillez vous reconnecter",
     "change_error_no_user": "Aucun utilisateur authentifié — veuillez vous connecter",
     "change_error_current_wrong": "Mot de passe actuel incorrect",

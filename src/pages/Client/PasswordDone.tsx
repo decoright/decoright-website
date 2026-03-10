@@ -2,7 +2,7 @@ import { LogoutButton } from "@/components/common/Confirm";
 import { PATHS } from "@/routers/Paths";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { ArrowRightStartOnRectangle, Home } from "@/icons";
+import { ArrowRightStartOnRectangle, CheckCircle, Home } from "@/icons";
 
 export default function PasswordDone() {
 
@@ -19,26 +19,26 @@ export default function PasswordDone() {
                     <div className="absolute top-0 left-0 w-full h-full border border-muted/15 rounded-4xl bg-surface/75 -z-10 mask-b-to-transparent mask-b-to-100%"></div>
 
                     <div className="flex flex-col items-center w-full mb-8">
-                        <div className="w-1/3">
-                            {/* <img src={HeroImg} alt="" className="w-full h-full" /> */}
+                        <div className="flex items-center justify-center size-20 md:size-24 bg-success/10 text-success rounded-full mb-6">
+                            <CheckCircle className="size-12 md:size-16" />
                         </div>
 
-                        <div className="space-y-2 text-center">
-                            <h1 className="font-semibold text-xl md:text-3xl"> { t('done_title') } </h1>
-                            <p className="text-xs md:text-sm"> { t('done_description') } </p>
+                        <div className="space-y-3 text-center">
+                            <h1 className="font-semibold text-2xl md:text-3xl text-heading"> {t('password.done_title')} </h1>
+                            <p className="text-sm md:text-base text-muted max-w-sm mx-auto"> {t('password.done_description')} </p>
                         </div>
                     </div>
 
                     {/* CTA */}
-                    <div className="flex items-center justify-center gap-4 w-full">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
 
                         <Link to={PATHS.ROOT}
-                            className="flex items-center gap-2 font-medium text-xs md:text-sm text-center px-4 py-2 bg-emphasis rounded-lg"
-                        > <Home /> { t('nav.home_welcome_back') } </Link>
+                            className="w-full sm:w-auto flex items-center justify-center gap-2 font-semibold text-sm px-6 py-3 bg-primary text-white rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors"
+                        > <Home className="size-5" /> {t('nav.home')} </Link>
 
                         <LogoutButton
-                            className="flex items-center gap-2 font-medium text-xs md:text-sm text-center px-3 py-2 border border-muted/25 rounded-lg"
-                        > <span className="flex gap-4"> { t('auth.logout') } <ArrowRightStartOnRectangle /></span> </LogoutButton>
+                            className="w-full sm:w-auto flex items-center justify-center gap-2 font-medium text-sm px-5 py-3 border border-muted/25 rounded-xl hover:bg-muted/5 transition-colors"
+                        > <span className="flex items-center gap-3"> {t('auth.logout')} <ArrowRightStartOnRectangle className="size-5" /></span> </LogoutButton>
 
                     </div>
 

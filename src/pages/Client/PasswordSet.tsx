@@ -11,6 +11,7 @@ import { PATHS } from "@/routers/Paths";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { getAuthErrorMessage } from "@/utils/auth-errors";
 
 export default function PasswordSet() {
 
@@ -113,12 +114,11 @@ export default function PasswordSet() {
 
 
             // All checks passed: perform the password update
-            const { error: updateError } = await supabase.auth.updateUser({ password: newPassword }); // !!! This won't update.
+            const { error: updateError } = await supabase.auth.updateUser({ password: newPassword });
 
             if (updateError) {
                 console.error("updateUser error", updateError);
-                // User-friendly message
-                setError(t('password.set_error_failed'));
+                setError(getAuthErrorMessage(updateError, t));
                 return;
             }
 

@@ -8,6 +8,7 @@ import { PATHS } from "@/routers/Paths";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { getAuthErrorMessage } from "@/utils/auth-errors";
 
 export default function PasswordChange () {
 
@@ -93,7 +94,7 @@ export default function PasswordChange () {
 
             if (updateError) {
                 console.error("Password update failed", updateError);
-                setError(t('password.change_error_failed'));
+                setError(getAuthErrorMessage(updateError, t));
                 return;
             }
 

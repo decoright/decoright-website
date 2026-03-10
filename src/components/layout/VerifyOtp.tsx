@@ -8,6 +8,7 @@ import OtpInput from 'react-otp-input';
 import Spinner from "../common/Spinner"
 import { useTranslation, Trans } from "react-i18next"
 import toast from "react-hot-toast"
+import { getAuthErrorMessage } from "@/utils/auth-errors"
 
 export function VerifyOtp() {
     const navigate = useNavigate()
@@ -50,7 +51,7 @@ export function VerifyOtp() {
 
             navigate(PATHS.ROOT)
         } catch (err: any) {
-            setError(err.message || t('auth.otp.error_invalid'))
+            setError(getAuthErrorMessage(err, t))
         } finally {
             setLoading(false)
         }
@@ -68,7 +69,7 @@ export function VerifyOtp() {
             if (resendError) throw resendError
             toast.success(t('auth.otp.resend_success'))
         } catch (err: any) {
-            setError(err.message || t('auth.otp.error_resend'))
+            setError(getAuthErrorMessage(err, t))
         } finally {
             setLoading(false)
         }

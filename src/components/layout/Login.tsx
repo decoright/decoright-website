@@ -6,6 +6,7 @@ import { LegalLinks } from "@/constants"
 import Spinner from "@components/common/Spinner"
 import { PATHS } from "@/routers/Paths"
 import { useTranslation } from "react-i18next"
+import { getAuthErrorMessage } from "@/utils/auth-errors"
 
 export function LoginLayout() {
     const [email, setEmail] = useState("")
@@ -31,7 +32,7 @@ export function LoginLayout() {
             // but we can force it here if needed.
             navigate(PATHS.ROOT)
         } catch (err: any) {
-            setError(err.message || t('auth.error_failed_login'))
+            setError(getAuthErrorMessage(err, t))
         } finally {
             setLoading(false)
         }

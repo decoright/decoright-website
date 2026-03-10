@@ -197,7 +197,7 @@ export default function Dashboard() {
                                         {t('admin.analytics.chart_no_data')}
                                     </div>
                                 ) : (
-                                    <ResponsiveContainer width="100%" height="100%">
+                                    <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                                         <RechartsAreaChart
                                             data={chartData}
                                             margin={{

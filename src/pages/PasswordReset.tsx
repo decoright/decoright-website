@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom"
 import { EMAIL_REGEX } from "@/utils/validators"
 import { supabase } from "@/lib/supabase"
 import { useTranslation } from "react-i18next"
+import { getAuthErrorMessage } from "@/utils/auth-errors"
 
 
 export default function PasswordReset() {
@@ -42,11 +43,14 @@ export default function PasswordReset() {
                 { redirectTo: redirectTo.toString() }
             )
 
-            if (SubmitError) throw SubmitError
+            if (SubmitError) {
+                setError(getAuthErrorMessage(SubmitError, t))
+                return
+            }
 
             navigate(PATHS.PASSWORD_SENT)
         } catch (err: any) {
-            setError(err.message || t('errors.generic'))
+            setError(getAuthErrorMessage(err, t))
         } finally {
             setLoading(false)
         }

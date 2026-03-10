@@ -7,6 +7,7 @@ import { EmailInput, Input, PasswordInput } from "../ui/Input"
 import { LegalLinks } from "../../constants"
 import Spinner from "../common/Spinner"
 import { useTranslation } from "react-i18next"
+import { getAuthErrorMessage } from "@/utils/auth-errors"
 
 export function SignupLayout() {
     const [firstName, setFirstName] = useState("")
@@ -76,15 +77,8 @@ export function SignupLayout() {
             })
 
             if (signupError) {
-                // Map Supabase errors to human-readable messages
-                if (signupError.message.toLowerCase().includes('already registered') ||
-                    signupError.message.toLowerCase().includes('user already exists')) {
-                    throw new Error(t('auth.error_email_taken') || 'An account with this email already exists. Try logging in.')
-                }
-                if (signupError.message.toLowerCase().includes('password')) {
-                    throw new Error(t('auth.error_weak_password') || 'Password must be at least 6 characters.')
-                }
-                throw signupError
+                setError(getAuthErrorMessage(signupError, t))
+                return
             }
 
             if (!data.user) throw new Error(t('auth.error_failed_signup'))
