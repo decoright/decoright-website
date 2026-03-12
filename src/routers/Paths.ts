@@ -22,7 +22,10 @@ export const PATHS = {
     PASSWORD_RESET: "/password/reset",
     PASSWORD_SENT: "/password/sent",
 
-    PRIVACY_POLICY: "/",
+    LEGAL_PAGE: "/legal/:slug",
+    legalPage: (slug: string) => `/legal/${encodeURIComponent(slug)}`,
+    PRIVACY_POLICY: "/legal/privacy-policy",
+    TERMS_OF_SERVICE: "/legal/terms-of-service",
 
     CLIENT: {
         ROOT: "/",
@@ -88,6 +91,10 @@ export const PATHS = {
         FAQ_CREATE: "/admin/faq/create",
         FAQ_UPDATE: "/admin/faq/:id/edit",
         faqUpdate: (id: string) => `/admin/faq/${encodeURIComponent(id)}/edit`,
+
+        LEGAL_LIST: "/admin/legal-pages",
+        LEGAL_UPDATE: "/admin/legal-pages/:id/edit",
+        legalUpdate: (id: string) => `/admin/legal-pages/${encodeURIComponent(id)}/edit`,
 
         SETTINGS: "/admin/settings",
     },

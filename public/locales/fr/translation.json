@@ -1,5 +1,7 @@
 {
   "nav": {
+    "privacy_policy": "Politique de confidentialité",
+    "privacy_policy_description": "Notre engagement envers votre vie privée et la protection des données",
     "home": "Accueil",
     "home_welcome_back": "Content de te revoir",
     "home_description": "Bienvenue — découvrez les temps forts et le contenu mis en avant",
@@ -209,7 +211,7 @@
     },
     "sections": {
       "services": {
-        "title": "Explorez notre gamme de services de design d'intérieur",
+        "title": "Explorere notre gamme de services de design d'intérieur",
         "description": "De la conception à la réalisation, nous proposons des solutions de design complètes adaptées à vos besoins uniques."
       },
       "projects": {
@@ -452,8 +454,6 @@
     "change_description": "Mettez à jour votre mot de passe pour sécuriser votre compte",
     "done_title": "Mot de passe mis à jour avec succès",
     "done_description": "Votre mot de passe a été mis à jour — vous pouvez maintenant accéder à votre compte",
-    "reset_access_error": "Cette page est accessible uniquement via un e-mail de réinitialisation du mot de passe",
-    "reset_link_invalid": "Lien de réinitialisation invalide ou expiré",
     "password_label": "Mot de passe",
     "password_confirm_label": "Confirmer le mot de passe",
     "password_current_label": "Mot de passe actuel",
@@ -876,7 +876,7 @@
       "form_hint_image": "Taille recommandée : 800x600px. Max 5Mo.",
       "form_placeholder_en": "Interior Design",
       "form_placeholder_fr": "Design d'Intérieur",
-      "form_placeholder_ar": "تصميم داخلي",
+      "form_placeholder_ar": "Design d'Intérieur",
       "form_placeholder_desc": "Brève description du service..."
     },
     "space_types": {
@@ -909,7 +909,7 @@
       "form_hint_reorder": "Les images s'affichent dans l'ordre numérique. Pour réorganiser : supprimez et ré-ajoutez.",
       "form_placeholder_en": "Kitchen and Bath",
       "form_placeholder_fr": "Cuisine et Salle de Bain",
-      "form_placeholder_ar": "المطبخ والحمام",
+      "form_placeholder_ar": "Cuisine et Salle de Bain",
       "form_placeholder_desc": "Brève description du type d'espace...",
       "form_wait_upload": "Veuillez attendre que toutes les images aient fini d'être téléchargées.",
       "form_click_to_add": "Cliquez pour ajouter des images (max {{max}})"

@@ -7,7 +7,6 @@ import ClientLayout from '@/layouts/ClientLayout';
 import AdminLayout from '@/layouts/AdminLayout';
 import RequireAuth from '@/components/auth/RequireAuth';
 import Spinner from '@/components/common/Spinner';
-import { useTranslation } from 'react-i18next';
 
 const Landing = lazy(() => import('@/pages/Public/Landing'));
 const About = lazy(() => import('@/pages/Public/About'));
@@ -16,6 +15,7 @@ const ServiceList = lazy(() => import('@/pages/Public/ServiceList'));
 const ProjectList = lazy(() => import('@/pages/Public/ProjectList'));
 const ProjectDetail = lazy(() => import('@/pages/Public/ProjectDetail'));
 const FAQList = lazy(() => import('@/pages/Public/FAQList'));
+const LegalPage = lazy(() => import('@/pages/Public/LegalPage'));
 
 const Signup = lazy(() => import('@/pages/Public/Signup'));
 const Login = lazy(() => import('@/pages/Public/Login'));
@@ -58,7 +58,23 @@ const AdminFAQList = lazy(() => import('@/pages/Admin/faqs/FAQList'));
 const AdminFAQCreate = lazy(() => import('@/pages/Admin/faqs/FAQCreate'));
 const AdminFAQUpdate = lazy(() => import('@/pages/Admin/faqs/FAQUpdate'));
 
+const AdminLegalList = lazy(() => import('@/pages/Admin/legal/LegalList'));
+const AdminLegalUpdate = lazy(() => import('@/pages/Admin/legal/LegalUpdate'));
+
 const AdminSettings = lazy(() => import('@/pages/Admin/Settings'));
+
+const getLoadingMomentText = () => {
+  if (typeof window === 'undefined') {
+    return 'Just a moment...';
+  }
+
+  const storedLanguage = localStorage.getItem('i18nextLng') || document.documentElement.lang || 'en';
+  const language = storedLanguage.split('-')[0];
+
+  if (language === 'ar') return 'لحظة واحدة...';
+  if (language === 'fr') return 'Un instant...';
+  return 'Just a moment...';
+};
 
 const router = createBrowserRouter([
 
@@ -94,6 +110,10 @@ const router = createBrowserRouter([
       {
         path: PATHS.FAQ_LIST,
         element: <FAQList />,
+      },
+      {
+        path: PATHS.LEGAL_PAGE,
+        element: <LegalPage />,
       },
       {
         path: PATHS.GALLERY_LIST,
@@ -271,6 +291,16 @@ const router = createBrowserRouter([
         element: <AdminFAQUpdate />,
       },
 
+      // Legal Pages
+      {
+        path: PATHS.ADMIN.LEGAL_LIST,
+        element: <AdminLegalList />,
+      },
+      {
+        path: PATHS.ADMIN.LEGAL_UPDATE,
+        element: <AdminLegalUpdate />,
+      },
+
       // Settings
       {
         path: PATHS.ADMIN.SETTINGS,
@@ -281,14 +311,11 @@ const router = createBrowserRouter([
 ]);
 
 export default function AppRoutes() {
-
-  const { t } = useTranslation();
-
   return (
     <Suspense fallback={
       <div className="flex flex-col items-center justify-center gap-2 w-full h-hero">
         <Spinner size="lg" />
-        <span className="text-sm"> {t('common.loading_moment')} </span>
+        <span className="text-sm"> {getLoadingMomentText()} </span>
       </div>
     }>
       <RouterProvider router={router} />

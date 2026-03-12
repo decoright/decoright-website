@@ -1,6 +1,8 @@
 
 import { Facebook, Instagram, Tiktok, Whatsapp, Youtube } from "@/icons";
 
+import { PATHS } from "@/routers/Paths";
+
 const userProfile = "/user.png"
 // const SpacesPlaning = "/services/IMG_3766.jpg";
 // const ColorConsultation = "/services/IMG_3767.jpg";
@@ -141,8 +143,8 @@ export const serviceDesignStyle = [
 ]
 
 export const LegalLinks = [
-    { label: 'Terms & Conditions', key: 'terms', path: '/terms' },
-    { label: 'Privacy Policy', key: 'privacy', path: '/privacy-policy' },
+    { label: 'Terms & Conditions', key: 'terms', path: PATHS.TERMS_OF_SERVICE },
+    { label: 'Privacy Policy', key: 'privacy', path: PATHS.PRIVACY_POLICY },
 ]
 
 // export const projects = [

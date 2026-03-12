@@ -8,13 +8,13 @@ import Footer from "@/components/navigation/Footer"
 export default function PublicLayout () {
     return (
         <>
-            <header className="content-container relative flex justify-center w-full z-30">
+            <header className="content-container relative flex justify-center w-full z-50">
                 <NavBar/>
             </header>
 
             <Outlet/>
 
-            <footer className="relative flex w-full h-full z-30 pt-12">
+            <footer className="relative flex w-full h-full z-10 pt-12">
                 <Footer/>
             </footer>
 

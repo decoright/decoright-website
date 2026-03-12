@@ -1,6 +1,6 @@
 
 import { PATHS } from "@/routers/Paths"
-import { Chat, Cog, DocumentPlus, Home, PaintBrush, Phone, PuzzlePiece, QuestionMarkCircle, RectangleStack, Squares2x2 } from "@/icons";
+import { Chat, Cog, DocumentPlus, DocumentText, Home, PaintBrush, Phone, PuzzlePiece, QuestionMarkCircle, RectangleStack, Squares2x2 } from "@/icons";
 
 // Admin navigation item list for menu
 export const adminMenuNav = [
@@ -53,8 +53,13 @@ export const adminSideMenuNav = [
         ], description: ''
     },
 
+    {
+        id: '9', label: 'Legal Pages', key: 'legal_pages', icon: null, children: [
+            { id: '9.1', label: 'Legal Pages List', key: 'legal_list', path: PATHS.ADMIN.LEGAL_LIST, icon: null, description: 'Manage privacy policy, terms, etc.' },
+        ], description: ''
+    },
 
-    { id: '9', label: 'Settings', key: 'settings', path: PATHS.ADMIN.SETTINGS, icon: null, description: 'Application settings, preferences and integrations' },
+    { id: '11', label: 'Settings', key: 'settings', path: PATHS.ADMIN.SETTINGS, icon: null, description: 'Application settings, preferences and integrations' },
 ]
 
 
@@ -68,6 +73,7 @@ export const clientMenuItems = [
     { label: 'Gallery', key: 'gallery', path: PATHS.GALLERY_LIST, icon: Squares2x2 , description: 'Browse our gallery and past work' },
     { label: 'FAQs', key: 'faqs', path: PATHS.FAQ_LIST, icon: QuestionMarkCircle , description: 'Frequently Asked Questions and support resources' },
     { label: 'Contact Us', key: 'contact_us', path: PATHS.CONTACT, icon: Phone , description: 'Get in touch with our team' },
+    { label: 'Privacy Policy', key: 'privacy_policy', path: PATHS.PRIVACY_POLICY, icon: DocumentText , description: 'Our commitment to your privacy' },
     { label: 'Account Settings', key: 'account_settings', path: PATHS.CLIENT.ACCOUNT_SETTINGS, icon: Cog , description: 'Manage your profile, preferences, and account settings' },
 ]
 
@@ -78,6 +84,7 @@ export const publicMenuItems = [
     { label: 'Gallery', key: 'gallery', path: PATHS.GALLERY_LIST, icon: PuzzlePiece , description: 'View images and designs associated with projects.' },
     { label: 'FAQs', key: 'faqs', path: PATHS.FAQ_LIST, icon: QuestionMarkCircle , description: 'Frequently Asked Questions and support resources' },
     { label: 'Contact Us', key: 'contact_us', path: PATHS.CONTACT, icon: Phone , description: 'Contact information and form' },
+    { label: 'Privacy Policy', key: 'privacy_policy', path: PATHS.PRIVACY_POLICY, icon: DocumentText , description: 'Our commitment to your privacy' },
 ]
 
 export const LegalLinks = [

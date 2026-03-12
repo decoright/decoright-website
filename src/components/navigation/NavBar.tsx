@@ -9,7 +9,7 @@ import { MenuCard } from "@components/ui/MenuCard"
 import { PCTALink, SCTALink } from "@components/ui/CTA"
 import { PATHS } from "@/routers/Paths"
 import { useTranslation } from "react-i18next"
-import { ArrowRightEndOnRectangle, ArrowRightStartOnRectangle, Chat, Folder, Language, Menu, PresentationChartLine, User, UserPlus } from "@/icons";
+import { ArrowRightEndOnRectangle, ArrowRightStartOnRectangle, Chat, DocumentText, Folder, Language, Menu, PresentationChartLine, User, UserPlus } from "@/icons";
 import { useUnreadCount } from "@/hooks/useUnreadCount";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 
@@ -61,6 +61,14 @@ export function AuthenticatedUserActins() {
     return (
         <>
             <div className="flex items-center gap-2 md:gap-4">
+
+                <Link
+                    to={PATHS.PRIVACY_POLICY}
+                    title={t('nav.privacy_policy')}
+                    className="md:hidden content-center p-1.5 border border-muted/15 bg-surface/75 rounded-full hover:bg-emphasis transition-colors"
+                >
+                    <DocumentText className="size-5" />
+                </Link>
 
                 {isAdmin
                     ? <>
@@ -155,6 +163,14 @@ export function AnonymousUserActins() {
 
         <>
             <div className="flex items-center gap-2 md:gap-4">
+
+                <Link
+                    to={PATHS.PRIVACY_POLICY}
+                    title={t('nav.privacy_policy')}
+                    className="md:hidden content-center p-1.5 border border-muted/15 bg-surface/75 rounded-full hover:bg-emphasis transition-colors"
+                >
+                    <DocumentText className="size-5" />
+                </Link>
                 
                 {/* Language Button */}
                 <button type="button" title={t('nav.language')} onClick={() => setLangMenuOpen(true)}
@@ -329,7 +345,7 @@ export function NavBar() {
 
     return (
 
-        <div dir="ltr" className="navbar-height absolute flex justify-between gap-2 md:gap-4 w-full px-3 sm:px-6 md:px-9 z-30">
+        <div dir="ltr" className="navbar-height absolute flex justify-between gap-2 md:gap-4 w-full px-3 sm:px-6 md:px-9 z-50">
             <NavLogo />
 
             {/* Prevent flicker or showing links prematurely during loading */}
