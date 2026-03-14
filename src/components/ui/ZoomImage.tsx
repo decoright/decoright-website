@@ -1,6 +1,7 @@
 // src/components/ZoomImage.tsx
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { getOptimizedImageUrl } from '@/utils/supabase-image';
 
 function ensureModalRoot() {
   if (typeof document === 'undefined') return null;
@@ -66,7 +67,7 @@ export default function ZoomImage({
   }
 
   const imgElement = (
-    <img src={src} alt={alt} {...imgProps} className={`zoom-image inline-block cursor-zoom-in w-full h-full object-cover ${className}`} style={style} />
+    <img src={getOptimizedImageUrl(String(src), { width: 1200, quality: 72, format: 'webp' })} alt={alt} {...imgProps} className={`zoom-image inline-block cursor-zoom-in w-full h-full object-cover ${className}`} style={style} loading="lazy" decoding="async" />
   );
 
   const modal =
@@ -83,10 +84,12 @@ export default function ZoomImage({
             onClick={(e) => {e.stopPropagation(), e.preventDefault()}}
           >
             <img
-              src={src}
+              src={getOptimizedImageUrl(String(src), { width: 1800, quality: 80, format: 'webp' })}
               alt={alt}
               className="zoomed-image w-full h-full rounded-md object-contain"
               crossOrigin="anonymous"
+              loading="eager"
+              decoding="async"
             />
             <button
               aria-label="Close"

@@ -8,7 +8,8 @@ export async function compressImage(
     file: File,
     quality: number = 0.7,
     maxWidth: number = 1920,
-    maxHeight: number = 1080
+    maxHeight: number = 1080,
+    outputType: 'image/jpeg' | 'image/webp' = 'image/jpeg'
 ): Promise<Blob> {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -51,7 +52,7 @@ export async function compressImage(
                             reject(new Error('Canvas toBlob failed'));
                         }
                     },
-                    'image/jpeg',
+                    outputType,
                     quality
                 );
             };

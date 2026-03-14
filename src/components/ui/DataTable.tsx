@@ -2,6 +2,7 @@
 
 import { Funnel, ChevronDown, EllipsisHorizontal, MagnifyingGlass, ArrowPath } from '@/icons';
 import React, { useMemo, useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type Column<T = any> = {
   key: string;                  // unique key in data or virtual key
@@ -43,6 +44,7 @@ export default function Table<T extends Record<string, any>>(props: {
   options?: TableOptions<T>;
   className?: string;
 }) {
+  const { t } = useTranslation();
   const { columns, data, options = {}, className = '' } = props;
   const {
     selectable = false,
@@ -50,7 +52,7 @@ export default function Table<T extends Record<string, any>>(props: {
     filterField,
     renderActions,
     ActionOptions,
-    searchPlaceholder = 'Search',
+    searchPlaceholder = t('common.search'),
     onSelectionChange,
     noResults,
     bulkActions = [], // defaults to empty
@@ -210,22 +212,22 @@ export default function Table<T extends Record<string, any>>(props: {
     const defaultMenu = (
       <ul className="p-2 text-sm text-body font-medium">
         <li>
-          <button className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">View</button>
+          <button className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">{t('common.view')}</button>
         </li>
         <li>
-          <button className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Duplicate</button>
+          <button className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">{t('common.duplicate')}</button>
         </li>
         <li>
-          <button className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Delete</button>
+          <button className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">{t('common.delete')}</button>
         </li>
         <li>
-          <button className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Edit</button>
+          <button className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">{t('common.edit')}</button>
         </li>
       </ul>
     );
 
     return (
-      <div className="relative inline-flex items-center z-60">
+      <div className="relative inline-flex items-center z-[100]">
         <button
           type="button"
           aria-expanded={isOpen}
@@ -235,7 +237,7 @@ export default function Table<T extends Record<string, any>>(props: {
             setOpenRowActionId((prev) => (prev === id ? null : id));
           }}
           className={`p-1 rounded-full ring-muted/15 hover:ring-1 hover:bg-emphasis/75 ${isOpen && 'ring-1 bg-emphasis/75'}`}
-          title="Row actions"
+          title={t('common.table.row_actions')}
         >
           {/* simple 3-dot icon */}
           <EllipsisHorizontal className="size-5 text-muted" />
@@ -245,7 +247,7 @@ export default function Table<T extends Record<string, any>>(props: {
           <div
             role="menu"
             onClick={(e) => e.stopPropagation()}
-            className="absolute end-0 top-full mt-2 min-w-40 w-max bg-surface border border-muted/15 rounded-lg shadow-md z-60"
+            className="absolute end-0 top-full mt-2 min-w-40 w-max bg-surface border border-muted/15 rounded-lg shadow-2xl z-[100]"
           >
             {renderActions ? (
               <div className="flex gap-4 p-2">{renderActions(row)}</div>
@@ -275,20 +277,20 @@ export default function Table<T extends Record<string, any>>(props: {
           }}
           className="shrink-0 inline-flex items-center justify-center text-body hover:text-heading font-medium leading-5 rounded-base text-sm focus:outline-none"
         >
-          Actions ({selectionCount})
+          {t('common.table.actions')} ({selectionCount})
           <svg className="w-4 h-4 ms-1.5 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 9-7 7-7-7" />
           </svg>
         </button>
 
         {open && (
-          <div className="z-30 absolute right-0 top-full min-w-40 w-max mt-2 bg-surface border border-muted/15 rounded-lg shadow-md ">
+          <div className="z-[100] absolute right-0 top-full min-w-40 w-max mt-2 bg-surface border border-muted/15 rounded-lg shadow-xl ">
             <ul className="flex flex-col gap-2 p-2 text-sm text-body font-medium">
               {/* default bulk actions (delete/export) */}
               {bulkActions.length === 0 ? (
                 <>
                   <li>
-                    <p> No actions for bulk </p>
+                    <p> {t('common.table.no_bulk_actions')} </p>
                   </li>
                 </>
               ) : (
@@ -325,7 +327,7 @@ export default function Table<T extends Record<string, any>>(props: {
 
   return (
     <div className={`relative w-full h-full border border-muted/25 bg-surface rounded-xl flex flex-col ${className}`}>
-      <div className="p-3 md:p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 flex-none border-b border-muted/10">
+      <div className="p-3 md:p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 flex-none border-b border-muted/10 relative z-20">
         {/* Search */}
         <div className="flex-1 w-full md:max-w-2xl">
           <label htmlFor="table-search" className="sr-only">Search</label>
@@ -349,7 +351,7 @@ export default function Table<T extends Record<string, any>>(props: {
                 className="space-x-1 shrink-0 inline-flex items-center justify-center text-body bg-emphasis box-border border border-muted/15 hover:text-heading shadow-xs focus:outline-1 outline-muted/45 font-medium leading-5 rounded-lg text-sm px-3 py-2"
               >
                 <Funnel className="size-4 text-muted" />
-                <span className="max-md:hidden"> Filter by </span>
+                <span className="max-md:hidden"> {t('common.table.filter_by')} </span>
                 <ChevronDown className="size-4 text-muted" />
               </button>
 
@@ -359,7 +361,7 @@ export default function Table<T extends Record<string, any>>(props: {
                   onClick={handleRefresh}
                   disabled={refreshing}
                   className="inline-flex items-center gap-2 p-2 border border-muted/15 hover:border-muted/25 rounded-lg text-sm bg-emphasis transition-colors shadow-xs"
-                  title={refreshing ? "Refreshing…" : "Refresh"}
+                  title={refreshing ? t('common.table.refreshing') : t('common.table.refresh')}
                 >
                   <ArrowPath className={`size-4 ${refreshing ? 'animate-spin' : ''}`} />
                 </button>
@@ -367,14 +369,14 @@ export default function Table<T extends Record<string, any>>(props: {
 
 
               {dropdownOpen && (
-                <div className="z-30 absolute right-0 mt-2 bg-surface border border-muted/25 rounded-xl shadow-lg w-60">
+                <div className="z-[100] absolute right-0 mt-2 bg-surface border border-muted/25 rounded-xl shadow-2xl w-60">
                   <ul className="p-2 text-sm text-body font-medium">
                     <li>
                       <button
                         onClick={() => { setFilterValue(null); setDropdownOpen(false); }}
                         className="inline-flex items-center w-full p-2 hover:text-heading rounded"
                       >
-                        All
+                        {t('common.table.all')}
                       </button>
                     </li>
 
@@ -414,7 +416,7 @@ export default function Table<T extends Record<string, any>>(props: {
                       className="w-4 h-4 border border-muted/15 rounded-xs"
                     />
                     <label htmlFor={`table-checkbox-all`} className="sr-only">
-                      Select all
+                      {t('common.table.select_all')}
                     </label>
                   </div>
                 </th>
@@ -437,7 +439,7 @@ export default function Table<T extends Record<string, any>>(props: {
                   {selectable && selectionCount > 0 ? (
                     <BulkActionsHeader />
                   ) : (
-                    <span className="text-muted">Actions</span>
+                    <span className="text-muted">{t('common.table.actions')}</span>
                   )}
                 </th>
               )}
@@ -448,7 +450,7 @@ export default function Table<T extends Record<string, any>>(props: {
             {filteredData.length === 0 ? (
               <tr className="border-b last:border-none">
                 <td colSpan={(columns.length) + (selectable ? 1 : 0) + (ActionOptions ? 1 : 0)}>
-                  {noResults ?? <div className="font-medium text-sm text-muted py-6 text-center">No results</div>}
+                  {noResults ?? <div className="font-medium text-sm text-muted py-6 text-center">{t('common.table.no_results')}</div>}
                 </td>
               </tr>
             ) : filteredData.map((row, idx) => {
@@ -465,7 +467,7 @@ export default function Table<T extends Record<string, any>>(props: {
                         <input id={`table-checkbox-${idx}`} type="checkbox" checked={!!selectedMap[idx]} onChange={(e) => toggleRow(idx, e.target.checked)}
                           className="w-4 h-4 bg-primary rounded-xl"
                         />
-                        <label htmlFor={`table-checkbox-${idx}`} className="sr-only">Select row</label>
+                        <label htmlFor={`table-checkbox-${idx}`} className="sr-only">{t('common.table.select_row')}</label>
                       </div>
                     </td>
                   )}

@@ -7,10 +7,11 @@ import { PATHS } from "@/routers/Paths";
 import { supabase } from "@/lib/supabase";
 import { ExclamationTriangle, ArrowLeft, DocumentText, MapPin, PaperClip, Photo, User, ChatBubbleOvalLeftEllipsis, ArrowDownTray } from "@/icons";
 import { useTranslation } from "react-i18next";
+import { getUserFriendlyError } from "@/utils/error-messages";
 
 export default function RequestOverview() {
     const { id } = useParams<{ id: string }>();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const [request, setRequest] = useState<any>(null);
     const [attachments, setAttachments] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
@@ -35,7 +36,7 @@ export default function RequestOverview() {
                     setAttachments(attachmentsData);
                 }
             } catch (err: any) {
-                setError(err.message || t('admin.request_detail.not_found'));
+                setError(getUserFriendlyError(err, t));
                 console.error("Failed to load request:", err);
             } finally {
                 setLoading(false);
@@ -77,6 +78,16 @@ export default function RequestOverview() {
         'Rejected': 'bg-red-500/10 text-red-600 border-red-500/20'
     };
 
+    const statusLabels: Record<string, string> = {
+        'Submitted': t('admin.requests.status_submitted'),
+        'Under Review': t('admin.requests.status_under_review'),
+        'Approved': t('admin.requests.status_approved'),
+        'In Progress': t('admin.requests.status_in_progress'),
+        'Completed': t('admin.requests.status_completed'),
+        'Rejected': t('admin.requests.status_rejected'),
+        'Cancelled': t('admin.requests.status_cancelled'),
+    };
+
     return (
         <main>
             <section className="relative flex flex-col w-full mb-20">
@@ -86,7 +97,7 @@ export default function RequestOverview() {
                     <div className="flex items-center justify-between gap-4 pb-4 border-b border-muted/15">
                         <div className="space-y-1">
                             <h1 className="font-semibold text-lg md:text-2xl">{t('admin.request_detail.title')}</h1>
-                            <p className="text-xs text-muted">Request #{request.request_code}</p>
+                            <p className="text-xs text-muted">{t('admin.requests.col_service_request')} #{request.request_code}</p>
                         </div>
                         <Link
                             to={PATHS.ADMIN.REQUEST_SERVICE_LIST}
@@ -113,20 +124,20 @@ export default function RequestOverview() {
                                     <div>
                                         <label className="text-xs text-muted font-medium">{t('admin.request_detail.field_service_type')}</label>
                                         <p className="text-sm font-medium mt-1">
-                                            {request.service_types?.display_name_en || 'N/A'}
+                                            {request.service_types?.display_name_en || t('common.optional')}
                                         </p>
                                     </div>
                                     <div>
                                         <label className="text-xs text-muted font-medium">{t('admin.request_detail.field_space_type')}</label>
                                         <p className="text-sm font-medium mt-1">
-                                            {request.space_types?.display_name_en || 'N/A'}
+                                            {request.space_types?.display_name_en || t('common.optional')}
                                         </p>
                                     </div>
                                     <div>
                                         <label className="text-xs text-muted font-medium">{t('admin.request_detail.field_location')}</label>
                                         <p className="text-sm font-medium mt-1 flex items-center gap-1">
                                             <MapPin className="size-4 text-muted" />
-                                            {request.location || 'N/A'}
+                                            {request.location || t('common.optional')}
                                         </p>
                                     </div>
                                     {(request.width || request.height) && (
@@ -145,7 +156,7 @@ export default function RequestOverview() {
                                     <div>
                                         <label className="text-xs text-muted font-medium">{t('admin.request_detail.field_created')}</label>
                                         <p className="text-sm font-medium mt-1">
-                                            {new Date(request.created_at).toLocaleDateString('en-US', {
+                                            {new Date(request.created_at).toLocaleDateString(i18n.language, {
                                                 year: 'numeric',
                                                 month: 'long',
                                                 day: 'numeric'
@@ -207,7 +218,7 @@ export default function RequestOverview() {
                                 <h2 className="font-semibold text-base">{t('admin.request_detail.section_status')}</h2>
                                 <div className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium border ${statusColors[request.status] || 'bg-zinc-500/10 text-zinc-600 border-zinc-500/20'}`}>
                                     <span className="size-2 rounded-full bg-current"></span>
-                                    {request.status}
+                                    {statusLabels[request.status] || request.status}
                                 </div>
                             </div>
 
@@ -221,13 +232,13 @@ export default function RequestOverview() {
                                     <div>
                                         <label className="text-xs text-muted font-medium">{t('admin.request_detail.field_name')}</label>
                                         <p className="text-sm font-medium mt-1">
-                                            {request.profiles?.full_name || 'N/A'}
+                                            {request.profiles?.full_name || t('admin.requests.unknown_client')}
                                         </p>
                                     </div>
                                     <div>
                                         <label className="text-xs text-muted font-medium">{t('admin.request_detail.field_role')}</label>
                                         <p className="text-sm font-medium mt-1 capitalize">
-                                            {request.profiles?.role || 'Customer'}
+                                            {request.profiles?.role === 'customer' ? t('common.customer') : request.profiles?.role || t('common.customer')}
                                         </p>
                                     </div>
                                 </div>

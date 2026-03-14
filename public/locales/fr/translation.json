@@ -79,6 +79,8 @@
     "delete": "Supprimer",
     "confirm": "Confirmer",
     "edit": "Modifier",
+    "view": "Voir",
+    "duplicate": "Dupliquer",
     "go_back": "Retour",
     "view_all": "Voir tout",
     "view_all_projects": "Voir tous les projets",
@@ -95,6 +97,7 @@
     "add": "Ajouter",
     "select": "Sélectionner",
     "complete": "Terminer",
+    "search": "Rechercher",
     "attachments": "Pièces jointes",
     "english": "Anglaise",
     "french": "Français",
@@ -108,7 +111,19 @@
     "uploaded_files_placeholder": "Les fichiers téléchargés apparaîtront ici",
     "uploading": "Téléchargement en cours",
     "upload_failed": "Échec du téléchargement",
-    "upload_attach_files_label": "Télécharger des fichiers joints"
+    "upload_attach_files_label": "Télécharger des fichiers joints",
+    "table": {
+      "actions": "Actions",
+      "no_bulk_actions": "Aucune action groupée",
+      "filter_by": "Filtrer par",
+      "all": "Tout",
+      "refresh": "Actualiser",
+      "refreshing": "Actualisation...",
+      "no_results": "Aucun résultat",
+      "select_all": "Tout sélectionner",
+      "select_row": "Sélectionner la ligne",
+      "row_actions": "Actions de ligne"
+    }
   },
   "confirm": {
     "confirm": "Confirmer",
@@ -376,7 +391,17 @@
   },
   "errors": {
     "error_generic": "Une erreur s’est produite. Veuillez réessayer",
-    "error_invalid_email": "Veuillez entrer une adresse e-mail valide"
+    "error_invalid_email": "Veuillez entrer une adresse e-mail valide",
+    "network_offline": "Vous êtes hors ligne. Vérifiez votre connexion internet puis réessayez.",
+    "network_issue": "Nous avons un problème de connexion pour le moment. Veuillez réessayer dans un instant.",
+    "permission_denied": "Vous n’avez pas l’autorisation d’effectuer cette action.",
+    "not_found": "Les informations demandées sont introuvables.",
+    "already_exists": "Cet élément existe déjà. Modifiez-le puis réessayez.",
+    "rate_limited": "Trop de tentatives en peu de temps. Veuillez patienter puis réessayer.",
+    "file_too_large": "Ce fichier est trop volumineux. Veuillez choisir un fichier plus petit.",
+    "unsupported_file_type": "Ce type de fichier n’est pas pris en charge. Veuillez choisir un autre fichier.",
+    "storage_limit_reached": "La capacité de stockage est actuellement atteinte. Supprimez des anciens fichiers ou contactez le support.",
+    "upload_failed": "Le téléversement a échoué. Veuillez réessayer."
   },
   "gallery": {
     "header": "Galerie — Avant & Après : Transformations qui racontent une histoire",
@@ -602,6 +627,7 @@
       "col_scope": "Portée",
       "col_chat": "Discussion",
       "col_submission": "Soumission",
+      "col_service_request": "Demande de service",
       "filter_all": "Toutes les demandes",
       "filter_submitted": "Soumise",
       "filter_in_progress": "En cours",
@@ -621,7 +647,36 @@
       "confirm_delete_btn": "Supprimer",
       "delete_success": "Demande {{code}} supprimée avec succès",
       "delete_failed": "Échec de la suppression de la demande",
-      "unknown_client": "Client inconnu"
+      "unknown_client": "Client inconnu",
+      "service_fallback": "Service",
+      "status_submitted": "Soumise",
+      "status_under_review": "En révision",
+      "status_approved": "Approuvée",
+      "status_in_progress": "En cours",
+      "status_completed": "Terminée",
+      "status_rejected": "Rejetée",
+      "status_cancelled": "Annulée"
+    },
+    "request_drawer": {
+      "header": "Demande de service",
+      "section_client": "Informations client",
+      "field_full_name": "Nom complet",
+      "field_phone": "Numéro de téléphone",
+      "field_location": "Emplacement",
+      "field_not_provided": "Non fourni",
+      "section_service": "Détails du service",
+      "field_service": "Type de service",
+      "field_space": "Catégorie d'espace",
+      "field_dimensions": "Dimensions",
+      "field_status": "Statut actuel",
+      "field_description": "Description du projet",
+      "workflow_title": "Actions du flux de travail",
+      "btn_start_review": "Démarrer la révision",
+      "btn_reject": "Rejeter la demande",
+      "btn_approve": "Approuver la demande",
+      "btn_in_progress": "Passer en cours",
+      "btn_complete": "Marquer comme terminée",
+      "no_actions": "Cette demande est {{status}}."
     },
     "request_detail": {
       "title": "Aperçu de la demande",

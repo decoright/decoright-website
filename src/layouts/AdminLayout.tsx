@@ -13,11 +13,11 @@ export default function AdminLayout() {
             </aside>
 
             <div className="flex flex-col h-screen w-full overflow-y-auto">
-                <header className="relative z-50 bg-background">
+                <header className="relative z-50 bg-background flex-none">
                     <DashboardNavBar />
                 </header>
 
-                <main className="pt-14 lg:pt-16 overflow-x-visible w-full">
+                <main className="relative pt-14 lg:pt-16 overflow-x-visible w-full flex-1">
                     <Outlet />
                 </main>
 

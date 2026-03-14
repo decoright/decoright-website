@@ -52,7 +52,15 @@ export default function FileUploadPanel({ stagedFiles }: FileUploadPanelProps) {
           <span className="font-semibold text-sm text-center min-w-max px-3 py-2 text-foreground bg-emphasis border border-muted/25 rounded-lg shadow-xs"> { t('common.upload') } </span>
 
         </label>
-        <input type="file" name="filesToUpload" id="filesToUpload" className="hidden" multiple onChange={onInputChange} />
+        <input
+          type="file"
+          name="filesToUpload"
+          id="filesToUpload"
+          className="hidden"
+          multiple
+          accept="image/*,video/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip,.rar,.7z,.dwg,.dxf,.rvt,.skp,.obj,.stl,.gltf,.glb"
+          onChange={onInputChange}
+        />
       </div>
 
         <div className="relative flex w-full md:p-2 border border-muted/25 rounded-b-lg bg-surface">

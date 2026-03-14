@@ -4,6 +4,7 @@ import { useStagedFiles } from '@/hooks/useStagedFiles';
 import { Cog, Photo, Plus, XMark } from '@/icons';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+import { getUserFriendlyError } from '@/utils/error-messages';
 
 const MAX_IMAGES = 5;
 
@@ -138,7 +139,7 @@ export default function SpaceTypeForm({ isOpen, spaceType, onClose, onSuccess }:
             onSuccess();
         } catch (err: any) {
             console.error('Failed to save space type:', err);
-            setError(err.message || t('common.error'));
+            setError(getUserFriendlyError(err, t));
         } finally {
             setLoading(false);
         }

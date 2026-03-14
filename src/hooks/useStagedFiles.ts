@@ -1,6 +1,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { StagedFile } from "@/types/upload";
+import { validateUploadFile } from "@/utils/file-upload";
 
 export function useStagedFiles(uploadFn?: (file: File) => Promise<string>) {
   const [files, setFiles] = useState<StagedFile[]>([]);
@@ -19,22 +20,29 @@ export function useStagedFiles(uploadFn?: (file: File) => Promise<string>) {
   function addFiles(fileList: FileList | null) {
     if (!fileList) return;
     const arr = Array.from(fileList);
-    const newStaged: StagedFile[] = arr.map((f) => ({
-      id: `local-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-      name: f.name,
-      size: f.size,
-      mime: f.type || "application/octet-stream",
-      file: f,
-      progress: 0,
-      status: "idle",
-    }));
+    const newStaged: StagedFile[] = arr.map((f) => {
+      const validation = validateUploadFile(f);
+      const rejectedReason = validation.ok ? undefined : validation.reason;
+      return {
+        id: `local-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        name: f.name,
+        size: f.size,
+        mime: f.type || "application/octet-stream",
+        file: f,
+        progress: 0,
+        status: rejectedReason ? "failed" : "idle",
+        rejectedReason,
+      };
+    });
 
     setFiles((prev) => {
       const nextFiles = [...prev, ...newStaged];
 
       // start uploads for new files immediately
       setTimeout(() => {
-        newStaged.forEach((f) => startUpload(f.id));
+        newStaged.forEach((f) => {
+          if (f.status === "idle") startUpload(f.id);
+        });
       }, 0);
 
       return nextFiles;
@@ -45,22 +53,27 @@ export function useStagedFiles(uploadFn?: (file: File) => Promise<string>) {
     if (!file) return;
 
     const arr = Array.from(file);
-    const newStaged: StagedFile[] = arr.map((f) => ({
-      id: `local-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-      name: f.name,
-      size: f.size,
-      mime: f.type || "application/octet-stream",
-      file: f,
-      progress: 0,
-      status: "idle",
-    }));
+    const newStaged: StagedFile[] = arr.map((f) => {
+      const validation = validateUploadFile(f);
+      const rejectedReason = validation.ok ? undefined : validation.reason;
+      return {
+        id: `local-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        name: f.name,
+        size: f.size,
+        mime: f.type || "application/octet-stream",
+        file: f,
+        progress: 0,
+        status: rejectedReason ? "failed" : "idle",
+        rejectedReason,
+      };
+    });
 
     // prepend new files so newest appear at top (choose your UX)
     setFiles(newStaged);
 
     // start upload immediately (optimistic) after state update
     setTimeout(() => {
-      if (newStaged[0]) startUpload(newStaged[0].id);
+      if (newStaged[0] && newStaged[0].status === "idle") startUpload(newStaged[0].id);
     }, 0);
   }
 
@@ -87,9 +100,12 @@ export function useStagedFiles(uploadFn?: (file: File) => Promise<string>) {
     try {
       const url = await uploadFn(targetFile);
       setFiles((prev) => prev.map((p) => (p.id === id ? { ...p, status: "complete", progress: 100, url } : p)));
-    } catch (error) {
+    } catch (error: any) {
       console.error("Upload failed for file", id, error);
-      setFiles((prev) => prev.map((p) => (p.id === id ? { ...p, status: "failed", progress: 0 } : p)));
+      const rejectedReason = error?.message === 'file_too_large' || error?.message === 'unsupported_file_type'
+        ? error.message
+        : undefined;
+      setFiles((prev) => prev.map((p) => (p.id === id ? { ...p, status: "failed", progress: 0, rejectedReason } : p)));
     }
   }
 

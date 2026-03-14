@@ -2,6 +2,7 @@
 import { supabase } from '@/lib/supabase'
 import type { Database, Enums } from '@/types/database.types'
 import { ActivityLogService } from './activity-log.service'
+import { makeStorageFileName, prepareFileForUpload, validateUploadFile } from '@/utils/file-upload'
 
 type CreateRequestInput = Database['public']['Tables']['service_requests']['Insert']
 
@@ -121,13 +122,21 @@ export const RequestService = {
     },
 
     async uploadAttachment(file: File) {
-        const fileExt = file.name.split('.').pop()
-        const fileName = `${Math.random()}.${fileExt}`
+        const validation = validateUploadFile(file)
+        if (!validation.ok) {
+            throw new Error(validation.reason)
+        }
+
+        const uploadFile = await prepareFileForUpload(file)
+        const fileName = makeStorageFileName(uploadFile)
         const filePath = `attachments/${fileName}`
 
         const { error: uploadError } = await supabase.storage
             .from('request-attachments')
-            .upload(filePath, file)
+            .upload(filePath, uploadFile, {
+                contentType: uploadFile.type || file.type,
+                upsert: false,
+            })
 
         if (uploadError) throw uploadError
 

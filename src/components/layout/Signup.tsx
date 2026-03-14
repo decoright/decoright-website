@@ -8,6 +8,7 @@ import { LegalLinks } from "../../constants"
 import Spinner from "../common/Spinner"
 import { useTranslation } from "react-i18next"
 import { getAuthErrorMessage } from "@/utils/auth-errors"
+import { getUserFriendlyError } from "@/utils/error-messages"
 
 export function SignupLayout() {
     const [firstName, setFirstName] = useState("")
@@ -86,7 +87,7 @@ export function SignupLayout() {
             navigate(PATHS.VERIFY_OTP, { state: { email } })
         } catch (err: any) {
             console.error("Signup error:", err)
-            setError(err.message || t('auth.error_failed_signup'))
+            setError(getUserFriendlyError(err, t))
         } finally {
             setLoading(false)
         }

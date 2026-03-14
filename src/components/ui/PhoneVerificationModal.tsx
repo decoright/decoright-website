@@ -6,6 +6,9 @@ import { PButton } from './Button';
 import { Input, PhoneInput } from '@components/ui/Input';
 import { useTranslation } from "react-i18next";
 import { ExclamationTriangle, XMark } from '@/icons';
+import { getUserFriendlyError } from '@/utils/error-messages';
+
+const OTP_RESEND_COOLDOWN_MS = 30_000;
 
 interface PhoneVerificationModalProps {
     isOpen: boolean;
@@ -19,6 +22,7 @@ export default function PhoneVerificationModal({ isOpen, onClose, onSuccess }: P
     const [step, setStep] = useState<'phone' | 'code'>('phone');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [otpCooldownUntil, setOtpCooldownUntil] = useState<number>(0);
     const { t } = useTranslation();
 
     if (!isOpen) return null;
@@ -29,6 +33,13 @@ export default function PhoneVerificationModal({ isOpen, onClose, onSuccess }: P
         setLoading(true);
         setError(null);
 
+        const now = Date.now();
+        if (otpCooldownUntil > now) {
+            setError(t('errors.rate_limited'));
+            setLoading(false);
+            return;
+        }
+
         try {
             const { data, error: fnError } = await supabase.functions.invoke('send-otp', {
                 body: { phone },
@@ -37,8 +48,9 @@ export default function PhoneVerificationModal({ isOpen, onClose, onSuccess }: P
             if (fnError || data.error) throw new Error(fnError?.message || data.error || t('phone_verification.error_send'));
 
             setStep('code');
+            setOtpCooldownUntil(Date.now() + OTP_RESEND_COOLDOWN_MS);
         } catch (err: any) {
-            setError(err.message);
+            setError(getUserFriendlyError(err, t));
         } finally {
             setLoading(false);
         }
@@ -59,9 +71,9 @@ export default function PhoneVerificationModal({ isOpen, onClose, onSuccess }: P
             onSuccess();
             onClose();
         } catch (err: any) {
-            setError(err.message);
-            console.log(err.message);
-            toast.error(err.message);
+            const friendly = getUserFriendlyError(err, t);
+            setError(friendly);
+            toast.error(friendly);
         } finally {
             setLoading(false);
         }
@@ -87,7 +99,7 @@ export default function PhoneVerificationModal({ isOpen, onClose, onSuccess }: P
                 {error && (
                     <div className="flex items-center gap-3 mb-4 p-3 bg-warning/10 border border-warning/20 rounded-xl">
                         <ExclamationTriangle className="size-4 text-warning shrink-0" />
-                        <p className="text-xs text-warning font-medium"> {t('phone_verification.error_verify')} ({error}) </p>
+                        <p className="text-xs text-warning font-medium"> {error} </p>
                     </div>
                 )}
 

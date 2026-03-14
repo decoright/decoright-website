@@ -5,6 +5,8 @@ import { useChat } from '@/hooks/useChat';
 import { Microphone, PaperAirplane, PaperClip } from '@/icons';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
+import { validateUploadFile } from '@/utils/file-upload';
+import { getUserFriendlyError } from '@/utils/error-messages';
 
 interface ChatFormProps {
     message?: string;
@@ -91,9 +93,9 @@ export default function ChatForm({ message, setMessage, onSend, onSendMedia }: C
         const file = e.target.files?.[0];
         if (!file) return;
 
-        // 20MB limit
-        if (file.size > 20 * 1024 * 1024) {
-            toast.error(t('chat.file_too_large'));
+        const validation = validateUploadFile(file);
+        if (!validation.ok) {
+            toast.error(t(`errors.${validation.reason}`));
             if (fileInputRef.current) fileInputRef.current.value = '';
             return;
         }
@@ -103,8 +105,10 @@ export default function ChatForm({ message, setMessage, onSend, onSendMedia }: C
             let type: any = 'FILE';
             if (file.type.startsWith('image/')) type = 'IMAGE';
             else if (file.type.startsWith('video/')) type = 'VIDEO';
-            
+
             await handleSendMedia(file, type);
+        } catch (error) {
+            toast.error(getUserFriendlyError(error, t));
         } finally {
             setIsUploading(false);
             if (fileInputRef.current) fileInputRef.current.value = '';
@@ -155,7 +159,7 @@ export default function ChatForm({ message, setMessage, onSend, onSendMedia }: C
                         type="file"
                         ref={fileInputRef}
                         onChange={handleFileChange}
-                        accept="*/*"
+                        accept="image/*,video/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip,.rar,.7z,.dwg,.dxf,.rvt,.skp,.obj,.stl,.gltf,.glb"
                         className="hidden"
                     />
 

@@ -4,6 +4,7 @@ import { ChatService } from '@/services/chat.service';
 import type { ChatRoom, Message, MessageType } from '@/types/chat';
 import { supabase } from '@/lib/supabase';
 import useAuth from './useAuth';
+import { debounce, dedupeRequest, throttleCall } from '@/utils/request-guard';
 
 export function useAdminChat() {
     const { user } = useAuth();
@@ -19,6 +20,7 @@ export function useAdminChat() {
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState<'all' | 'unread'>('all');
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const isLoadingRoomsRef = useRef(false);
 
     const scrollToBottom = useCallback(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -30,16 +32,25 @@ export function useAdminChat() {
 
 
     const loadRooms = useCallback(async () => {
+        if (isLoadingRoomsRef.current) return;
+        if (!throttleCall('admin-chat-load-rooms', 1200)) return;
+
         try {
+            isLoadingRoomsRef.current = true;
             setLoading(true);
-            const data = await ChatService.getChatRooms();
+            const data = await dedupeRequest('admin-chat-load-rooms', () => ChatService.getChatRooms());
             setRooms(data);
         } catch (error) {
             console.error("Failed to load rooms:", error);
         } finally {
+            isLoadingRoomsRef.current = false;
             setLoading(false);
         }
     }, []);
+
+    const debouncedLoadRooms = useRef(debounce(() => {
+        loadRooms();
+    }, 900)).current;
 
     // Initial load
     useEffect(() => {
@@ -51,9 +62,7 @@ export function useAdminChat() {
         const sub = supabase
             .channel('chat_rooms_list')
             .on('postgres_changes', { event: '*', schema: 'public', table: 'chat_rooms' }, () => {
-                // When rooms change, we can just refresh the list or update the specific room
-                // For now, refreshing the list is fine as it's not frequent
-                loadRooms();
+                debouncedLoadRooms();
             })
             .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, (payload) => {
                 const newMsg = payload.new as Message;
@@ -72,7 +81,7 @@ export function useAdminChat() {
             .subscribe();
 
         return () => { sub.unsubscribe(); };
-    }, [loadRooms, currentUserId]);
+    }, [debouncedLoadRooms, currentUserId]);
 
     // Handle deep linking
     useEffect(() => {
@@ -148,7 +157,7 @@ export function useAdminChat() {
             });
 
             // Refresh rooms list to show new message preview in sidebar
-            loadRooms();
+            debouncedLoadRooms();
         } catch (error) {
             console.error("Failed to send message:", error);
         }
@@ -182,7 +191,7 @@ export function useAdminChat() {
                 return [...prev, sentMsg];
             });
 
-            loadRooms();
+            debouncedLoadRooms();
         } catch (error) {
             console.error("Failed to send media message:", error);
             throw error;

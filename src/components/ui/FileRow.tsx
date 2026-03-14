@@ -40,7 +40,11 @@ export default function FileRow({
             {/* status text */}
             {file.status === "uploading" && <div className="text-2xs md:text-xs text-muted w-fit"> { t('common.uploading') }... </div>}
             {file.status === "complete" && <div className="text-2xs md:text-xs text-success w-fit"> { t('common.complete') } </div>}
-            {file.status === "failed" && <div className="text-2xs md:text-xs text-danger w-fit"> { t('common.uploading_failed') } </div>}
+            {file.status === "failed" && (
+              <div className="text-2xs md:text-xs text-danger w-fit">
+                {file.rejectedReason ? t(`errors.${file.rejectedReason}`) : t('common.uploading_failed')}
+              </div>
+            )}
             {file.status === "idle" && <div className="text-2xs md:text-xs text-warning w-fit"> { t('common.ready') } </div>}
 
           </div>

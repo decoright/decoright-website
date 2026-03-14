@@ -3,8 +3,12 @@ import { supabase } from "@/lib/supabase";
 import { Link } from "react-router-dom";
 import { EmailInput } from "@/components/ui/Input";
 import { PATHS } from "@/routers/Paths";
+import { useTranslation } from "react-i18next";
+import { getUserFriendlyError } from "@/utils/error-messages";
+import { getAuthErrorMessage } from "@/utils/auth-errors";
 
 export default function ForgotPassword() {
+    const { t } = useTranslation();
     const [email, setEmail] = useState("");
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState<string | null>(null);
@@ -23,9 +27,9 @@ export default function ForgotPassword() {
 
             if (resetError) throw resetError;
 
-            setMessage("Password reset link has been sent to your email.");
+            setMessage(t('password.sent_description'));
         } catch (err: any) {
-            setError(err.message || "Failed to send reset link");
+            setError(getAuthErrorMessage(err, t) || getUserFriendlyError(err, t));
         } finally {
             setLoading(false);
         }
@@ -37,8 +41,8 @@ export default function ForgotPassword() {
                 <div className="absolute max-md:hidden top-0 left-0 w-full h-full border border-muted/15 rounded-4xl bg-surface/45 -z-10 mask-b-to-transparent mask-b-to-100%"></div>
                 <div className="relative flex flex-col gap-8 w-full md:w-4/5 p-2 md:p-4 lg:p-8">
                     <div className="space-y-2 md:space-y-3">
-                        <h1 className="font-semibold text-2xl md:text-3xl"> Forgot Password? </h1>
-                        <p className="text-2xs md:text-xs text-muted">Enter your email address and we'll send you a link to reset your password.</p>
+                        <h1 className="font-semibold text-2xl md:text-3xl">{t('password.reset_title')}</h1>
+                        <p className="text-2xs md:text-xs text-muted">{t('password.reset_description')}</p>
                     </div>
 
                     <form onSubmit={handleResetRequest} className="flex flex-col items-center gap-6">
@@ -53,13 +57,13 @@ export default function ForgotPassword() {
                             disabled={loading}
                             className="font-semibold text-white/95 w-full px-4 p-2 bg-primary rounded-xl disabled:opacity-50"
                         >
-                            {loading ? "Sending..." : "Send Reset Link"}
+                            {loading ? t('common.loading') : t('password.cta_send_reset_link')}
                         </button>
                     </form>
 
                     <div className="flex justify-center w-full">
                         <Link to={PATHS.LOGIN} className="text-xs text-muted hover:text-foreground hover:underline">
-                            Back to Login
+                            {t('common.go_back')}
                         </Link>
                     </div>
                 </div>

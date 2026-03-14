@@ -6,10 +6,11 @@ import remarkGfm from 'remark-gfm';
 import { LegalService } from '@/services/legal.service';
 import type { LegalPage as LegalPageType } from '@/services/legal.service';
 import Spinner from '@/components/common/Spinner';
+import { getUserFriendlyError } from '@/utils/error-messages';
 
 export function LegalPage() {
   const { slug } = useParams<{ slug: string }>();
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const [page, setPage] = useState<LegalPageType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -24,10 +25,10 @@ export function LegalPage() {
         if (data) {
           setPage(data);
         } else {
-          setError('Page not found');
+          setError(t('errors.not_found'));
         }
       } catch (err: any) {
-        setError(err.message || 'Failed to load page');
+        setError(getUserFriendlyError(err, t));
       } finally {
         setLoading(false);
       }

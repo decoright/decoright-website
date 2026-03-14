@@ -5,6 +5,7 @@ import { Cog, Folder, PencilSquare, Photo, Trash } from '@/icons';
 import toast from 'react-hot-toast';
 import ZoomImage from '@/components/ui/ZoomImage';
 import { useTranslation } from 'react-i18next';
+import { getUserFriendlyError } from '@/utils/error-messages';
 
 
 interface ServiceTypeTableProps {
@@ -25,7 +26,7 @@ export default function ServiceTypeTable({ serviceTypes, onEdit, onRefresh }: Se
             onRefresh();
         } catch (error) {
             console.error('Failed to toggle service type status:', error);
-            toast.error(t('common.error'));
+            toast.error(getUserFriendlyError(error, t));
         } finally {
             setTogglingId(null);
         }
@@ -45,7 +46,7 @@ export default function ServiceTypeTable({ serviceTypes, onEdit, onRefresh }: Se
             }
         } catch (error) {
             console.error('Failed to check service type usage:', error)
-            toast.error(t('common.error'))
+            toast.error(getUserFriendlyError(error, t))
             return
         }
 
@@ -63,7 +64,7 @@ export default function ServiceTypeTable({ serviceTypes, onEdit, onRefresh }: Se
                 onRefresh();
             } catch (error: any) {
                 console.error('Failed to delete service type:', error);
-                toast.error(error.message || t('common.error'));
+                toast.error(getUserFriendlyError(error, t));
             }
         }
     };

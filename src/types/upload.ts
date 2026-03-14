@@ -9,6 +9,7 @@ export interface StagedFile {
   progress: number;   // 0..100
   status: UploadStatus;
   url?: string;       // public url after upload
+  rejectedReason?: 'file_too_large' | 'unsupported_file_type';
 };
 
 // Runtime presence to avoid "module don't provide export" in some environments

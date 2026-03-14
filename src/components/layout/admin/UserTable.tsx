@@ -48,7 +48,7 @@ export default function UserTable() {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-semibold text-heading text-sm">{row.full_name || 'Unknown'}</span>
+              <span className="font-semibold text-heading text-sm">{row.full_name || t('admin.user_drawer.unknown_user')}</span>
               {row.role === 'super_admin' && (
                 <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-600 uppercase border border-amber-500/20">
                   {t('admin.users.role_super_admin')}

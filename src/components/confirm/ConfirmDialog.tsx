@@ -21,11 +21,11 @@ export default function ConfirmDialog({
   const dialogRef = useRef<HTMLDivElement | null>(null);
   const confirmButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  const { t } = useTranslation('common');
-  const resolvedTitle = title ?? t('confirm_default_label');
-  const resolvedDescription = description ?? t('confirm_default_description');
-  const resolvedConfirmText = confirmText ?? t('confirm');
-  const resolvedCancelText = cancelText ?? t('cancel');
+  const { t } = useTranslation();
+  const resolvedTitle = title ?? t('confirm.confirm_default_label');
+  const resolvedDescription = description ?? t('confirm.confirm_default_description');
+  const resolvedConfirmText = confirmText ?? t('confirm.confirm');
+  const resolvedCancelText = cancelText ?? t('common.cancel');
 
   // manage focus when opened
   useEffect(() => {

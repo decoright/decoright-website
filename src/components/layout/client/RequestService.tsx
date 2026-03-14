@@ -14,6 +14,7 @@ import { SpaceTypesService, type SpaceType } from '@/services/space-types.servic
 import { useNavigate } from 'react-router-dom'
 import { PATHS } from '@/routers/Paths'
 import { useTranslation } from "react-i18next";
+import { getUserFriendlyError } from '@/utils/error-messages';
 
 
 export default function RequestServiceLayout() {
@@ -129,7 +130,7 @@ export default function RequestServiceLayout() {
 
             navigate(PATHS.CLIENT.REQUEST_SERVICE_LIST)
         } catch (err: any) {
-            setError(err.message || t('request_form.error_submit'))
+            setError(getUserFriendlyError(err, t))
             console.error("Submit error:", err);
         } finally {
             setLoading(false);

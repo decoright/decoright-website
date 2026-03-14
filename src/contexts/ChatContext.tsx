@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import useAuth from '@/hooks/useAuth';
 import type { ChatRoom, Message, MessageType } from '@/types/chat';
+import { makeStorageFileName, prepareFileForUpload, validateUploadFile } from '@/utils/file-upload';
+import { debounce, dedupeRequest, throttleCall } from '@/utils/request-guard';
 
 interface ChatContextType {
     rooms: ChatRoom[];
@@ -40,6 +42,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     // Refs to prevent stale closures and track current state
     const selectedRoomRef = useRef<ChatRoom | null>(null);
     const loadRoomsCalledRef = useRef(false);
+    const isLoadingRoomsRef = useRef(false);
 
     // Sync ref with state
     useEffect(() => {
@@ -48,34 +51,39 @@ export function ChatProvider({ children }: { children: ReactNode }) {
 
     // Optimized room fetching - single query approach
     const loadRooms = useCallback(async () => {
-        if (!user || loadRoomsCalledRef.current) return;
+        if (!user || loadRoomsCalledRef.current || isLoadingRoomsRef.current) return;
+        if (!throttleCall('chat-context-load-rooms', 1200)) return;
+
         loadRoomsCalledRef.current = true;
+        isLoadingRoomsRef.current = true;
 
         try {
             setLoadingRooms(true);
 
             // Fetch rooms with service request info
-            const { data: roomsData, error: roomsError } = await supabase
-                .from('chat_rooms')
-                .select(`
-                    *,
-                    service_requests (
-                        id,
-                        request_code,
-                        service_type_id,
-                        status,
-                        service_types (
-                            name,
-                            display_name_en
-                        ),
-                        profiles:user_id (
+            const { data: roomsData, error: roomsError } = await dedupeRequest('chat-context-rooms-query', async () => {
+                return supabase
+                    .from('chat_rooms')
+                    .select(`
+                        *,
+                        service_requests (
                             id,
-                            full_name
+                            request_code,
+                            service_type_id,
+                            status,
+                            service_types (
+                                name,
+                                display_name_en
+                            ),
+                            profiles:user_id (
+                                id,
+                                full_name
+                            )
                         )
-                    )
-                `)
-                .eq('is_active', true)
-                .order('updated_at', { ascending: false });
+                    `)
+                    .eq('is_active', true)
+                    .order('updated_at', { ascending: false });
+            });
 
             if (roomsError) throw roomsError;
 
@@ -87,12 +95,14 @@ export function ChatProvider({ children }: { children: ReactNode }) {
             if (roomIds.length > 0) {
                 // Get last message per room using a subquery approach
                 // We'll fetch recent messages and group client-side for simplicity
-                const { data: recentMessages } = await supabase
-                    .from('messages')
-                    .select('*, profiles:sender_id(id, full_name, role)')
-                    .in('chat_room_id', roomIds)
-                    .order('created_at', { ascending: false })
-                    .limit(roomIds.length * 2); // Get enough to have at least 1 per room
+                const { data: recentMessages } = await dedupeRequest('chat-context-recent-messages', async () => {
+                    return supabase
+                        .from('messages')
+                        .select('*, profiles:sender_id(id, full_name, role)')
+                        .in('chat_room_id', roomIds)
+                        .order('created_at', { ascending: false })
+                        .limit(roomIds.length * 2);
+                });
 
                 if (recentMessages) {
                     // Group by chat_room_id, keep only the latest
@@ -121,8 +131,16 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         } finally {
             setLoadingRooms(false);
             loadRoomsCalledRef.current = false;
+            isLoadingRoomsRef.current = false;
         }
     }, [user]);
+
+    const debouncedLoadRooms = useRef(
+        debounce(() => {
+            loadRoomsCalledRef.current = false;
+            loadRooms();
+        }, 900)
+    ).current;
 
     // Initial load - only once per mount
     useEffect(() => {
@@ -145,22 +163,24 @@ export function ChatProvider({ children }: { children: ReactNode }) {
                     ));
                 } else if (payload.eventType === 'INSERT') {
                     // Only refetch for new rooms (rare event)
-                    loadRooms();
+                    debouncedLoadRooms();
                 } else if (payload.eventType === 'DELETE') {
                     // Better to refetch rooms to ensure correct unread counts and last messages
                     loadRoomsCalledRef.current = false;
-                    loadRooms();
+                    debouncedLoadRooms();
                 }
             })
             .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, async (payload) => {
                 const newMsgRaw = payload.new as Message;
                 
                 // Fetch profile for the new message to show sender name
-                const { data: newMsg } = await supabase
-                    .from('messages')
-                    .select('*, profiles:sender_id(id, full_name, role)')
-                    .eq('id', newMsgRaw.id)
-                    .single();
+                const { data: newMsg } = await dedupeRequest(`chat-room-new-msg-${newMsgRaw.id}`, async () => {
+                    return supabase
+                        .from('messages')
+                        .select('*, profiles:sender_id(id, full_name, role)')
+                        .eq('id', newMsgRaw.id)
+                        .single();
+                });
 
                 if (!newMsg) return;
 
@@ -183,7 +203,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
             .subscribe();
 
         return () => { channel.unsubscribe(); };
-    }, [user, loadRooms]);
+    }, [user, debouncedLoadRooms]);
 
     // Handle URL-based room selection
     useEffect(() => {
@@ -260,11 +280,13 @@ export function ChatProvider({ children }: { children: ReactNode }) {
                     
                     // Fetch profile for the new message to show sender name
                     const fetchFullMsg = async () => {
-                        const { data: newMsg } = await supabase
-                            .from('messages')
-                            .select('*, profiles:sender_id(id, full_name, role)')
-                            .eq('id', newMsgRaw.id)
-                            .single();
+                        const { data: newMsg } = await dedupeRequest(`chat-room-full-msg-${newMsgRaw.id}`, async () => {
+                            return supabase
+                                .from('messages')
+                                .select('*, profiles:sender_id(id, full_name, role)')
+                                .eq('id', newMsgRaw.id)
+                                .single();
+                        });
 
                         if (!newMsg) return;
 
@@ -354,18 +376,33 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         if (!selectedRoom || !user) return;
 
         try {
-            let ext = 'bin';
+            let uploadFile: File | Blob = file;
+
             if (file instanceof File) {
-                ext = file.name.split('.').pop() || 'bin';
-            } else {
-                ext = type === 'IMAGE' ? 'jpg' : type === 'AUDIO' ? 'webm' : type === 'VIDEO' ? 'mp4' : 'bin';
+                const validation = validateUploadFile(file);
+                if (!validation.ok) {
+                    throw new Error(validation.reason);
+                }
+                uploadFile = await prepareFileForUpload(file);
             }
 
-            const fileName = `${selectedRoom.id}/${Date.now()}.${ext}`;
+            let ext = 'bin';
+            if (uploadFile instanceof File) {
+                ext = uploadFile.name.split('.').pop() || 'bin';
+            } else {
+                ext = type === 'IMAGE' ? 'webp' : type === 'AUDIO' ? 'webm' : type === 'VIDEO' ? 'mp4' : 'bin';
+            }
+
+            const fileName = uploadFile instanceof File
+                ? `${selectedRoom.id}/${makeStorageFileName(uploadFile)}`
+                : `${selectedRoom.id}/${Date.now()}.${ext}`;
 
             const { data: uploadData, error: uploadError } = await supabase.storage
                 .from('request-attachments')
-                .upload(fileName, file);
+                .upload(fileName, uploadFile, {
+                    contentType: uploadFile instanceof File ? uploadFile.type : undefined,
+                    upsert: false,
+                });
 
             if (uploadError) throw uploadError;
 

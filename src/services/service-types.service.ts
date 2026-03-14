@@ -1,9 +1,14 @@
 import { supabase } from '@/lib/supabase'
 import type { Database } from '@/types/database.types'
+import { makeStorageFileName, prepareFileForUpload, validateUploadFile } from '@/utils/file-upload'
+import { getCachedValue, setCachedValue } from '@/utils/local-cache'
 
 export type ServiceType = Database['public']['Tables']['service_types']['Row']
 export type ServiceTypeInsert = Database['public']['Tables']['service_types']['Insert']
 export type ServiceTypeUpdate = Database['public']['Tables']['service_types']['Update']
+
+const ACTIVE_SERVICE_TYPES_CACHE_KEY = 'cache:service-types:active'
+const ACTIVE_SERVICE_TYPES_TTL = 5 * 60 * 1000
 
 export const ServiceTypesService = {
     async getAll() {
@@ -16,13 +21,18 @@ export const ServiceTypesService = {
     },
 
     async getActive() {
+        const cached = getCachedValue<ServiceType[]>(ACTIVE_SERVICE_TYPES_CACHE_KEY)
+        if (cached) return cached
+
         const { data, error } = await supabase
             .from('service_types')
             .select('*')
             .eq('is_active', true)
 
         if (error) throw error
-        return data as ServiceType[]
+        const result = data as ServiceType[]
+        setCachedValue(ACTIVE_SERVICE_TYPES_CACHE_KEY, result, ACTIVE_SERVICE_TYPES_TTL)
+        return result
     },
 
     async create(payload: ServiceTypeInsert) {
@@ -78,13 +88,21 @@ export const ServiceTypesService = {
     },
 
     async uploadImage(file: File) {
-        const fileExt = file.name.split('.').pop()
-        const fileName = `${Math.random()}.${fileExt}`
+        const validation = validateUploadFile(file)
+        if (!validation.ok) {
+            throw new Error(validation.reason)
+        }
+
+        const uploadFile = await prepareFileForUpload(file)
+        const fileName = makeStorageFileName(uploadFile)
         const filePath = `service-icons/${fileName}`
 
         const { error: uploadError } = await supabase.storage
             .from('service-types')
-            .upload(filePath, file)
+            .upload(filePath, uploadFile, {
+                contentType: uploadFile.type || file.type,
+                upsert: false,
+            })
 
         if (uploadError) throw uploadError
 

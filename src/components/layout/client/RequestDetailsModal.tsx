@@ -4,6 +4,7 @@ import { RequestService } from "@/services/request.service"
 import { useTranslation } from "react-i18next";
 import { XMark, Calendar, MapPin, Squares2x2, DocumentText, PaperClip, ArrowLongRight } from '@/icons';
 import Spinner from '@/components/common/Spinner';
+import { getUserFriendlyError } from '@/utils/error-messages';
 
 interface RequestDetailsModalProps {
     requestId: string;
@@ -32,7 +33,7 @@ const RequestDetailsModal = ({ requestId, isOpen, onClose }: RequestDetailsModal
             const data = await RequestService.getRequestById(requestId);
             setRequest(data);
         } catch (err: any) {
-            setError(err.message || t('requests.error_load'));
+            setError(getUserFriendlyError(err, t));
         } finally {
             setLoading(false);
         }
