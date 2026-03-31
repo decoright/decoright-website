@@ -45,8 +45,14 @@ export function LoginLayout() {
             <form onSubmit={handleLogin} className="flex flex-col items-center gap-8">
 
                 <div className="flex flex-col gap-4 w-full">
-                    <EmailInput value={email} onChange={(e: any) => setEmail(e.target.value)} required />
-                    <PasswordInput value={password} onChange={(e: any) => setPassword(e.target.value)} required />
+                    <div className="flex flex-col gap-1 w-full">
+                        <label htmlFor="field_email" className="font-medium text-xs">{t('auth.labels.email')}</label>
+                        <EmailInput id="field_email" value={email} onChange={(e: any) => setEmail(e.target.value)} required />
+                    </div>
+                    <div className="flex flex-col gap-1 w-full">
+                        <label htmlFor="field_password" className="font-medium text-xs">{t('auth.labels.password')}</label>
+                        <PasswordInput id="field_password" value={password} onChange={(e: any) => setPassword(e.target.value)} required />
+                    </div>
 
                     {error && <p className="text-xs text-danger text-center"> {error} </p>}
 
@@ -54,7 +60,7 @@ export function LoginLayout() {
                         {/* Save Log Info */}
                         <div className="inline-flex gap-2 rtl:space-x-reverse content-center cursor-pointer w-full">
                             <input id="save-login-info" type="checkbox" name="remember" className="accent-primary" />
-                            <label htmlFor="save-login-info" className="text-xs md:text-sm"> {t('auth.remember_me')} </label>
+                            <label htmlFor="save-login-info" className="text-xs md:text-sm"> {t('auth.save_log_info')} </label>
                         </div>
                         <Link to={PATHS.PASSWORD_RESET} className="min-w-max w-fit"> <p className="text-2xs md:text-xs hover:text-primary px-1 underline"> {t('auth.forgot_password')} </p>  </Link>
                     </div>

@@ -79,6 +79,8 @@
     "delete": "Supprimer",
     "confirm": "Confirmer",
     "edit": "Modifier",
+    "update": "Mettre à jour",
+    "updating": "Mise à jour en cours",
     "view": "Voir",
     "duplicate": "Dupliquer",
     "go_back": "Retour",
@@ -150,7 +152,7 @@
     "password": "Mot de passe",
     "show_password": "Afficher le mot de passe",
     "hide_password": "Masquer le mot de passe",
-    "remember_me": "Se souvenir de moi",
+    "save_log_info": "Enregistrer les informations de connexion",
     "forgot_password": "Mot de passe oublié ?",
     "no_account": "Vous n'avez pas encore de compte ?",
     "signup_now": "S'inscrire",
@@ -167,9 +169,18 @@
       "generic": "L'authentification a échoué. Veuillez réessayer."
     },
     "phone": "Numéro de téléphone",
+    "labels": {
+      "first_name": "Prénom",
+      "last_name": "Nom",
+      "email": "E-mail",
+      "phone": "Numéro de téléphone",
+      "password": "Mot de passe",
+      "confirm_password": "Confirmer le mot de passe",
+      "email_or_phone": "E-mail ou téléphone"
+    },
     "placeholders": {
       "email": "email@exemple.com",
-      "phone": "Numéro de téléphone",
+      "phone": "Entrez le numéro de téléphone",
       "email_or_phone": "Entrez l'e-mail ou le téléphone",
       "first_name": "Prénom",
       "last_name": "Nom"

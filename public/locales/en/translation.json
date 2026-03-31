@@ -80,6 +80,8 @@
     "cancel": "Cancel",
     "confirm": "Confirm",
     "delete": "Delete",
+    "update": "Update",
+    "updating": "Updating",
     "edit": "Edit",
     "view": "View",
     "duplicate": "Duplicate",
@@ -152,7 +154,7 @@
     "password": "Password",
     "show_password": "Show password",
     "hide_password": "Hide password",
-    "remember_me": "Remember me",
+    "save_log_info": "Save login information",
     "forgot_password": "Forgot your password?",
     "no_account": "Don't have an account yet?",
     "signup_now": "Sign up",
@@ -175,9 +177,18 @@
       "generic": "Authentication failed. Please try again."
     },
     "phone": "Phone Number",
+    "labels": {
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "password": "Password",
+      "confirm_password": "Confirm Password",
+      "email_or_phone": "Email or Phone"
+    },
     "placeholders": {
       "email": "email@example.com",
-      "phone": "05 50 12 34 56",
+      "phone": "Enter phone number",
       "email_or_phone": "Enter email or phone",
       "first_name": "First name",
       "last_name": "Last name"

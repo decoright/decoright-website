@@ -89,7 +89,7 @@ export default function Landing() {
                     placeholder={
                         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
                             {[...Array(6)].map((_, i) => (
-                                <div key={i} className="aspect-[4/3] bg-surface animate-pulse rounded-xl ring-1 ring-muted/15" />
+                                <div key={i} className="aspect-4/3 bg-surface animate-pulse rounded-xl ring-1 ring-muted/15" />
                             ))}
                         </div>
                     }

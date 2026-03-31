@@ -32,7 +32,7 @@ function SpaceTypeCard({ spaceType }: { spaceType: SpaceTypeWithImages }) {
     const hasImage = images.length > 0
 
     return (
-        <div className="relative overflow-hidden rounded-xl aspect-[4/3] bg-surface ring-1 ring-muted/15 group">
+        <div className="relative overflow-hidden rounded-xl aspect-4/3 bg-surface ring-1 ring-muted/15 group">
             {/* Background images with crossfade */}
             {hasImage ? (
                 images.map((url, i) => (

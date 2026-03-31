@@ -25,7 +25,7 @@ export function ShowcaseCard({ showcase }: { showcase: any }) {
                     }`}
                 />
             </div>
-            <div className="px-1 mt-3">
+            <div className="px-1 mt-2">
                 <h3 className="font-semibold text-foreground text-sm sm:text-base transition-colors group-hover/item:text-primary line-clamp-1">
                     {t(`showcases.${showcase.key}`)}
                 </h3>

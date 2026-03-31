@@ -110,7 +110,7 @@ export default function Dashboard() {
     }
 
     return (
-        <main className="h-full">
+        <main className="w-full h-full">
             <section className="relative flex flex-col w-full h-full pt-4 md:py-6">
                 <div className="flex flex-col gap-4 w-full">
 

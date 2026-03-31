@@ -78,6 +78,8 @@
     "cancel": "إلغاء",
     "confirm": "تأكيد",
     "delete": "حذف",
+    "update": "تحديث",
+    "updating": "جاري التحديث",
     "edit": "تعديل",
     "view": "عرض",
     "duplicate": "تكرار",
@@ -150,14 +152,14 @@
     "password": "كلمة المرور",
     "show_password": "إظهار كلمة المرور",
     "hide_password": "إخفاء كلمة المرور",
-    "remember_me": "تذكرني",
+    "save_log_info": "حفظ معلومات تسجيل الدخول",
     "forgot_password": "هل نسيت كلمة المرور؟",
     "no_account": "ليس لديك حساب بعد؟",
     "signup_now": "أنشئ حساباً",
     "already_have_account": "لديك حساب بالفعل؟",
     "login_now": "تسجيل الدخول",
     "error_failed_login": "فشل تسجيل الدخول",
-    "error_failed_signup": "فشل إنشاء الحساب",
+    "error_failed_signup": "فشلت عملية إنشاء الحساب. يرجى المحاولة مرة أخرى",
     "errors": {
       "invalid_credentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
       "email_not_confirmed": "يرجى تأكيد بريدك الإلكتروني قبل تسجيل الدخول.",
@@ -167,9 +169,18 @@
       "generic": "فشلت عملية المصادقة. يرجى المحاولة مرة أخرى."
     },
     "phone": "رقم الهاتف",
+    "labels": {
+      "first_name": "الاسم الأول",
+      "last_name": "اسم العائلة",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "password": "كلمة المرور",
+      "confirm_password": "تأكيد كلمة المرور",
+      "email_or_phone": "البريد الإلكتروني أو الهاتف"
+    },
     "placeholders": {
       "email": "email@example.com",
-      "phone": "رقم الهاتف",
+      "phone": "أدخل رقم الهاتف",
       "email_or_phone": "أدخل البريد الإلكتروني أو الهاتف",
       "first_name": "الاسم الأول",
       "last_name": "اسم العائلة"

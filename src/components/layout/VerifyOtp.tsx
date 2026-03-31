@@ -102,7 +102,7 @@ export function VerifyOtp() {
                         </p>
                     </div>
 
-                    <form onSubmit={handleVerifyToken} className="flex flex-col items-center gap-8">
+                    <form dir="ltr" onSubmit={handleVerifyToken} className="flex flex-col items-center gap-8">
 
                         <OtpInput
                             skipDefaultStyles={true}

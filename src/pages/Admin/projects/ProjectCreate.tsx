@@ -8,7 +8,7 @@ export default function ProjectCreatePage() {
     const { t } = useTranslation();
 
     return (
-        <main className="min-h-screen">
+        <main className="min-h-screen w-full">
             <section className="relative flex flex-col w-full px-4 md:px-8 pt-6 pb-20">
                 <div className="flex flex-col gap-8 w-full max-w-5xl">
                     <div className="flex flex-col gap-1 border-b border-muted/10 pb-6">
