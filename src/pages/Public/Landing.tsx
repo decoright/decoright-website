@@ -8,9 +8,12 @@ import { ChevronDown, Mail } from "lucide-react"
 import { Link } from "react-router-dom"
 import { PATHS } from "@/routers/Paths"
 import { ArrowLongRight } from "@/icons"
+import { supportMailAddress } from "@/constants/company"
+import { useSiteSettings } from "@/hooks/useSiteSettings"
 
 export default function Landing() {
     const [settings, setSettings] = useState<Record<string, string>>({});
+    const { primaryEmail } = useSiteSettings();
 
     useEffect(() => {
         async function fetchSettings() {
@@ -158,21 +161,22 @@ export default function Landing() {
 
                     <div className="flex flex-col gap-6 items-center justify-center">
                         <div className="flex flex-col gap-4 items-center justify-center">
-                            <h2 className="font-bold text-7xl text-white mb-4"> {t('landing.sections.contact.title')} </h2>
-                            <p className="text-sm text-white max-w-[80%]"> {t('landing.sections.contact.description')} </p>
+                            <h2 className="font-bold text-4xl xs:text-5xl md:text-6xl lg:text-7xl text-white mb-4"> {t('landing.sections.contact.title')} </h2>
+                            <p className="text-sm text-white md:max-w-[80%]"> {t('landing.sections.contact.description')} </p>
                         </div>
 
-                        <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+                        <div className="flex flex-col xs:flex-row gap-4 items-center justify-center max-md:w-full">
+                            <a
+                            href={`mailto:${primaryEmail || supportMailAddress}`}
+                            target="_blank" rel="noopener noreferrer"
+                            className="flex items-center justify-center gap-2 font-medium text-sm text-foreground text-center w-full min-w-max px-3 py-1.5 border-2 border-white bg-emphasis rounded-lg cursor-pointer hover:bg-white/45 transition"
+                            > <Mail className="size-4 inline-block ml-1 text-inherit" /> {t('landing.sections.contact.cta_email')} </a>
                             <Link
                             to={PATHS.CONTACT}
-                            className="flex items-center gap-2 font-medium text-sm text-foreground px-3 py-1 border-2 border-white bg-emphasis rounded-lg cursor-pointer hover:bg-white/45 transition"
-                            > <Mail className="size-4 inline-block ml-1 text-inherit" /> {t('landing.sections.contact.cta_email')} </Link>
-                            <a
-                            href="mailto:contact@decoright.com"
-                            className="font-medium text-sm text-white px-3 py-1 border-2 border-white rounded-lg cursor-pointer hover:bg-white/45 hover:text-foreground transition"
+                            className="flex items-center justify-center font-medium text-sm text-white text-center w-full min-w-max px-3 py-1.5 border-2 border-white rounded-lg cursor-pointer hover:bg-white/45 hover:text-foreground transition"
                             >
                                 {t('landing.sections.contact.cta_contact_page')}  <ArrowLongRight className="size-4 inline-block ml-1 text-inherit" />
-                            </a>
+                            </Link>
                         </div>
                     </div>
 

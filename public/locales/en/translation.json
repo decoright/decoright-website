@@ -102,6 +102,7 @@
     "retry": "Retry",
     "remove": "Remove",
     "add": "Add",
+    "save_success": "Changes saved successfully!",
     "select": "Select",
     "complete": "Complete",
     "search": "Search",
