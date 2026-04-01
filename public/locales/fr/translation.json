@@ -251,6 +251,13 @@
       "faq": {
         "title": "Questions les plus fréquemment posées par nos utilisateurs",
         "description": "Trouvez des réponses aux questions courantes sur nos services de design, notre processus et nos tarifs."
+      },
+      "contact": {
+        "title": "Contactez-nous",
+        "description": "Nous aimerions avoir de vos nouvelles. Que vous ayez une question sur nos services, nos tarifs ou toute autre chose, notre équipe est prête à répondre à toutes vos questions.",
+        "email_cta": "Contact via Email",
+        "contact_page_cta": "Contact & Support",
+        "cheers": "Nous avons hâte d'avoir de vos nouvelles !"
       }
     }
   },

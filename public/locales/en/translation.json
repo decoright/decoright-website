@@ -259,6 +259,13 @@
       "faq": {
         "title": "Most frequently asked questions by our users",
         "description": "Find answers to common questions about our design services, process, and pricing."
+      },
+      "contact": {
+        "title": "Get in Touch",
+        "description": "We'd love to hear from you. Whether you have a question about our services, pricing, or anything else, our team is ready to answer all your questions.",
+        "cta_email": "Contact via Email",
+        "cta_contact_page": "Contact & Support",
+        "cheers": "We look forward to hearing your preferences and questions. Don't hesitate to reach out to us!"
       }
     }
   },
