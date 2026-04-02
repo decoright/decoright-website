@@ -223,7 +223,7 @@
     }
 
     .active {
-        @apply bg-emphasis;
+        @apply bg-emphasis ring-1 ring-muted/10;
     }
 
     .custom-scrollbar::-webkit-scrollbar {

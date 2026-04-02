@@ -202,6 +202,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        path: PATHS.ADMIN.DASHBOARD,
         element: <AdminDashboardHome />,
       },
       {

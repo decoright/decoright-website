@@ -6,6 +6,7 @@ import { NavLink, useLocation } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { ArrowRightStartOnRectangle, CaretDown } from "@/icons";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
+import { useTranslation } from "react-i18next"
 
 // Helper: return array of parent ids whose subtree matches the current path.
 // Uses startsWith so parent items containing path prefixes open automatically.
@@ -85,7 +86,9 @@ function NavItem({
   openSet: Set<string>;
   toggle: (id: string) => void;
 }) {
+
   const isOpen = openSet.has(item.id);
+  const { t } = useTranslation();
 
   if (item.children) {
     return (
@@ -93,7 +96,7 @@ function NavItem({
         <button onClick={() => toggle(item.id)} aria-expanded={isOpen} aria-controls={`children-${item.id}`}
           className="flex items-center justify-between w-full px-3 py-2"
         >
-          <span className="text-sm text-muted">{item.label}</span>
+          <span className="text-sm text-muted"> { item.key ? t(item.key) : item.label} </span>
           <span aria-hidden className="ml-2 text-sm">
             <CaretDown className={`size-4 ${isOpen && "-rotate-180"}`} />
           </span>
@@ -109,7 +112,7 @@ function NavItem({
                 className="text-xs w-full p-2 hover:bg-emphasis active:hover:bg-emphasis rounded-lg cursor-pointer"
                 aria-current={undefined}
               >
-                {child.label}
+                { child.key ? t(child.key) : child.label}
               </NavLink>
             </li>
           ))}
@@ -125,13 +128,16 @@ function NavItem({
         to={item.path ?? "#"}
         className="block text-sm mb-2 p-2 hover:bg-emphasis active:hover:bg-emphasis rounded-lg cursor-pointer"
       >
-        {item.label}
+        { item.key ? t(item.key) : item.label}
       </NavLink>
     </li>
   );
 }
 
 function NavActionList() {
+
+  const { t } = useTranslation();
+
   return (
 
     <ul className="flex flex-col gap-2 w-full h-fit p-2">
@@ -141,7 +147,7 @@ function NavActionList() {
             {/* Icon */}
             <ArrowRightStartOnRectangle />
             {/* Label */}
-            <span className="font-medium text-sm"> Logout </span>
+            <span className="font-medium text-sm"> { t('auth.logout') } </span>
           </div>
         </LogoutButton>
       </li>
