@@ -1,5 +1,7 @@
 {
   "nav": {
+    "terms": "الشروط والأحكام",
+    "terms_description": "شروط واحكام استخدام الخدمة",
     "privacy_policy": "سياسة الخصوصية",
     "privacy_policy_description": "التزامنا بخصوصيتك وحماية بياناتك",
     "home": "الرئيسية",

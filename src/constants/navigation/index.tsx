@@ -69,6 +69,7 @@ export const clientMenuItems = [
     { label: 'Gallery', key: 'gallery', path: PATHS.GALLERY_LIST, icon: Squares2x2 , description: 'Browse our gallery and past work' },
     { label: 'FAQs', key: 'faqs', path: PATHS.FAQ_LIST, icon: QuestionMarkCircle , description: 'Frequently Asked Questions and support resources' },
     { label: 'Contact Us', key: 'contact_us', path: PATHS.CONTACT, icon: Phone , description: 'Get in touch with our team' },
+    { label: 'Terms & Conditions', key: 'terms', path: PATHS.TERMS_OF_SERVICE, icon: DocumentText , description: 'Our terms and conditions' },
     { label: 'Privacy Policy', key: 'privacy_policy', path: PATHS.PRIVACY_POLICY, icon: DocumentText , description: 'Our commitment to your privacy' },
     { label: 'Account Settings', key: 'account_settings', path: PATHS.CLIENT.ACCOUNT_SETTINGS, icon: Cog , description: 'Manage your profile, preferences, and account settings' },
 ]
@@ -77,9 +78,10 @@ export const publicMenuItems = [
     { label: 'Home', key: 'home', path: PATHS.ROOT, icon: Home , description: 'Landing page and highlights' },
     { label: 'Services', key: 'services', path: PATHS.SERVICE_LIST, icon: PuzzlePiece , description: 'Learn about available services' },
     { label: 'Projects', key: 'projects', path: PATHS.PROJECT_LIST, icon: PaintBrush , description: 'View public projects and case studies' },
-    { label: 'Gallery', key: 'gallery', path: PATHS.GALLERY_LIST, icon: PuzzlePiece , description: 'View images and designs associated with projects.' },
+    { label: 'Gallery', key: 'gallery', path: PATHS.GALLERY_LIST, icon: Squares2x2 , description: 'View images and designs associated with projects.' },
     { label: 'FAQs', key: 'faqs', path: PATHS.FAQ_LIST, icon: QuestionMarkCircle , description: 'Frequently Asked Questions and support resources' },
     { label: 'Contact Us', key: 'contact_us', path: PATHS.CONTACT, icon: Phone , description: 'Contact information and form' },
+    { label: 'Terms & Conditions', key: 'terms', path: PATHS.TERMS_OF_SERVICE, icon: DocumentText , description: 'Our terms and conditions' },
     { label: 'Privacy Policy', key: 'privacy_policy', path: PATHS.PRIVACY_POLICY, icon: DocumentText , description: 'Our commitment to your privacy' },
 ]
 

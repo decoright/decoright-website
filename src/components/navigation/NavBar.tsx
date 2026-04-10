@@ -9,7 +9,7 @@ import { MenuCard } from "@components/ui/MenuCard"
 import { PCTALink, SCTALink } from "@components/ui/CTA"
 import { PATHS } from "@/routers/Paths"
 import { useTranslation } from "react-i18next"
-import { ArrowRightEndOnRectangle, ArrowRightStartOnRectangle, Chat, DocumentText, Folder, Language, Menu, PresentationChartLine, User, UserPlus } from "@/icons";
+import { ArrowRightEndOnRectangle, ArrowRightStartOnRectangle, Chat, CheckCircle, DocumentText, Folder, Language, Menu, PresentationChartLine, User, UserPlus } from "@/icons";
 import { useUnreadCount } from "@/hooks/useUnreadCount";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 
@@ -62,65 +62,6 @@ export function AuthenticatedUserActins() {
         <>
             <div className="flex items-center gap-2 md:gap-4">
 
-                <Link
-                    to={PATHS.PRIVACY_POLICY}
-                    title={t('nav.privacy_policy')}
-                    className="md:hidden content-center p-1.5 border border-muted/15 bg-surface/75 rounded-full hover:bg-emphasis transition-colors"
-                >
-                    <DocumentText className="size-5" />
-                </Link>
-
-                {isAdmin
-                    ? <>
-                        {/* Request Project */}
-                        <Link to={PATHS.ADMIN.PROJECT_CREATE} title={t('nav.create_project')} className="max-md:hidden content-center p-2.5 min-w-max font-medium text-sm border border-muted/15 bg-surface/75 rounded-full hover:bg-emphasis transition-colors">
-                            {t('nav.create_project')}
-                        </Link>
-
-                        <Link to={PATHS.ADMIN.ANALYTICS} title={t('nav.dashboard_panel')} className="max-md:hidden content-center p-2 border border-muted/15 bg-surface/75 rounded-full hover:bg-emphasis transition-colors">
-                            <PresentationChartLine className="size-5 md:size-6" />
-                        </Link>
-
-                        {/* Chat Nav Page */}
-                        <Link to={PATHS.ADMIN.CHAT} title={t('nav.chats')} className="relative content-center p-1.5 md:p-2 border border-muted/15 bg-surface/75 rounded-full hover:bg-emphasis transition-colors">
-                            <Chat className="size-5 md:size-6" />
-
-                            {hasUnread && (
-                                <span className="absolute flex size-3 top-0 left-0">
-                                    <span className="absolute inline-flex h-full w-full animate-[ping_1.5s_infinite] rounded-full bg-primary/75"></span>
-                                    <span className="relative inline-flex size-3 rounded-full bg-primary"></span>
-                                </span>
-                            )}
-                        </Link>
-                    </>
-
-                    : <>
-
-                        {/* Request Project */}
-                        <Link to={PATHS.CLIENT.REQUEST_SERVICE} title={t('nav.request_service')} className="max-md:hidden content-center p-2 min-w-max font-medium text-sm border border-primary/45 bg-surface/75 rounded-full hover:bg-emphasis transition-colors">
-                            {t('nav.request_service')}
-                        </Link>
-
-                        {/* Chat Nav Page */}
-                        <Link to={PATHS.CLIENT.CHAT} title={t('nav.chats')} className="relative content-center p-1.5 md:p-2 border border-muted/15 bg-surface/75 rounded-full hover:bg-emphasis transition-colors">
-                            <Chat className="size-5 md:size-6" />
-
-                            {hasUnread && (
-                                <span className="absolute flex size-3 top-0 left-0">
-                                    <span className="absolute inline-flex h-full w-full animate-[ping_1.5s_infinite] rounded-full bg-primary/75"></span>
-                                    <span className="relative inline-flex size-3 rounded-full bg-primary"></span>
-                                </span>
-                            )}
-                        </Link>
-
-                    </>
-                }
-
-                {/* User Profile Nav Page */}
-                <Link to={PATHS.CLIENT.ACCOUNT_PROFILE} title={t('nav.profile')} className="max-md:hidden content-center p-1.5 md:p-2 border border-muted/15 bg-surface/75 rounded-full hover:bg-emphasis transition-colors">
-                    <User className="size-5 md:size-6" />
-                </Link>
-
                 {/* Language Button */}
                 <button type="button" title={t('nav.language')} onClick={() => setLangMenuOpen(true)}
                     className="content-center p-1.5 md:p-2 border border-muted/15 bg-surface/75 rounded-full hover:bg-emphasis transition-colors">
@@ -163,14 +104,6 @@ export function AnonymousUserActins() {
 
         <>
             <div className="flex items-center gap-2 md:gap-4">
-
-                <Link
-                    to={PATHS.PRIVACY_POLICY}
-                    title={t('nav.privacy_policy')}
-                    className="md:hidden content-center p-1.5 border border-muted/15 bg-surface/75 rounded-full hover:bg-emphasis transition-colors"
-                >
-                    <DocumentText className="size-5" />
-                </Link>
                 
                 {/* Language Button */}
                 <button type="button" title={t('nav.language')} onClick={() => setLangMenuOpen(true)}
