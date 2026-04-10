@@ -1,5 +1,7 @@
 {
   "nav": {
+    "terms": "Terms",
+    "terms_description": "Our terms and conditions",
     "privacy_policy": "Privacy Policy",
     "privacy_policy_description": "Our commitment to your privacy and data protection",
     "home": "Home",
