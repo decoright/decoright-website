@@ -143,6 +143,9 @@
     "signup_now": "أنشئ حساباً",
     "already_have_account": "لديك حساب بالفعل؟",
     "login_now": "تسجيل الدخول",
+    "or": "أو",
+    "login_with_google": "تسجيل الدخول باستخدام Google",
+    "signup_with_google": "إنشاء حساب باستخدام Google",
     "error_failed_login": "فشل تسجيل الدخول",
     "error_failed_signup": "فشل إنشاء الحساب",
     "errors": {

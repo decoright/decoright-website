@@ -143,6 +143,9 @@
     "signup_now": "S'inscrire",
     "already_have_account": "Vous avez déjà un compte ?",
     "login_now": "Connexion",
+    "or": "ou",
+    "login_with_google": "Continuer avec Google",
+    "signup_with_google": "S'inscrire avec Google",
     "error_failed_login": "Échec de la connexion",
     "error_failed_signup": "Échec de l'inscription",
     "errors": {
