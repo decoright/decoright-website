@@ -48,6 +48,16 @@ export default function RequestDetailDrawer({ request, isOpen, onClose, onStatus
         'Cancelled': 'text-zinc-500 bg-zinc-500/10',
     };
 
+    const statusLabels: Record<string, string> = {
+        'Submitted': t('admin.requests.status_submitted'),
+        'Under Review': t('admin.requests.status_under_review'),
+        'Approved': t('admin.requests.status_approved'),
+        'In Progress': t('admin.requests.status_in_progress'),
+        'Completed': t('admin.requests.status_completed'),
+        'Rejected': t('admin.requests.status_rejected'),
+        'Cancelled': t('admin.requests.status_cancelled'),
+    };
+
     return (
         <>
             {/* Backdrop */}
@@ -87,7 +97,7 @@ export default function RequestDetailDrawer({ request, isOpen, onClose, onStatus
                                     </div>
                                     <div>
                                         <p className="text-xs text-muted">{t('admin.request_drawer.field_full_name')}</p>
-                                        <p className="font-medium">{request.profiles?.full_name || 'Anonymous'}</p>
+                                        <p className="font-medium">{request.profiles?.full_name || t('admin.requests.unknown_client')}</p>
                                     </div>
                                 </div>
 
@@ -122,7 +132,7 @@ export default function RequestDetailDrawer({ request, isOpen, onClose, onStatus
                                         <Tag className="size-4" />
                                         <span className="text-3xs uppercase font-bold">{t('admin.request_drawer.field_service')}</span>
                                     </div>
-                                    <p className="text-sm font-medium">{request.service_types?.display_name_en || 'Unknown'}</p>
+                                    <p className="text-sm font-medium">{request.service_types?.display_name_en || t('admin.requests.service_fallback')}</p>
                                 </div>
 
                                 <div className="p-4 rounded-xl bg-emphasis/30 border border-muted/10">
@@ -130,7 +140,7 @@ export default function RequestDetailDrawer({ request, isOpen, onClose, onStatus
                                         <RectangleStack className="size-4" />
                                         <span className="text-3xs uppercase font-bold">{t('admin.request_drawer.field_space')}</span>
                                     </div>
-                                    <p className="text-sm font-medium">{request.space_types?.display_name_en || request.space_type || 'Unknown'}</p>
+                                    <p className="text-sm font-medium">{request.space_types?.display_name_en || request.space_type || t('common.optional')}</p>
                                 </div>
 
                                 <div className="p-4 rounded-xl bg-emphasis/30 border border-muted/10">
@@ -141,7 +151,7 @@ export default function RequestDetailDrawer({ request, isOpen, onClose, onStatus
                                 <div className="p-4 rounded-xl bg-emphasis/30 border border-muted/10">
                                     <span className="text-3xs uppercase font-bold text-muted mb-1 block">{t('admin.request_drawer.field_status')}</span>
                                     <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${statusColors[request.status] || 'bg-muted/10'}`}>
-                                        {request.status}
+                                        {statusLabels[request.status] || request.status}
                                     </span>
                                 </div>
                             </div>
@@ -221,7 +231,7 @@ export default function RequestDetailDrawer({ request, isOpen, onClose, onStatus
 
                             {['Completed', 'Rejected', 'Cancelled'].includes(request.status) && (
                                 <div className="w-full py-3 text-center text-muted text-sm font-medium border border-dashed border-muted/30 rounded-lg">
-                                    {t('admin.request_drawer.no_actions', { status: request.status })}
+                                    {t('admin.request_drawer.no_actions', { status: statusLabels[request.status] || request.status })}
                                 </div>
                             )}
                         </div>

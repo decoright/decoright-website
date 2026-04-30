@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase'
 import type { Database } from '@/types/database.types'
 import { compressImage } from '@/utils/image.utils'
+import { makeStorageFileName, validateUploadFile } from '@/utils/file-upload'
 import { ActivityLogService } from './activity-log.service'
 
 export type UserProfile = Database['public']['Tables']['profiles']['Row'] & { email?: string }
@@ -349,6 +350,7 @@ export const AdminService = {
                 if (room) {
                     await supabase.from('messages').insert({
                         chat_room_id: room.id,
+                        request_id: id,
                         sender_id: user.id,
                         content: `Status updated to: ${status}`,
                         message_type: 'SYSTEM',
@@ -493,16 +495,23 @@ export const AdminService = {
     },
 
     async uploadProjectImage(file: File) {
-        const compressedBlob = await compressImage(file, 0.7)
-        const compressedFile = new File([compressedBlob], file.name, { type: 'image/jpeg' })
+        const validation = validateUploadFile(file)
+        if (!validation.ok) {
+            throw new Error(validation.reason)
+        }
 
-        const fileExt = 'jpg'
-        const fileName = `${Math.random()}.${fileExt}`
+        const compressedBlob = await compressImage(file, 0.7)
+        const compressedFile = new File([compressedBlob], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg' })
+
+        const fileName = makeStorageFileName(compressedFile)
         const filePath = `project-images/${fileName}`
 
         const { error: uploadError } = await supabase.storage
             .from('projects')
-            .upload(filePath, compressedFile)
+            .upload(filePath, compressedFile, {
+                contentType: 'image/jpeg',
+                upsert: false,
+            })
 
         if (uploadError) throw uploadError
 

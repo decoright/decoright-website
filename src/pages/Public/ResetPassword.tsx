@@ -3,8 +3,13 @@ import { supabase } from "@/lib/supabase";
 import { useNavigate } from "react-router-dom";
 import { PasswordInput } from "@/components/ui/Input";
 import { PATHS } from "@/routers/Paths";
+import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
+import { getAuthErrorMessage } from "@/utils/auth-errors";
+import { getUserFriendlyError } from "@/utils/error-messages";
 
 export default function ResetPassword() {
+    const { t } = useTranslation();
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [loading, setLoading] = useState(false);
@@ -14,7 +19,7 @@ export default function ResetPassword() {
     const handleUpdatePassword = async (e: React.FormEvent) => {
         e.preventDefault();
         if (password !== confirmPassword) {
-            setError("Passwords do not match");
+            setError(t('password.helper_match'));
             return;
         }
 
@@ -28,10 +33,10 @@ export default function ResetPassword() {
 
             if (updateError) throw updateError;
 
-            alert("Password updated successfully!");
+            toast.success(t('password.done_title'));
             navigate(PATHS.LOGIN);
         } catch (err: any) {
-            setError(err.message || "Failed to update password");
+            setError(getAuthErrorMessage(err, t) || getUserFriendlyError(err, t));
         } finally {
             setLoading(false);
         }
@@ -43,22 +48,22 @@ export default function ResetPassword() {
                 <div className="absolute max-md:hidden top-0 left-0 w-full h-full border border-muted/15 rounded-4xl bg-surface/45 -z-10 mask-b-to-transparent mask-b-to-100%"></div>
                 <div className="relative flex flex-col gap-8 w-full md:w-4/5 p-2 md:p-4 lg:p-8">
                     <div className="space-y-2 md:space-y-3">
-                        <h1 className="font-semibold text-2xl md:text-3xl"> Reset Your Password </h1>
-                        <p className="text-2xs md:text-xs text-muted">Enter your new password below to regain access to your account.</p>
+                        <h1 className="font-semibold text-2xl md:text-3xl">{t('password.set_title')}</h1>
+                        <p className="text-2xs md:text-xs text-muted">{t('password.set_description')}</p>
                     </div>
 
                     <form onSubmit={handleUpdatePassword} className="flex flex-col items-center gap-6">
                         <div className="flex flex-col gap-4 w-full">
                             <PasswordInput
                                 id="new-password"
-                                label="New Password"
+                                label={t('password.password_new_label') as string}
                                 value={password}
                                 onChange={(e: any) => setPassword(e.target.value)}
                                 required
                             />
                             <PasswordInput
                                 id="confirm-password"
-                                label="Confirm New Password"
+                                label={t('password.password_confirm_new_label') as string}
                                 value={confirmPassword}
                                 onChange={(e: any) => setConfirmPassword(e.target.value)}
                                 required
@@ -71,7 +76,7 @@ export default function ResetPassword() {
                             disabled={loading}
                             className="font-semibold text-white/95 w-full px-4 p-2 bg-primary rounded-xl disabled:opacity-50"
                         >
-                            {loading ? "Updating..." : "Update Password"}
+                            {loading ? t('common.loading') : t('password.password_set_cta')}
                         </button>
                     </form>
                 </div>

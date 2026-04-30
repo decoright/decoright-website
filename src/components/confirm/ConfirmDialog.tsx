@@ -22,9 +22,9 @@ export default function ConfirmDialog({
   const confirmButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const { t } = useTranslation();
-  const resolvedTitle = title ?? t('common.confirm_default_label');
-  const resolvedDescription = description ?? t('common.confirm_default_description');
-  const resolvedConfirmText = confirmText ?? t('common.confirm');
+  const resolvedTitle = title ?? t('confirm.confirm_default_label');
+  const resolvedDescription = description ?? t('confirm.confirm_default_description');
+  const resolvedConfirmText = confirmText ?? t('confirm.confirm');
   const resolvedCancelText = cancelText ?? t('common.cancel');
 
   // manage focus when opened

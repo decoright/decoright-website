@@ -8,6 +8,7 @@ import { ChatBubbleOvalLeftEllipsis, ChevronRight, Eye, Trash, MapPin, Calendar,
 import useConfirm from "@/components/confirm/useConfirm";
 import RequestDetailsModal from "./RequestDetailsModal";
 import toast from "react-hot-toast";
+import { getUserFriendlyError } from "@/utils/error-messages";
 
 export function RequestServiceItem({ request, onDelete }: { request: any, onDelete: (id: string) => void }) {
     const { t, i18n } = useTranslation();
@@ -43,7 +44,7 @@ export function RequestServiceItem({ request, onDelete }: { request: any, onDele
                 toast.success(t('requests.delete_success'));
                 onDelete(request.id);
             } catch (err: any) {
-                toast.error(err.message || t('common.error'));
+                toast.error(getUserFriendlyError(err, t));
             }
         }
     };
@@ -165,7 +166,7 @@ export function RequestServiceList() {
             const data = await RequestService.getMyRequests()
             setRequests(data)
         } catch (err: any) {
-            setError(err.message || t('requests.error_load'))
+            setError(getUserFriendlyError(err, t))
         } finally {
             setLoading(false)
         }

@@ -124,6 +124,7 @@ export const ChatService = {
             .from('messages')
             .insert({
                 chat_room_id: rId,
+                request_id: reqId,
                 sender_id: user.id,
                 content: text,
                 message_type: mType,

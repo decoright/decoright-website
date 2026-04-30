@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { getUserFriendlyError } from "@/utils/error-messages";
 
 const STATIC_LOGO = "/Logo.PNG";
 
@@ -80,7 +81,7 @@ export default function Settings() {
             setLogoFile(null);
             toast.success(t('admin.settings.logo_updated'));
         } catch (err: any) {
-            toast.error(err.message || t('admin.settings.logo_upload_failed'));
+            toast.error(getUserFriendlyError(err, t));
         } finally {
             setLogoUploading(false);
         }

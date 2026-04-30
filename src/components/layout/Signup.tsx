@@ -3,11 +3,12 @@ import { useState } from "react"
 import { supabase } from "@/lib/supabase"
 import { useNavigate, Link } from "react-router-dom"
 import { PATHS } from "@/routers/Paths"
-import { EmailInput, Input, PasswordInput } from "../ui/Input"
-import { LegalLinks } from "../../constants"
-import Spinner from "../common/Spinner"
+import { EmailInput, Input, PasswordInput } from "@components/ui/Input"
+import { LegalLinks } from "@/constants"
+import Spinner from "@components/common/Spinner"
 import { useTranslation } from "react-i18next"
 import { getAuthErrorMessage } from "@/utils/auth-errors"
+import { getUserFriendlyError } from "@/utils/error-messages"
 
 export function SignupLayout() {
     const [firstName, setFirstName] = useState("")
@@ -103,9 +104,10 @@ export function SignupLayout() {
             if (!data.user) throw new Error(t('auth.error_failed_signup'))
 
             navigate(PATHS.VERIFY_OTP, { state: { email } })
+
         } catch (err: any) {
             console.error("Signup error:", err)
-            setError(err.message || t('auth.error_failed_signup'))
+            setError(getUserFriendlyError(err, t))
         } finally {
             setLoading(false)
         }
@@ -125,12 +127,29 @@ export function SignupLayout() {
 
                 <div className="flex flex-col gap-4 w-full">
                     <div className="flex max-xs:flex-col md:flex-col lg:flex-row gap-3 md:gap-4 w-full">
-                        <Input type="text" placeholder={t('auth.placeholders.first_name')} value={firstName} onChange={(e: any) => setFirstName(e.target.value)} required />
-                        <Input type="text" placeholder={t('auth.placeholders.last_name')} value={lastName} onChange={(e: any) => setLastName(e.target.value)} required />
+                        <div className="flex flex-col gap-1 w-full">
+                            <label htmlFor="field_first_name" className="font-medium text-xs">{t('auth.labels.first_name')}</label>
+                            <Input type="text" id="field_first_name" placeholder={t('auth.placeholders.first_name')} value={firstName} onChange={(e: any) => setFirstName(e.target.value)} required />
+                        </div>
+                        <div className="flex flex-col gap-1 w-full">
+                            <label htmlFor="field_last_name" className="font-medium text-xs">{t('auth.labels.last_name')}</label>
+                            <Input type="text" id="field_last_name" placeholder={t('auth.placeholders.last_name')} value={lastName} onChange={(e: any) => setLastName(e.target.value)} required />
+                        </div>
                     </div>
-                    <Input type="tel" placeholder={t('auth.placeholders.phone')} value={phone} onChange={(e: any) => setPhone(e.target.value)} required />
-                    <EmailInput value={email} onChange={(e: any) => setEmail(e.target.value)} required />
-                    <PasswordInput value={password} onChange={(e: any) => setPassword(e.target.value)} required />
+
+                    <div className="flex flex-col gap-1 w-full">
+                        <label htmlFor="field_phone" className="font-medium text-xs">{t('auth.labels.phone')}</label>
+                        <Input id="field_phone" placeholder={t('auth.placeholders.phone')} value={phone} onChange={(e: any) => setPhone(e.target.value)} required />
+                    </div>
+
+                    <div className="flex flex-col gap-1 w-full">
+                        <label htmlFor="field_email" className="font-medium text-xs">{t('auth.labels.email')}</label>
+                        <EmailInput id="field_email" value={email} onChange={(e: any) => setEmail(e.target.value)} required />
+                    </div>
+                    <div className="flex flex-col gap-1 w-full">
+                        <label htmlFor="field_password" className="font-medium text-xs">{t('auth.labels.password')}</label>
+                        <PasswordInput id="field_password" value={password} onChange={(e: any) => setPassword(e.target.value)} required />
+                    </div>
                 </div>
 
                 {error && <p className="text-xs text-danger text-center"> {error} </p>}

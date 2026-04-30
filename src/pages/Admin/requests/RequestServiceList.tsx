@@ -36,8 +36,8 @@ export default function RequestServiceList() {
 
     return (
         <div className="w-full">
-            <section className="flex flex-col pt-4 md:pt-6 w-full h-full mb-40">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+            <section className="flex flex-col pt-6 md:pt-10 w-full h-full mb-40">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                     <div>
                         <h1 className="font-medium text-xl md:text-2xl text-heading tracking-tight">{t('admin.requests.title')}</h1>
                         <p className="text-sm text-muted mt-1">{t('admin.requests.subtitle')}</p>

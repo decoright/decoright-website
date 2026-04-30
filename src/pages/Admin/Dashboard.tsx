@@ -110,7 +110,7 @@ export default function Dashboard() {
     }
 
     return (
-        <main className="h-full">
+        <main className="w-full h-full">
             <section className="relative flex flex-col w-full h-full pt-4 md:py-6">
                 <div className="flex flex-col gap-4 w-full">
 
@@ -163,10 +163,10 @@ export default function Dashboard() {
                     </div>
 
                     {/* Chart + Popular Services */}
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 min-w-0">
 
                         {/* Requests Volume chart */}
-                        <div className="flex flex-col lg:col-span-2 border border-muted/20 bg-surface rounded-2xl overflow-hidden">
+                        <div className="flex flex-col lg:col-span-2 border border-muted/20 bg-surface rounded-2xl overflow-hidden min-w-0">
 
                             {/* Chart header */}
                             <div className="px-5 py-4 border-b border-muted/10 flex items-start justify-between gap-4 flex-wrap">
@@ -187,7 +187,7 @@ export default function Dashboard() {
                             </div>
 
                             {/* Chart body — fixed height drives ResponsiveContainer */}
-                            <div className="h-[260px] md:h-[380px] p-2 pt-4">
+                            <div className="h-[260px] md:h-[380px] p-2 pt-4 min-w-0">
                                 {loading ? (
                                     <div className="flex items-center justify-center h-full w-full opacity-40">
                                         <Spinner size="md" />

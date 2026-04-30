@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase'
 import type { Database } from '@/types/database.types'
-import { compressImage } from '@/utils/image.utils'
+import { makeStorageFileName, prepareFileForUpload, validateUploadFile } from '@/utils/file-upload'
+import { getCachedValue, setCachedValue } from '@/utils/local-cache'
 
 export type SpaceType = Database['public']['Tables']['space_types']['Row']
 export type SpaceTypeInsert = Database['public']['Tables']['space_types']['Insert']
@@ -10,6 +11,9 @@ export type SpaceTypeImage = Database['public']['Tables']['space_type_images']['
 export type SpaceTypeWithImages = SpaceType & {
     space_type_images: SpaceTypeImage[]
 }
+
+const ACTIVE_SPACE_TYPES_CACHE_KEY = 'cache:space-types:active'
+const ACTIVE_SPACE_TYPES_TTL = 5 * 60 * 1000
 
 export const SpaceTypesService = {
     async getAll() {
@@ -23,6 +27,9 @@ export const SpaceTypesService = {
     },
 
     async getActive() {
+        const cached = getCachedValue<SpaceTypeWithImages[]>(ACTIVE_SPACE_TYPES_CACHE_KEY)
+        if (cached) return cached
+
         const { data, error } = await supabase
             .from('space_types')
             .select('*, space_type_images(id, image_url, sort_order, uploaded_at)')
@@ -30,7 +37,9 @@ export const SpaceTypesService = {
             .order('name', { ascending: true })
 
         if (error) throw error
-        return (data ?? []) as SpaceTypeWithImages[]
+        const result = (data ?? []) as SpaceTypeWithImages[]
+        setCachedValue(ACTIVE_SPACE_TYPES_CACHE_KEY, result, ACTIVE_SPACE_TYPES_TTL)
+        return result
     },
 
     async getById(id: string) {
@@ -89,13 +98,20 @@ export const SpaceTypesService = {
     },
 
     async uploadImage(file: File): Promise<string> {
-        const compressedBlob = await compressImage(file, 0.7)
-        const compressedFile = new File([compressedBlob], file.name, { type: 'image/jpeg' })
-        const filePath = `space-type-images/${Date.now()}-${Math.random().toString(36).slice(2)}.jpg`
+        const validation = validateUploadFile(file)
+        if (!validation.ok) {
+            throw new Error(validation.reason)
+        }
+
+        const uploadFile = await prepareFileForUpload(file)
+        const filePath = `space-type-images/${makeStorageFileName(uploadFile)}`
 
         const { data: uploadData, error: uploadError } = await supabase.storage
             .from('projects')
-            .upload(filePath, compressedFile)
+            .upload(filePath, uploadFile, {
+                contentType: uploadFile.type || file.type,
+                upsert: false,
+            })
 
         if (uploadError) throw uploadError
 
@@ -130,4 +146,3 @@ export const SpaceTypesService = {
         if (insertError) throw insertError
     },
 }
-

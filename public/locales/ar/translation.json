@@ -31,6 +31,7 @@
     "requests": "طلبات الخدمة",
     "service_request": "طلب خدمة",
     "request_list": "قائمة الطلبات",
+    "activity_log": "سجل النشاط",
     "gallery_management": "إدارة المعرض",
     "gallery_list": "قائمة المعرض",
     "add_gallery": "إضافة صورة للمعرض",
@@ -49,6 +50,8 @@
     "dashboard_panel": "لوحة التحكم",
     "chats": "المحادثات",
     "select_language": "اختر اللغة",
+    "legal_list": "المستندات القانونية",
+    "company_details": "تفاصيل الشركة",
     "settings": "الإعدادات",
     "language": "تفضيلات اللغة",
     "language_description": "اختر لغة التطبيق المفضلة",
@@ -82,7 +85,11 @@
     "cancel": "إلغاء",
     "confirm": "تأكيد",
     "delete": "حذف",
+    "update": "تحديث",
+    "updating": "جاري التحديث",
     "edit": "تعديل",
+    "view": "عرض",
+    "duplicate": "تكرار",
     "go_back": "العودة",
     "view_all": "عرض الكل",
     "view_all_projects": "عرض جميع المشاريع",
@@ -97,8 +104,10 @@
     "retry": "إعادة المحاولة",
     "remove": "إزالة",
     "add": "إضافة",
+    "save_success": "تم حفظ التغييرات بنجاح!",
     "select": "اختيار",
     "complete": "إكمال",
+    "search": "بحث",
     "attachments": "المرفقات",
     "english": "الإنجليزية",
     "french": "الفرنسية",
@@ -112,7 +121,19 @@
     "uploaded_files_placeholder": "ستظهر الملفات المرفوعة هنا",
     "uploading": "جارٍ الرفع",
     "upload_failed": "فشل الرفع",
-    "upload_attach_files_label": "رفع الملفات المرفقة"
+    "upload_attach_files_label": "رفع الملفات المرفقة",
+    "table": {
+      "actions": "الإجراءات",
+      "no_bulk_actions": "لا توجد إجراءات جماعية",
+      "filter_by": "تصفية حسب",
+      "all": "الكل",
+      "refresh": "تحديث",
+      "refreshing": "جارٍ التحديث...",
+      "no_results": "لا توجد نتائج",
+      "select_all": "تحديد الكل",
+      "select_row": "تحديد الصف",
+      "row_actions": "إجراءات الصف"
+    }
   },
   "confirm": {
     "confirm": "تأكيد",
@@ -139,7 +160,7 @@
     "password": "كلمة المرور",
     "show_password": "إظهار كلمة المرور",
     "hide_password": "إخفاء كلمة المرور",
-    "remember_me": "تذكرني",
+    "save_log_info": "حفظ معلومات تسجيل الدخول",
     "forgot_password": "هل نسيت كلمة المرور؟",
     "no_account": "ليس لديك حساب بعد؟",
     "signup_now": "أنشئ حساباً",
@@ -149,7 +170,7 @@
     "login_with_google": "تسجيل الدخول باستخدام Google",
     "signup_with_google": "إنشاء حساب باستخدام Google",
     "error_failed_login": "فشل تسجيل الدخول",
-    "error_failed_signup": "فشل إنشاء الحساب",
+    "error_failed_signup": "فشلت عملية إنشاء الحساب. يرجى المحاولة مرة أخرى",
     "errors": {
       "invalid_credentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
       "email_not_confirmed": "يرجى تأكيد بريدك الإلكتروني قبل تسجيل الدخول.",
@@ -159,9 +180,18 @@
       "generic": "فشلت عملية المصادقة. يرجى المحاولة مرة أخرى."
     },
     "phone": "رقم الهاتف",
+    "labels": {
+      "first_name": "الاسم الأول",
+      "last_name": "اسم العائلة",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "password": "كلمة المرور",
+      "confirm_password": "تأكيد كلمة المرور",
+      "email_or_phone": "البريد الإلكتروني أو الهاتف"
+    },
     "placeholders": {
       "email": "email@example.com",
-      "phone": "رقم الهاتف",
+      "phone": "أدخل رقم الهاتف",
       "email_or_phone": "أدخل البريد الإلكتروني أو الهاتف",
       "first_name": "الاسم الأول",
       "last_name": "اسم العائلة"
@@ -232,6 +262,13 @@
       "faq": {
         "title": "الأسئلة الأكثر شيوعًا من قبل مستخدمينا",
         "description": "اكتشف الأجوبة على الأسئلة الشائعة حول خدمات التصميم والعملية والأسعار لدينا."
+      },
+      "contact": {
+        "title": "اتصل بنا",
+        "description": "يسعدنا التواصل معك. سواء كان لديك سؤال حول خدماتنا، أو الأسعار، أو أي شيء آخر، فإن فريقنا مستعد للإجابة على جميع أسئلتك.",
+        "cta_email": "اتصل عبر البريد الإلكتروني",
+        "cta_contact_page": "اتصل بنا والدعم",
+        "cheers": "نتطلع إلى الاستماع إلى تفضيلاتك واستفساراتك. لا تتردد في التواصل معنا!"
       }
     }
   },
@@ -391,7 +428,19 @@
   },
   "errors": {
     "generic": "حدث خطأ. يرجى المحاولة مرة أخرى",
-    "invalid_email": "يرجى إدخال بريد إلكتروني صحيح"
+    "invalid_email": "يرجى إدخال بريد إلكتروني صحيح",
+    "error_generic": "حدث خطأ. يرجى المحاولة مرة أخرى",
+    "error_invalid_email": "يرجى إدخال بريد إلكتروني صحيح",
+    "network_offline": "أنت غير متصل بالإنترنت. يرجى التحقق من الاتصال والمحاولة مرة أخرى.",
+    "network_issue": "نواجه مشكلة في الاتصال الآن. يرجى المحاولة بعد قليل.",
+    "permission_denied": "ليس لديك صلاحية لتنفيذ هذا الإجراء.",
+    "not_found": "لم يتم العثور على البيانات المطلوبة.",
+    "already_exists": "هذا العنصر موجود بالفعل. يرجى تعديله ثم المحاولة مرة أخرى.",
+    "rate_limited": "تمت محاولات كثيرة خلال وقت قصير. يرجى الانتظار ثم إعادة المحاولة.",
+    "file_too_large": "حجم الملف كبير جدًا. يرجى اختيار ملف أصغر.",
+    "unsupported_file_type": "نوع هذا الملف غير مدعوم. يرجى اختيار ملف آخر.",
+    "storage_limit_reached": "تم الوصول إلى حد التخزين الحالي. يرجى حذف ملفات قديمة أو التواصل مع الدعم.",
+    "upload_failed": "فشل الرفع. يرجى المحاولة مرة أخرى."
   },
   "gallery": {
     "header": "المعرض — قبل وبعد: تحولات تروي قصة المكان",
@@ -617,6 +666,7 @@
       "col_scope": "النطاق",
       "col_chat": "المحادثة",
       "col_submission": "تاريخ التقديم",
+      "col_service_request": "طلب خدمة",
       "filter_all": "جميع الطلبات",
       "filter_submitted": "مقدَّم",
       "filter_in_progress": "قيد التنفيذ",
@@ -636,7 +686,36 @@
       "confirm_delete_btn": "حذف",
       "delete_success": "تم حذف الطلب {{code}} بنجاح",
       "delete_failed": "فشل في حذف الطلب",
-      "unknown_client": "عميل غير معروف"
+      "unknown_client": "عميل غير معروف",
+      "service_fallback": "خدمة",
+      "status_submitted": "مقدَّم",
+      "status_under_review": "قيد المراجعة",
+      "status_approved": "مقبول",
+      "status_in_progress": "قيد التنفيذ",
+      "status_completed": "مكتمل",
+      "status_rejected": "مرفوض",
+      "status_cancelled": "ملغى"
+    },
+    "request_drawer": {
+      "header": "طلب الخدمة",
+      "section_client": "معلومات العميل",
+      "field_full_name": "الاسم الكامل",
+      "field_phone": "رقم الهاتف",
+      "field_location": "الموقع",
+      "field_not_provided": "غير متوفر",
+      "section_service": "تفاصيل الخدمة",
+      "field_service": "نوع الخدمة",
+      "field_space": "فئة المساحة",
+      "field_dimensions": "الأبعاد",
+      "field_status": "الحالة الحالية",
+      "field_description": "وصف المشروع",
+      "workflow_title": "إجراءات سير العمل",
+      "btn_start_review": "بدء المراجعة",
+      "btn_reject": "رفض الطلب",
+      "btn_approve": "قبول الطلب",
+      "btn_in_progress": "نقل إلى قيد التنفيذ",
+      "btn_complete": "تحديد كمكتمل",
+      "no_actions": "هذا الطلب في حالة {{status}}."
     },
     "request_detail": {
       "title": "نظرة عامة على الطلب",

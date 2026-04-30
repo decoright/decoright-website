@@ -5,6 +5,7 @@ import { Calendar, User, DocumentText, CheckCircle, Trash, ArrowPath } from "@/i
 import { format } from "date-fns";
 import Table from "@/components/ui/DataTable";
 import { useTranslation } from "react-i18next";
+import { getUserFriendlyError } from "@/utils/error-messages";
 
 function getEventIcon(type: string) {
     switch (type) {
@@ -114,7 +115,7 @@ export default function ActivityLogPage() {
             setLogs(data);
             setError(null);
         } catch (err: any) {
-            setError(err.message || t('admin.activity.loading'));
+            setError(getUserFriendlyError(err, t));
         } finally {
             setLoading(false);
         }

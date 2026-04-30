@@ -59,17 +59,17 @@ export default function KanbanBoard({ requests, onCardClick }: KanbanBoardProps)
                                     </div>
 
                                     <p className="text-sm font-semibold mb-1 group-hover:text-primary transition-colors">
-                                        {request.profiles?.full_name || 'Anonymous'}
+                                        {request.profiles?.full_name || t('admin.requests.unknown_client')}
                                     </p>
 
                                     <div className="flex flex-col gap-1.5 mt-3">
                                         <div className="flex items-center gap-1.5 text-3xs text-muted">
                                             <Tag className="size-3" />
-                                            <span>{request.service_types?.display_name_en || 'Unknown'}</span>
+                                            <span>{request.service_types?.display_name_en || t('admin.requests.service_fallback')}</span>
                                         </div>
                                         <div className="flex items-center gap-1.5 text-3xs text-muted">
                                             <RectangleStack className="size-3" />
-                                            <span>{request.space_type}</span>
+                                            <span>{request.space_type || t('common.optional')}</span>
                                         </div>
                                     </div>
 

@@ -49,6 +49,7 @@ export const PATHS = {
 
     ADMIN: {
         ROOT: "/admin/",
+        DASHBOARD: "/admin/dashboard",
         ANALYTICS: "/admin/analytics",
         ACTIVITY_LOG: "/admin/activity-log",
 

@@ -31,7 +31,7 @@ export function ServiceCardItem({ service }: { service: ServiceType }) {
 
     return (
         <li key={service.id} className="relative flex flex-col w-full h-full group">
-            <div className="flex flex-col h-full ring-1 ring-muted/25 rounded-xl bg-surface overflow-hidden transition-all duration-300 hover:shadow-lg hover:ring-primary/25">
+            <div className="flex flex-col h-full ring-1 ring-muted/25 rounded-xl bg-surface overflow-hidden transition-all duration-300 hover:shadow-sm hover:ring-primary/25">
                 {/* Image Area */}
                 <div className="w-full aspect-4/3 overflow-hidden bg-muted/5">
                     {service.image_url ? (
@@ -59,7 +59,7 @@ export function ServiceCardItem({ service }: { service: ServiceType }) {
                 </div>
 
                 {/* Content Area */}
-                <div className="flex flex-col flex-1 p-5 gap-2">
+                <div className="flex flex-col flex-1 p-3 gap-2">
                     <h3 className="text-lg font-semibold text-foreground line-clamp-1">
                         {getLocalizedLabel(service)}
                     </h3>
@@ -69,10 +69,10 @@ export function ServiceCardItem({ service }: { service: ServiceType }) {
                 </div>
 
                 {/* Button Area */}
-                <div className="p-4 pt-0 mt-auto">
+                <div className="flex p-3 pt-0 mt-auto w-full">
                     <SCTALink
                         to={`${PATHS.CLIENT.REQUEST_SERVICE}?type=${service.id}`}
-                        className="w-full justify-center py-2.5"
+                        className="w-full justify-center py-2.5 border border-muted/20"
                     >
                         {t("services.service_card_cta")}
                     </SCTALink>
@@ -204,7 +204,7 @@ export default function ServiceCardList() {
                             </p>
                         </div>
 
-                        <div className="relative flex w-full p-4">
+                        <div className="relative flex w-full p-3">
                             <PCTALink to={PATHS.CLIENT.REQUEST_SERVICE} className="w-full">{t("services.service_card_cta")}</PCTALink>
                         </div>
                     </div>

@@ -31,6 +31,7 @@
     "requests": "Service Requests",
     "service_request": "Service Request",
     "request_list": "Request List",
+    "activity_log": "Activity Log",
     "gallery_management": "Gallery Management",
     "gallery_list": "Gallery List",
     "add_gallery": "Add Gallery Item",
@@ -49,6 +50,8 @@
     "dashboard_panel": "Dashboard Panel",
     "chats": "Chats",
     "select_language": "Select a Language",
+    "legal_list": "Legal Documents",
+    "company_details": "Company Details",
     "settings": "Settings",
     "language": "Language Preferences",
     "language_description": "Choose your preferred app language",
@@ -84,7 +87,11 @@
     "cancel": "Cancel",
     "confirm": "Confirm",
     "delete": "Delete",
+    "update": "Update",
+    "updating": "Updating",
     "edit": "Edit",
+    "view": "View",
+    "duplicate": "Duplicate",
     "go_back": "Go back",
     "view_all": "View All",
     "required": "Required",
@@ -102,8 +109,10 @@
     "retry": "Retry",
     "remove": "Remove",
     "add": "Add",
+    "save_success": "Changes saved successfully!",
     "select": "Select",
     "complete": "Complete",
+    "search": "Search",
     "attachments": "Attachments",
     "views_compact": "{{value, compact}} Views",
     "views_label": "{{count}} view",
@@ -114,7 +123,19 @@
     "uploaded_files_placeholder": "Uploaded files will appear here",
     "uploading": "Uploading",
     "uploading_failed": "Uploading Failed",
-    "upload_attach_files_label": "Attach Files"
+    "upload_attach_files_label": "Attach Files",
+    "table": {
+      "actions": "Actions",
+      "no_bulk_actions": "No actions for bulk",
+      "filter_by": "Filter by",
+      "all": "All",
+      "refresh": "Refresh",
+      "refreshing": "Refreshing...",
+      "no_results": "No results",
+      "select_all": "Select all",
+      "select_row": "Select row",
+      "row_actions": "Row actions"
+    }
   },
   "confirm": {
     "confirm": "Confirm",
@@ -141,7 +162,7 @@
     "password": "Password",
     "show_password": "Show password",
     "hide_password": "Hide password",
-    "remember_me": "Remember me",
+    "save_log_info": "Save login information",
     "forgot_password": "Forgot your password?",
     "no_account": "Don't have an account yet?",
     "signup_now": "Sign up",
@@ -167,9 +188,18 @@
       "generic": "Authentication failed. Please try again."
     },
     "phone": "Phone Number",
+    "labels": {
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "password": "Password",
+      "confirm_password": "Confirm Password",
+      "email_or_phone": "Email or Phone"
+    },
     "placeholders": {
       "email": "email@example.com",
-      "phone": "05 50 12 34 56",
+      "phone": "Enter phone number",
       "email_or_phone": "Enter email or phone",
       "first_name": "First name",
       "last_name": "Last name"
@@ -240,6 +270,13 @@
       "faq": {
         "title": "Most frequently asked questions by our users",
         "description": "Find answers to common questions about our design services, process, and pricing."
+      },
+      "contact": {
+        "title": "Get in Touch",
+        "description": "We'd love to hear from you. Whether you have a question about our services, pricing, or anything else, our team is ready to answer all your questions.",
+        "cta_email": "Contact via Email",
+        "cta_contact_page": "Contact & Support",
+        "cheers": "We look forward to hearing your preferences and questions. Don't hesitate to reach out to us!"
       }
     }
   },
@@ -398,7 +435,17 @@
   },
   "errors": {
     "error_generic": "Something went wrong. Please try again",
-    "error_invalid_email": "Please enter a valid email address"
+    "error_invalid_email": "Please enter a valid email address",
+    "network_offline": "You are offline. Please check your internet connection and try again.",
+    "network_issue": "We are having trouble connecting right now. Please try again in a moment.",
+    "permission_denied": "You do not have permission to do this action.",
+    "not_found": "The requested information could not be found.",
+    "already_exists": "This item already exists. Please change it and try again.",
+    "rate_limited": "Too many attempts in a short time. Please wait and try again.",
+    "file_too_large": "This file is too large. Please choose a smaller file.",
+    "unsupported_file_type": "This file type is not supported. Please choose a different file.",
+    "storage_limit_reached": "Storage is currently full. Please remove old files or contact support.",
+    "upload_failed": "Upload failed. Please try again."
   },
   "gallery": {
     "header": "Gallery — Before & After Transformations That Tell a Story",
@@ -504,7 +551,7 @@
     "dashboard": {
       "greeting": "Good Morning!",
       "subtitle": "Here's what's happening with DecoRight today.",
-      "kpi_active_requests": "Total Active Requests",
+      "kpi_z_requests": "Total Active Requests",
       "kpi_pending_review": "Pending Review",
       "kpi_unread_messages": "Unread Messages",
       "quick_actions": "Quick Actions",
@@ -626,6 +673,7 @@
       "col_scope": "Scope",
       "col_chat": "Chat",
       "col_submission": "Submission",
+      "col_service_request": "Service Request",
       "filter_all": "All Requests",
       "filter_submitted": "Submitted",
       "filter_in_progress": "In Progress",
@@ -645,7 +693,36 @@
       "confirm_delete_btn": "Delete",
       "delete_success": "Request {{code}} deleted successfully",
       "delete_failed": "Failed to delete request",
-      "unknown_client": "Unknown Client"
+      "unknown_client": "Unknown Client",
+      "service_fallback": "Service",
+      "status_submitted": "Submitted",
+      "status_under_review": "Under Review",
+      "status_approved": "Approved",
+      "status_in_progress": "In Progress",
+      "status_completed": "Completed",
+      "status_rejected": "Rejected",
+      "status_cancelled": "Cancelled"
+    },
+    "request_drawer": {
+      "header": "Service Request",
+      "section_client": "Client Information",
+      "field_full_name": "Full Name",
+      "field_phone": "Phone Number",
+      "field_location": "Location",
+      "field_not_provided": "Not provided",
+      "section_service": "Service Details",
+      "field_service": "Service Type",
+      "field_space": "Space Category",
+      "field_dimensions": "Dimensions",
+      "field_status": "Current Status",
+      "field_description": "Project Description",
+      "workflow_title": "Workflow Actions",
+      "btn_start_review": "Start Review",
+      "btn_reject": "Reject Request",
+      "btn_approve": "Approve Request",
+      "btn_in_progress": "Move to In Progress",
+      "btn_complete": "Mark as Completed",
+      "no_actions": "This request is {{status}}."
     },
     "request_detail": {
       "title": "Request Overview",

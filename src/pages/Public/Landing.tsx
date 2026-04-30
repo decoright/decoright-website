@@ -4,10 +4,16 @@ import { AdminService } from "@/services/admin.service"
 import { useTranslation } from "react-i18next"
 import { Hero } from "@/components/layout/Landing"
 import { LazySection } from "@/components/common/LazySection"
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, Mail } from "lucide-react"
+import { Link } from "react-router-dom"
+import { PATHS } from "@/routers/Paths"
+import { ArrowLongRight } from "@/icons"
+import { supportMailAddress } from "@/constants/company"
+import { useSiteSettings } from "@/hooks/useSiteSettings"
 
 export default function Landing() {
     const [settings, setSettings] = useState<Record<string, string>>({});
+    const { primaryEmail } = useSiteSettings();
 
     useEffect(() => {
         async function fetchSettings() {
@@ -89,7 +95,7 @@ export default function Landing() {
                     placeholder={
                         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
                             {[...Array(6)].map((_, i) => (
-                                <div key={i} className="aspect-[4/3] bg-surface animate-pulse rounded-xl ring-1 ring-muted/15" />
+                                <div key={i} className="aspect-4/3 bg-surface animate-pulse rounded-xl ring-1 ring-muted/15" />
                             ))}
                         </div>
                     }
@@ -124,9 +130,6 @@ export default function Landing() {
             <section className="content-container relative flex flex-col gap-10 w-full py-16 md:py-24 px-4 sm:px-6 md:px-8 max-lg:overflow-x-clip">
 
                 <hr className="absolute top-0 left-0 w-full h-full border-0 border-x border-muted/25 -z-10" />
-                <hr className="absolute -bottom-2 -start-1 w-2.25 h-fit aspect-square border border-muted/25 rounded-full bg-emphasis shadow-xs -z-10" />
-                <hr className="absolute -bottom-2 -end-1 w-2.25 h-fit aspect-square border border-muted/25 rounded-full bg-emphasis shadow-xs -z-10" />
-
 
                 {/* Section Header */}
                 <SectionHeader
@@ -150,6 +153,38 @@ export default function Landing() {
                         </div>
                     }
                 />
+
+            </section>
+
+            <section className="content-container relative flex flex-col gap-4 w-full h-[50vh] max-sm:px-4 p-0 border border-t-0 border-muted/25 rounded-b-3xl overflow-hidden">
+                <div className="flex flex-col gap-8 items-center justify-center w-full h-full bg-linear-to-br from-primary via-primary/75 to-primary/25 rounded-2xl p-8 text-center text-white">
+
+                    <div className="flex flex-col gap-6 items-center justify-center">
+                        <div className="flex flex-col gap-4 items-center justify-center">
+                            <h2 className="font-bold text-4xl xs:text-5xl md:text-6xl lg:text-7xl text-white mb-4"> {t('landing.sections.contact.title')} </h2>
+                            <p className="text-sm text-white md:max-w-[80%]"> {t('landing.sections.contact.description')} </p>
+                        </div>
+
+                        <div className="flex flex-col xs:flex-row gap-4 items-center justify-center max-md:w-full">
+                            <a
+                            href={`mailto:${primaryEmail || supportMailAddress}`}
+                            target="_blank" rel="noopener noreferrer"
+                            className="flex items-center justify-center gap-2 font-medium text-sm text-foreground text-center w-full min-w-max px-3 py-1.5 border-2 border-white bg-emphasis rounded-lg cursor-pointer hover:bg-white/45 transition"
+                            > <Mail className="size-4 inline-block ml-1 text-inherit" /> {t('landing.sections.contact.cta_email')} </a>
+                            <Link
+                            to={PATHS.CONTACT}
+                            className="flex items-center justify-center font-medium text-sm text-white text-center w-full min-w-max px-3 py-1.5 border-2 border-white rounded-lg cursor-pointer hover:bg-white/45 hover:text-foreground transition"
+                            >
+                                {t('landing.sections.contact.cta_contact_page')}  <ArrowLongRight className="size-4 inline-block ml-1 text-inherit" />
+                            </Link>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col gap-4 mt-4">
+                        <p className="font-medium  text-xs text-white"> {t('landing.sections.contact.cheers')}  </p>
+                        <hr />
+                    </div>
+                </div>
 
             </section>
         </>

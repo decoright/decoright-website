@@ -4,6 +4,7 @@ import { ServiceTypesService, type ServiceType, type ServiceTypeInsert, type Ser
 import { Cog, Photo, XMark } from '@/icons';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
+import { getUserFriendlyError } from '@/utils/error-messages';
 
 interface ServiceTypeFormProps {
     isOpen: boolean;
@@ -111,7 +112,7 @@ export default function ServiceTypeForm({ isOpen, serviceType, onClose, onSucces
             onSuccess();
         } catch (err: any) {
             console.error('Failed to save service type:', err);
-            setError(err.message || t('common.error'));
+            setError(getUserFriendlyError(err, t));
         } finally {
             setLoading(false);
             setUploading(false);

@@ -31,6 +31,7 @@
     "requests": "Demandes de service",
     "service_request": "Demande de service",
     "request_list": "Liste des demandes",
+    "activity_log": "Journal d'activité",
     "gallery_management": "Gestion de la galerie",
     "gallery_list": "Liste de la galerie",
     "add_gallery": "Ajouter à la galerie",
@@ -49,6 +50,8 @@
     "dashboard_panel": "Tableau de bord",
     "chats": "Discussions",
     "select_language": "Choisir une langue",
+    "legal_list": "Documents juridiques",
+    "company_details": "Détails de l'entreprise",
     "settings": "Paramètres",
     "language": "Préférences de langue",
     "language_description": "Choisissez la langue de l’application",
@@ -83,6 +86,10 @@
     "delete": "Supprimer",
     "confirm": "Confirmer",
     "edit": "Modifier",
+    "update": "Mettre à jour",
+    "updating": "Mise à jour en cours",
+    "view": "Voir",
+    "duplicate": "Dupliquer",
     "go_back": "Retour",
     "view_all": "Voir tout",
     "view_all_projects": "Voir tous les projets",
@@ -97,8 +104,10 @@
     "retry": "Réessayer",
     "remove": "Supprimer",
     "add": "Ajouter",
+    "save_success": "Modifications enregistrées avec succès !",
     "select": "Sélectionner",
     "complete": "Terminer",
+    "search": "Rechercher",
     "attachments": "Pièces jointes",
     "english": "Anglaise",
     "french": "Français",
@@ -112,7 +121,19 @@
     "uploaded_files_placeholder": "Les fichiers téléchargés apparaîtront ici",
     "uploading": "Téléchargement en cours",
     "upload_failed": "Échec du téléchargement",
-    "upload_attach_files_label": "Télécharger des fichiers joints"
+    "upload_attach_files_label": "Télécharger des fichiers joints",
+    "table": {
+      "actions": "Actions",
+      "no_bulk_actions": "Aucune action groupée",
+      "filter_by": "Filtrer par",
+      "all": "Tout",
+      "refresh": "Actualiser",
+      "refreshing": "Actualisation...",
+      "no_results": "Aucun résultat",
+      "select_all": "Tout sélectionner",
+      "select_row": "Sélectionner la ligne",
+      "row_actions": "Actions de ligne"
+    }
   },
   "confirm": {
     "confirm": "Confirmer",
@@ -139,7 +160,7 @@
     "password": "Mot de passe",
     "show_password": "Afficher le mot de passe",
     "hide_password": "Masquer le mot de passe",
-    "remember_me": "Se souvenir de moi",
+    "save_log_info": "Enregistrer les informations de connexion",
     "forgot_password": "Mot de passe oublié ?",
     "no_account": "Vous n'avez pas encore de compte ?",
     "signup_now": "S'inscrire",
@@ -159,9 +180,18 @@
       "generic": "L'authentification a échoué. Veuillez réessayer."
     },
     "phone": "Numéro de téléphone",
+    "labels": {
+      "first_name": "Prénom",
+      "last_name": "Nom",
+      "email": "E-mail",
+      "phone": "Numéro de téléphone",
+      "password": "Mot de passe",
+      "confirm_password": "Confirmer le mot de passe",
+      "email_or_phone": "E-mail ou téléphone"
+    },
     "placeholders": {
       "email": "email@exemple.com",
-      "phone": "Numéro de téléphone",
+      "phone": "Entrez le numéro de téléphone",
       "email_or_phone": "Entrez l'e-mail ou le téléphone",
       "first_name": "Prénom",
       "last_name": "Nom"
@@ -232,6 +262,13 @@
       "faq": {
         "title": "Questions les plus fréquemment posées par nos utilisateurs",
         "description": "Trouvez des réponses aux questions courantes sur nos services de design, notre processus et nos tarifs."
+      },
+      "contact": {
+        "title": "Contactez-nous",
+        "description": "Nous aimerions avoir de vos nouvelles. Que vous ayez une question sur nos services, nos tarifs ou toute autre chose, notre équipe est prête à répondre à toutes vos questions.",
+        "email_cta": "Contact via Email",
+        "contact_page_cta": "Contact & Support",
+        "cheers": "Nous sommes impatients d'entendre vos préférences et vos questions. N'hésitez pas à nous contacter !"
       }
     }
   },
@@ -390,7 +427,17 @@
   },
   "errors": {
     "error_generic": "Une erreur s’est produite. Veuillez réessayer",
-    "error_invalid_email": "Veuillez entrer une adresse e-mail valide"
+    "error_invalid_email": "Veuillez entrer une adresse e-mail valide",
+    "network_offline": "Vous êtes hors ligne. Vérifiez votre connexion internet puis réessayez.",
+    "network_issue": "Nous avons un problème de connexion pour le moment. Veuillez réessayer dans un instant.",
+    "permission_denied": "Vous n’avez pas l’autorisation d’effectuer cette action.",
+    "not_found": "Les informations demandées sont introuvables.",
+    "already_exists": "Cet élément existe déjà. Modifiez-le puis réessayez.",
+    "rate_limited": "Trop de tentatives en peu de temps. Veuillez patienter puis réessayer.",
+    "file_too_large": "Ce fichier est trop volumineux. Veuillez choisir un fichier plus petit.",
+    "unsupported_file_type": "Ce type de fichier n’est pas pris en charge. Veuillez choisir un autre fichier.",
+    "storage_limit_reached": "La capacité de stockage est actuellement atteinte. Supprimez des anciens fichiers ou contactez le support.",
+    "upload_failed": "Le téléversement a échoué. Veuillez réessayer."
   },
   "gallery": {
     "header": "Galerie — Avant & Après : Transformations qui racontent une histoire",
@@ -616,6 +663,7 @@
       "col_scope": "Portée",
       "col_chat": "Discussion",
       "col_submission": "Soumission",
+      "col_service_request": "Demande de service",
       "filter_all": "Toutes les demandes",
       "filter_submitted": "Soumise",
       "filter_in_progress": "En cours",
@@ -635,7 +683,36 @@
       "confirm_delete_btn": "Supprimer",
       "delete_success": "Demande {{code}} supprimée avec succès",
       "delete_failed": "Échec de la suppression de la demande",
-      "unknown_client": "Client inconnu"
+      "unknown_client": "Client inconnu",
+      "service_fallback": "Service",
+      "status_submitted": "Soumise",
+      "status_under_review": "En révision",
+      "status_approved": "Approuvée",
+      "status_in_progress": "En cours",
+      "status_completed": "Terminée",
+      "status_rejected": "Rejetée",
+      "status_cancelled": "Annulée"
+    },
+    "request_drawer": {
+      "header": "Demande de service",
+      "section_client": "Informations client",
+      "field_full_name": "Nom complet",
+      "field_phone": "Numéro de téléphone",
+      "field_location": "Emplacement",
+      "field_not_provided": "Non fourni",
+      "section_service": "Détails du service",
+      "field_service": "Type de service",
+      "field_space": "Catégorie d'espace",
+      "field_dimensions": "Dimensions",
+      "field_status": "Statut actuel",
+      "field_description": "Description du projet",
+      "workflow_title": "Actions du flux de travail",
+      "btn_start_review": "Démarrer la révision",
+      "btn_reject": "Rejeter la demande",
+      "btn_approve": "Approuver la demande",
+      "btn_in_progress": "Passer en cours",
+      "btn_complete": "Marquer comme terminée",
+      "no_actions": "Cette demande est {{status}}."
     },
     "request_detail": {
       "title": "Aperçu de la demande",

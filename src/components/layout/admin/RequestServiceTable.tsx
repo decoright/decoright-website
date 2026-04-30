@@ -21,7 +21,18 @@ const STATUS_OPTIONS = [
 export default function RequestServiceTable({ externalData, onRefresh }: RequestServiceTableProps) {
     const navigate = useNavigate();
     const confirm = useConfirm();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+
+    const statusLabels: Record<string, string> = {
+        'Submitted': t('admin.requests.status_submitted'),
+        'Under Review': t('admin.requests.status_under_review'),
+        'Approved': t('admin.requests.status_approved'),
+        'In Progress': t('admin.requests.status_in_progress'),
+        'Completed': t('admin.requests.status_completed'),
+        'Rejected': t('admin.requests.status_rejected'),
+        'Cancelled': t('admin.requests.status_cancelled'),
+    };
+
     const [data, setData] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [updatingStatusId, setUpdatingStatusId] = useState<string | null>(null);
@@ -84,7 +95,7 @@ export default function RequestServiceTable({ externalData, onRefresh }: Request
         const chatId = req.chat_id || (Array.isArray(req.chat_room) ? req.chat_room[0]?.id : req.chat_room?.id);
         return {
             ...req,
-            full_name: req.profiles?.full_name || 'Anonymous',
+            full_name: req.profiles?.full_name || t('admin.requests.unknown_client'),
             status_label: req.status,
             date: new Date(req.created_at).toLocaleDateString(),
             chat_id: chatId
@@ -106,7 +117,7 @@ export default function RequestServiceTable({ externalData, onRefresh }: Request
                     <div className="flex flex-col">
                         <div className="flex items-center gap-2">
                             <span className="font-semibold text-heading text-sm uppercase">{row.request_code}</span>
-                            <span className="text-xs text-muted font-normal">• {row.service_type || 'Service'}</span>
+                            <span className="text-xs text-muted font-normal">• {row.service_type || t('admin.requests.service_fallback')}</span>
                         </div>
                         <span className="text-xs text-muted truncate max-w-[150px]">{row.full_name || t('admin.requests.unknown_client')}</span>
                     </div>
@@ -138,7 +149,7 @@ export default function RequestServiceTable({ externalData, onRefresh }: Request
                         >
                             {STATUS_OPTIONS.map(opt => (
                                 <option key={opt} value={opt} className="bg-surface text-heading">
-                                    {opt}
+                                    {statusLabels[opt] || opt}
                                 </option>
                             ))}
                         </select>
@@ -184,7 +195,7 @@ export default function RequestServiceTable({ externalData, onRefresh }: Request
             className: 'text-end min-w-[120px]',
             render: (row: any) => (
                 <span className="text-xs text-muted">
-                    {new Date(row.created_at).toLocaleDateString()}
+                    {new Date(row.created_at).toLocaleDateString(i18n.language)}
                 </span>
             )
         },

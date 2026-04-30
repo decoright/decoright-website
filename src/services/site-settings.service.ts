@@ -1,4 +1,6 @@
 import { supabase } from '@/lib/supabase'
+import { prepareFileForUpload, validateUploadFile } from '@/utils/file-upload'
+import { getCachedValue, setCachedValue } from '@/utils/local-cache'
 
 export interface SiteSetting {
     id: string
@@ -8,8 +10,14 @@ export interface SiteSetting {
     updated_at: string | null
 }
 
+const SITE_SETTINGS_CACHE_KEY = 'cache:site-settings:all'
+const SITE_SETTINGS_TTL = 10 * 60 * 1000
+
 export const SiteSettingsService = {
     async getAll() {
+        const cached = getCachedValue<Record<string, string>>(SITE_SETTINGS_CACHE_KEY)
+        if (cached) return cached
+
         const { data, error } = await supabase
             .from('site_settings')
             .select('*')
@@ -20,6 +28,7 @@ export const SiteSettingsService = {
         data.forEach(s => {
             if (s.key && s.value !== null) settings[s.key] = s.value
         })
+        setCachedValue(SITE_SETTINGS_CACHE_KEY, settings, SITE_SETTINGS_TTL)
         return settings
     },
 
@@ -31,17 +40,25 @@ export const SiteSettingsService = {
             .single()
 
         if (error) throw error
+        const cached = getCachedValue<Record<string, string>>(SITE_SETTINGS_CACHE_KEY) || {}
+        setCachedValue(SITE_SETTINGS_CACHE_KEY, { ...cached, [key]: value }, SITE_SETTINGS_TTL)
         return data
     },
 
     async uploadLogo(file: File): Promise<string> {
-        const ext = file.name.split('.').pop()
+        const validation = validateUploadFile(file)
+        if (!validation.ok) {
+            throw new Error(validation.reason)
+        }
+
+        const uploadFile = await prepareFileForUpload(file)
+        const ext = uploadFile.name.split('.').pop()
         const path = `logo/logo.${ext}`
 
         // Upsert: overwrite any existing logo file
         const { error: uploadError } = await supabase.storage
             .from('site-assets')
-            .upload(path, file, { upsert: true, contentType: file.type })
+            .upload(path, uploadFile, { upsert: true, contentType: uploadFile.type || file.type })
 
         if (uploadError) throw uploadError
 
