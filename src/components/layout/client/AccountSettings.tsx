@@ -7,11 +7,12 @@ import { allowedLocales } from "@/constants";
 import { EmailInput, Input, PhoneInput } from "@components/ui/Input";
 import { supabase } from "@/lib/supabase";
 import { PATHS } from "@/routers/Paths";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { SelectDropDownMenu } from "@components/ui/Select";
 import { useTranslation } from "react-i18next";
-import { CheckCircle, LockClosed, QuestionMarkCircle } from "@/icons";
+import { CheckCircle, LockClosed, QuestionMarkCircle, Trash, ExclamationTriangle } from "@/icons";
 import { PButton } from "@components/ui/Button";
+import { useConfirm } from "@/components/confirm";
 
 // Normalize Algerian phone numbers to E.164 international format
 function normalizePhone(raw: string): string {
@@ -26,12 +27,15 @@ function normalizePhone(raw: string): string {
 export default function AccountSettingsLayout() {
     const { t, i18n } = useTranslation();
     const { user, loading: authLoading } = useAuth();
+    const navigate = useNavigate();
+    const confirm = useConfirm();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
     const [language, setLanguage] = useState<string>(i18n.language || 'en');
     const [initializing, setInitializing] = useState(true);
     const [saving, setSaving] = useState(false);
+    const [deleting, setDeleting] = useState(false);
     const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
     const [globalError, setGlobalError] = useState<string | null>(null);
 
@@ -146,6 +150,34 @@ export default function AccountSettingsLayout() {
         setLanguage(option.value);
         i18n.changeLanguage(option.value);
     }
+
+    // ── Delete Account Handler ─────────────────────────────────────────────────
+    const handleDeleteAccount = async () => {
+        const isConfirmed = await confirm({
+            title: t('settings.delete_account_title'),
+            message: t('settings.delete_account_message'),
+            confirmText: t('settings.delete_account_confirm'),
+            cancelText: t('common.cancel'),
+            isDangerous: true,
+        });
+
+        if (!isConfirmed) return;
+
+        setDeleting(true);
+        try {
+            const { error } = await supabase.rpc('delete_user_account', { p_user_id: user.id });
+            if (error) throw error;
+
+            toast.success(t('settings.delete_account_success'));
+            await supabase.auth.signOut();
+            window.location.href = PATHS.LOGIN;
+        } catch (err: any) {
+            console.error('Failed to delete account:', err);
+            setGlobalError(t('settings.delete_account_error'));
+        } finally {
+            setDeleting(false);
+        }
+    };
 
 
     const languageChoices = [
@@ -306,6 +338,20 @@ export default function AccountSettingsLayout() {
                                     <span className="text-2xs text-muted">Reset via email link</span>
                                 </div>
                             </Link>
+                        </li>
+                        <li>
+                            <button
+                                type="button"
+                                onClick={handleDeleteAccount}
+                                disabled={deleting}
+                                className="flex items-center gap-3 w-full px-3 py-2.5 bg-surface border border-danger/30 rounded-xl hover:border-danger/50 transition-colors text-left"
+                            >
+                                <Trash className="size-5 text-danger shrink-0" />
+                                <div className="flex flex-col">
+                                    <span className="font-medium text-sm text-danger">{t('settings.delete_account')}</span>
+                                    <span className="text-2xs text-danger/70">{t('settings.delete_account_desc')}</span>
+                                </div>
+                            </button>
                         </li>
                     </ul>
                 </div>
