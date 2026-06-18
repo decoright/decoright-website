@@ -55,6 +55,7 @@ export const PATHS = {
         DASHBOARD: "/admin/dashboard",
         ANALYTICS: "/admin/analytics",
         ACTIVITY_LOG: "/admin/activity-log",
+        DELETION_REQUESTS: "/admin/deletion-requests",
 
         CHAT: "/admin/chat",
         CHAT_ROOM: "/admin/chat/:id",
