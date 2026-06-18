@@ -60,10 +60,10 @@ export default function DeletionRequestsPage() {
     const handleDelete = async (row: DeletionRequest) => {
         const isConfirmed = await confirm({
             title: t("admin.deletion_requests.delete_title"),
-            message: t("admin.deletion_requests.delete_message", { email: row.email }),
+            description: t("admin.deletion_requests.delete_message", { email: row.email }),
             confirmText: t("common.delete"),
             cancelText: t("common.cancel"),
-            isDangerous: true,
+            variant: "destructive",
         });
         if (!isConfirmed) return;
 
