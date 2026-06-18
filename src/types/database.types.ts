@@ -868,6 +868,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      delete_user_account: {
+        Args: { p_user_id: string }
+        Returns: undefined
+      }
       increment_project_view_count: {
         Args: { project_id: string }
         Returns: undefined

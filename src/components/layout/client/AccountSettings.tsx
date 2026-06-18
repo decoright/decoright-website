@@ -7,10 +7,10 @@ import { allowedLocales } from "@/constants";
 import { EmailInput, Input, PhoneInput } from "@components/ui/Input";
 import { supabase } from "@/lib/supabase";
 import { PATHS } from "@/routers/Paths";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { SelectDropDownMenu } from "@components/ui/Select";
 import { useTranslation } from "react-i18next";
-import { CheckCircle, LockClosed, QuestionMarkCircle, Trash, ExclamationTriangle } from "@/icons";
+import { CheckCircle, LockClosed, QuestionMarkCircle, Trash } from "@/icons";
 import { PButton } from "@components/ui/Button";
 import { useConfirm } from "@/components/confirm";
 
@@ -27,7 +27,6 @@ function normalizePhone(raw: string): string {
 export default function AccountSettingsLayout() {
     const { t, i18n } = useTranslation();
     const { user, loading: authLoading } = useAuth();
-    const navigate = useNavigate();
     const confirm = useConfirm();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -155,10 +154,10 @@ export default function AccountSettingsLayout() {
     const handleDeleteAccount = async () => {
         const isConfirmed = await confirm({
             title: t('settings.delete_account_title'),
-            message: t('settings.delete_account_message'),
+            description: t('settings.delete_account_message'),
             confirmText: t('settings.delete_account_confirm'),
             cancelText: t('common.cancel'),
-            isDangerous: true,
+            variant: 'destructive',
         });
 
         if (!isConfirmed) return;

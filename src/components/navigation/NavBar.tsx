@@ -9,8 +9,7 @@ import { MenuCard } from "@components/ui/MenuCard"
 import { PCTALink, SCTALink } from "@components/ui/CTA"
 import { PATHS } from "@/routers/Paths"
 import { useTranslation } from "react-i18next"
-import { ArrowRightEndOnRectangle, ArrowRightStartOnRectangle, Chat, CheckCircle, DocumentText, Folder, Language, Menu, PresentationChartLine, User, UserPlus } from "@/icons";
-import { useUnreadCount } from "@/hooks/useUnreadCount";
+import { ArrowRightEndOnRectangle, ArrowRightStartOnRectangle, Folder, Language, Menu, PresentationChartLine, UserPlus } from "@/icons";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 
 const UserContext = createContext<any>(null);
@@ -50,11 +49,10 @@ export function NavLinks() {
 
 export function AuthenticatedUserActins() {
 
-    const { user, isAdmin } = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const { setLangMenuOpen } = useContext(MenuContext);
     const [navMenuOpen, setNavMenuOpen] = useState<boolean>(false);
     const { t } = useTranslation()
-    const hasUnread = useUnreadCount();
 
     if (!user) return null;
 
