@@ -23,6 +23,9 @@ export const adminSideMenuNav = [
     { id: '4', label: 'Request List', key: 'nav.request_list', path: PATHS.ADMIN.REQUEST_SERVICE_LIST, icon: null, description: 'Browse, filter and update service requests',},
 
     { id: '10', label: 'Activity Log', key: 'nav.activity_log', path: PATHS.ADMIN.ACTIVITY_LOG, icon: null, description: 'Audit trail of system events' },
+
+    { id: '12', label: 'Deletion Requests', key: 'nav.deletion_requests', path: PATHS.ADMIN.DELETION_REQUESTS, icon: null, description: 'Account & data deletion requests from users' },
+
     {
         id: '5', label: 'Gallery Management', key: 'nav.gallery_management', icon: null, children: [
             { id: '5.1', label: 'Gallery List', key: 'nav.gallery_list', path: PATHS.ADMIN.GALLERY_LIST, icon: null, description: 'View and manage all your marketing gallery items.' },

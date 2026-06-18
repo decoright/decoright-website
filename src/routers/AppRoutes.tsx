@@ -40,6 +40,7 @@ const ClientPasswordDone = lazy(() => import('@/pages/Client/PasswordDone'));
 const AdminDashboard = lazy(() => import('@/pages/Admin/Dashboard'));
 const AdminDashboardHome = lazy(() => import('@/pages/Admin/DashboardHome'));
 const AdminActivityLog = lazy(() => import('@/pages/Admin/ActivityLog'));
+const AdminDeletionRequests = lazy(() => import('@/pages/Admin/DeletionRequests'));
 const AdminChat = lazy(() => import('@/pages/Admin/Chat'));
 const AdminUsers = lazy(() => import('@/pages/Admin/Users'));
 const AdminServiceRequests = lazy(() => import('@/pages/Admin/requests/RequestServiceList'));
@@ -217,6 +218,10 @@ const router = createBrowserRouter([
       {
         path: PATHS.ADMIN.ACTIVITY_LOG,
         element: <AdminActivityLog />,
+      },
+      {
+        path: PATHS.ADMIN.DELETION_REQUESTS,
+        element: <AdminDeletionRequests />,
       },
       {
         path: PATHS.ADMIN.CHAT,
