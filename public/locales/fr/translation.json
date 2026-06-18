@@ -210,9 +210,45 @@
       "loading_moment": "Un instant..."
     }
   },
+  "account_deletion": {
+    "title": "Supprimer votre compte",
+    "intro": "Cette page explique comment supprimer définitivement votre compte {{company}} ainsi que les données personnelles qui y sont associées. Vous pouvez supprimer votre compte directement dans l'application ou en utilisant le formulaire ci-dessous.",
+    "method_app_title": "Option 1 — Supprimer depuis l'application",
+    "method_app_steps": {
+      "1": "Ouvrez l'application Decoright et connectez-vous à votre compte.",
+      "2": "Allez dans Paramètres → Paramètres du compte.",
+      "3": "Faites défiler jusqu'à la section Sécurité et appuyez sur « Supprimer le compte ».",
+      "4": "Confirmez l'action. Votre compte et vos données seront définitivement supprimés."
+    },
+    "form_title": "Option 2 — Demander la suppression en ligne",
+    "form_desc": "Si vous n'avez plus accès à l'application, envoyez votre demande ci-dessous. Saisissez l'adresse e-mail liée à votre compte. Nous vérifierons votre identité et procéderons à la suppression.",
+    "form_email_label": "Adresse e-mail du compte",
+    "form_message_label": "Message (facultatif)",
+    "form_message_placeholder": "Toute autre information que vous souhaitez nous communiquer",
+    "form_submit": "Demander la suppression du compte",
+    "form_success_title": "Demande reçue",
+    "form_success_desc": "Nous avons bien reçu votre demande de suppression de compte. Votre compte et vos données seront supprimés dans un délai de 30 jours, et une confirmation sera envoyée à votre adresse e-mail.",
+    "form_error_email_required": "Veuillez saisir l'adresse e-mail de votre compte.",
+    "form_error_email_invalid": "Veuillez saisir une adresse e-mail valide.",
+    "form_error_generic": "Une erreur s'est produite. Veuillez réessayer ou nous envoyer un e-mail directement.",
+    "data_deleted_title": "Quelles données sont supprimées",
+    "data_deleted_intro": "Lorsque votre compte est supprimé, nous supprimons définitivement :",
+    "data_deleted": {
+      "profile": "Vos informations de profil (nom, e-mail, numéro de téléphone)",
+      "messages": "Vos messages et votre historique de conversations",
+      "requests": "Vos demandes de service et leurs détails",
+      "files": "Les fichiers et images que vous avez téléversés"
+    },
+    "data_retained_title": "Ce que nous conservons et pour combien de temps",
+    "data_retained_desc": "Les enregistrements que nous sommes légalement tenus de conserver (tels que les registres de transactions ou de facturation) peuvent être conservés pendant la durée requise par la loi. Les copies résiduelles dans les sauvegardes chiffrées sont supprimées dans un délai de 30 jours. Après la suppression, votre compte ne peut pas être récupéré.",
+    "processing_time": "Les demandes de suppression sont traitées dans un délai de 30 jours.",
+    "contact_title": "Besoin d'aide ?",
+    "contact_desc": "Si vous avez des questions concernant la suppression de votre compte ou de vos données, contactez-nous :"
+  },
   "footer": {
     "description": "{{companyName}} est votre partenaire de confiance pour des solutions de design d'intérieur et de décoration exquises. Nous donnons vie à votre vision avec créativité et style.",
     "rights": "Tous droits réservés.",
+    "delete_account": "Supprimer le compte",
     "social": {
       "facebook": "Facebook",
       "instagram": "Instagram",

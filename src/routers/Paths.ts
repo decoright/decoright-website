@@ -27,6 +27,9 @@ export const PATHS = {
     PRIVACY_POLICY: "/legal/privacy-policy",
     TERMS_OF_SERVICE: "/legal/terms-of-service",
 
+    // Public account & data deletion page (required for Google Play Store)
+    ACCOUNT_DELETION: "/delete-account",
+
     CLIENT: {
         ROOT: "/",
 

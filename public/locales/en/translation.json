@@ -218,9 +218,45 @@
       "loading_moment": "Just a moment..."
     }
   },
+  "account_deletion": {
+    "title": "Delete Your Account",
+    "intro": "This page explains how to permanently delete your {{company}} account and the personal data associated with it. You can delete your account directly in the app, or request deletion using the form below.",
+    "method_app_title": "Option 1 — Delete from the app",
+    "method_app_steps": {
+      "1": "Open the Decoright app and sign in to your account.",
+      "2": "Go to Settings → Account Settings.",
+      "3": "Scroll to the Security section and tap “Delete Account”.",
+      "4": "Confirm the action. Your account and data will be permanently removed."
+    },
+    "form_title": "Option 2 — Request deletion online",
+    "form_desc": "If you can no longer access the app, submit your request below. Enter the email address linked to your account. We will verify your identity and process the deletion.",
+    "form_email_label": "Account email address",
+    "form_message_label": "Message (optional)",
+    "form_message_placeholder": "Anything else you'd like us to know",
+    "form_submit": "Request account deletion",
+    "form_success_title": "Request received",
+    "form_success_desc": "We've received your account deletion request. Your account and data will be deleted within 30 days, and a confirmation will be sent to your email.",
+    "form_error_email_required": "Please enter your account email address.",
+    "form_error_email_invalid": "Please enter a valid email address.",
+    "form_error_generic": "Something went wrong. Please try again or email us directly.",
+    "data_deleted_title": "What data is deleted",
+    "data_deleted_intro": "When your account is deleted, we permanently remove:",
+    "data_deleted": {
+      "profile": "Your profile information (name, email, phone number)",
+      "messages": "Your chat messages and conversation history",
+      "requests": "Your service requests and their details",
+      "files": "Files and images you uploaded"
+    },
+    "data_retained_title": "What we keep and for how long",
+    "data_retained_desc": "Records we are legally required to retain (such as transaction or invoicing records) may be kept for the period required by law. Residual copies in encrypted backups are removed within 30 days. After deletion, your account cannot be recovered.",
+    "processing_time": "Deletion requests are processed within 30 days.",
+    "contact_title": "Need help?",
+    "contact_desc": "If you have any questions about deleting your account or your data, contact us:"
+  },
   "footer": {
     "description": "{{companyName}} is your trusted partner for exquisite interior design and decor solutions. We bring your vision to life with creativity and style.",
     "rights": "All rights reserved.",
+    "delete_account": "Delete Account",
     "social": {
       "facebook": "Facebook",
       "instagram": "Instagram",
