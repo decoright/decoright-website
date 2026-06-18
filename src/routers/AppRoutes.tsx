@@ -16,6 +16,7 @@ const ProjectList = lazy(() => import('@/pages/Public/ProjectList'));
 const ProjectDetail = lazy(() => import('@/pages/Public/ProjectDetail'));
 const FAQList = lazy(() => import('@/pages/Public/FAQList'));
 const LegalPage = lazy(() => import('@/pages/Public/LegalPage'));
+const AccountDeletion = lazy(() => import('@/pages/Public/AccountDeletion'));
 
 const Signup = lazy(() => import('@/pages/Public/Signup'));
 const Login = lazy(() => import('@/pages/Public/Login'));
@@ -114,6 +115,10 @@ const router = createBrowserRouter([
       {
         path: PATHS.LEGAL_PAGE,
         element: <LegalPage />,
+      },
+      {
+        path: PATHS.ACCOUNT_DELETION,
+        element: <AccountDeletion />,
       },
       {
         path: PATHS.GALLERY_LIST,

@@ -82,6 +82,9 @@ export function Footer() {
                                 <Link to={item.path} className="text-xs hover:underline"> {t(`nav.${item.key}`)} </Link>
                             </li>
                         ))}
+                        <li>
+                            <Link to={PATHS.ACCOUNT_DELETION} className="text-xs hover:underline"> {t('footer.delete_account')} </Link>
+                        </li>
                     </ul>
                 </div>
 
