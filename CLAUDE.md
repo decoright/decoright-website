@@ -142,4 +142,4 @@ Migrations are checked into `supabase/migrations/`. The `temp_migrations/` folde
 | `docs/account_deletion.md` | Account deletion flow, required for the Play Store |
 | `supabase_setup_guide.md` | Project bootstrap steps |
 
-The Supabase MCP project ref, from `opencode.json`, is `iqdreqrottmwiyyhhfxm`.
+The app talks to Supabase project `pibqqtjarlgqjpabbens`, per `VITE_SUPABASE_URL`. Note `opencode.json` still points its Supabase MCP server at `iqdreqrottmwiyyhhfxm`, a different project.

@@ -3,7 +3,10 @@
 # Only the settings this project actually relies on are listed. Everything
 # else keeps the CLI defaults.
 
-project_id = "iqdreqrottmwiyyhhfxm"
+# Taken from VITE_SUPABASE_URL in .env, which is the project the app actually
+# talks to. Note that opencode.json still points its Supabase MCP server at a
+# different ref (iqdreqrottmwiyyhhfxm), so that tool queries another database.
+project_id = "pibqqtjarlgqjpabbens"
 
 [functions.send-auth-email]
 # The Supabase Auth "Send Email" hook authenticates with a Standard Webhooks

@@ -35,7 +35,7 @@ Everything below works either way. Set `AUTH_EMAIL_FROM` accordingly.
 ```bash
 npm install -g supabase
 supabase login
-supabase link --project-ref iqdreqrottmwiyyhhfxm
+supabase link --project-ref pibqqtjarlgqjpabbens
 ```
 
 ## Step 2 — Set the secrets
@@ -88,7 +88,7 @@ In the Supabase dashboard:
 1. Go to **Authentication → Hooks**.
 2. Find **Send Email hook** and enable it.
 3. Choose **HTTPS** as the type.
-4. URL: `https://iqdreqrottmwiyyhhfxm.supabase.co/functions/v1/send-auth-email`
+4. URL: `https://pibqqtjarlgqjpabbens.supabase.co/functions/v1/send-auth-email`
 5. Copy the generated secret. It looks like `v1,whsec_...`.
 6. Save.
 
