@@ -23,4 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 .env
+# Catch .env.local, .env.production, stray .env.bak copies and the like,
+# while keeping the committed placeholder file.
+.env.*
+!.env.example
 trash
