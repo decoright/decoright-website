@@ -878,6 +878,10 @@ export type Database = {
       }
       is_admin: { Args: never; Returns: boolean }
       is_super_admin: { Args: never; Returns: boolean }
+      phone_exists: {
+        Args: { p_phone: string }
+        Returns: boolean
+      }
     }
     Enums: {
       admin_action: "STATUS_CHANGE" | "PROJECT_PUBLISH" | "SETTINGS_UPDATE"

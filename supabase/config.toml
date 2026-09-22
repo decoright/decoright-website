@@ -1,0 +1,12 @@
+# Supabase CLI configuration.
+#
+# Only the settings this project actually relies on are listed. Everything
+# else keeps the CLI defaults.
+
+project_id = "iqdreqrottmwiyyhhfxm"
+
+[functions.send-auth-email]
+# The Supabase Auth "Send Email" hook authenticates with a Standard Webhooks
+# signature, not with a user JWT. Leaving the default verify_jwt = true would
+# make every hook delivery fail with 401 before the function body runs.
+verify_jwt = false

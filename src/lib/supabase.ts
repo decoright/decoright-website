@@ -5,10 +5,18 @@ import { createClient } from "@supabase/supabase-js";
 import type { Database } from "../types/database.types";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+// Supabase renamed the client-side key from "anon" to "publishable". Accept
+// either name so a .env written against the newer dashboard wording still
+// boots. Netlify currently supplies VITE_SUPABASE_ANON_KEY.
+const SUPABASE_ANON_KEY =
+  import.meta.env.VITE_SUPABASE_ANON_KEY ||
+  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
 if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-  throw new Error("Missing VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY in environment");
+  throw new Error(
+    "Missing VITE_SUPABASE_URL, or VITE_SUPABASE_ANON_KEY / VITE_SUPABASE_PUBLISHABLE_KEY, in environment"
+  );
 }
 
 

@@ -20,7 +20,7 @@ export function SignupLayout() {
     const [googleLoading, setGoogleLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const navigate = useNavigate()
-    const { t } = useTranslation()
+    const { t, i18n } = useTranslation()
 
     const handleGoogleSignup = async () => {
         setGoogleLoading(true)
@@ -74,13 +74,27 @@ export function SignupLayout() {
             const normalizedPhone = normalizePhone(phone)
 
             // --- Check for duplicate phone number ---
-            const { data: existingPhone } = await supabase
-                .from('profiles')
-                .select('id')
-                .eq('phone', normalizedPhone)
-                .maybeSingle()
+            // This check runs before the visitor is authenticated. Reading the
+            // profiles table directly would require granting anonymous read
+            // access to every customer's name, email and phone, so it goes
+            // through a function that returns only a boolean instead.
+            // Falls back to the direct read if that function is not deployed.
+            let phoneTaken = false
+            const { data: phoneExists, error: phoneCheckError } = await supabase
+                .rpc('phone_exists', { p_phone: normalizedPhone })
 
-            if (existingPhone) {
+            if (phoneCheckError) {
+                const { data: existingPhone } = await supabase
+                    .from('profiles')
+                    .select('id')
+                    .eq('phone', normalizedPhone)
+                    .maybeSingle()
+                phoneTaken = Boolean(existingPhone)
+            } else {
+                phoneTaken = Boolean(phoneExists)
+            }
+
+            if (phoneTaken) {
                 throw new Error(t('auth.error_phone_taken') || 'This phone number is already linked to an account.')
             }
 
@@ -91,7 +105,11 @@ export function SignupLayout() {
                 options: {
                     data: {
                         full_name: `${firstName} ${lastName}`.trim(),
-                        phone: normalizedPhone
+                        phone: normalizedPhone,
+                        // Read back by the send-auth-email edge function so the
+                        // verification email arrives in the language the user
+                        // signed up in. Stored on user_metadata.
+                        lang: (i18n.language || 'en').split('-')[0]
                     }
                 }
             })
