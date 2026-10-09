@@ -197,6 +197,11 @@
       "first_name": "Prénom",
       "last_name": "Nom"
     },
+    "callback": {
+      "signing_in": "Connexion en cours…",
+      "failed": "La connexion n'a pas pu aboutir",
+      "back_to_login": "Retour à la connexion"
+    },
     "otp": {
       "verify_account": "Vérifiez votre compte",
       "description": "Un code de vérification à 6 chiffres a été envoyé à <b>{{email}}</b>. Entrez-le ci-dessous pour terminer votre inscription.",

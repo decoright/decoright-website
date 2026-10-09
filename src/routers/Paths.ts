@@ -19,6 +19,10 @@ export const PATHS = {
 
     VERIFY_OTP: "/verify-otp",
 
+    // Where signInWithOAuth returns after a third-party sign-in.
+    // Must also be listed under Redirect URLs in the Supabase dashboard.
+    AUTH_CALLBACK: "/auth/callback",
+
     PASSWORD_RESET: "/password/reset",
     PASSWORD_SENT: "/password/sent",
 

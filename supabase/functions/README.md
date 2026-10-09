@@ -4,12 +4,15 @@ Supabase's built-in email sender is capped at a handful of messages per hour and
 
 The function in `send-auth-email/` is a Supabase **Send Email hook**. Once registered, Supabase Auth stops sending mail itself and POSTs the message to this function instead.
 
+It is deliberately one file, `index.ts`, with the email templates inlined. A dashboard deploy uploads only the entry file, so a sibling module fails to bundle with `Module not found ... templates.ts`. Keeping everything in one file means it deploys identically from the dashboard or the CLI. If you split it again, deploy with the CLI only.
+
 | Flow in the app | What the email contains | Why |
 |---|---|---|
 | Signup | A 6-digit code | `VerifyOtp.tsx` calls `verifyOtp()` with a typed token |
-| Password reset | A button linking back to the app | `PasswordReset.tsx` passes a `redirectTo` |
+| Password reset | A button linking back to the app | `PasswordReset.tsx` passes a `redirectTo`; the Flutter app passes `decoright://reset-password` |
 | Email change, reauthentication | A 6-digit code | Same verification mechanism as signup |
-| Magic link, invite | A button | Link-based by nature |
+| Magic link (OTP login) | A 6-digit code | The Flutter app's "login with OTP" calls `signInWithOtp()` and asks the user to type the code |
+| Invite | A button | Link-based by nature |
 
 Emails are sent in English, Arabic or French, chosen from `user_metadata.lang`. Arabic renders right to left.
 
@@ -19,7 +22,7 @@ Emails are sent in English, Arabic or French, chosen from `user_metadata.lang`. 
 
 This is the one thing that will block you, so deal with it first.
 
-Resend will only send from a domain you have verified with DNS records. You cannot verify `decoright.netlify.app`, because Netlify owns that domain and you cannot add DNS records to it.
+Resend will only send from a domain you have verified with DNS records. You cannot verify `decoright-dz.com`, because Netlify owns that domain and you cannot add DNS records to it.
 
 Your options:
 
@@ -47,7 +50,7 @@ supabase secrets set \
   RESEND_API_KEY="re_your_key_here" \
   AUTH_EMAIL_FROM="Decoright <no-reply@yourdomain.com>" \
   AUTH_EMAIL_REPLY_TO="decoright26@gmail.com" \
-  PUBLIC_SITE_URL="https://decoright.netlify.app" \
+  PUBLIC_SITE_URL="https://decoright-dz.com" \
   SUPPORT_EMAIL="decoright26@gmail.com"
 ```
 
@@ -65,7 +68,7 @@ supabase secrets set BRAND_LOGO_URL="https://<project>.supabase.co/storage/v1/ob
 | `SEND_EMAIL_HOOK_SECRET` | Yes, see step 4 | signature check is skipped and a warning is logged |
 | `AUTH_EMAIL_FROM` | Recommended | `Decoright <onboarding@resend.dev>` |
 | `AUTH_EMAIL_REPLY_TO` | No | no reply-to header |
-| `PUBLIC_SITE_URL` | No | `https://decoright.netlify.app` |
+| `PUBLIC_SITE_URL` | No | `https://decoright-dz.com` |
 | `SUPPORT_EMAIL` | No | `decoright26@gmail.com` |
 | `BRAND_LOGO_URL` | No | wordmark text instead of an image |
 

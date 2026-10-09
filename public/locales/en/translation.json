@@ -205,6 +205,11 @@
       "first_name": "First name",
       "last_name": "Last name"
     },
+    "callback": {
+      "signing_in": "Signing you in…",
+      "failed": "Sign-in could not be completed",
+      "back_to_login": "Back to login"
+    },
     "otp": {
       "verify_account": "Verify your account",
       "description": "A 6-digit verification code has been sent to <b>{{email}}</b>. Enter it below to complete your signup.",

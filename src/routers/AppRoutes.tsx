@@ -17,6 +17,7 @@ const ProjectDetail = lazy(() => import('@/pages/Public/ProjectDetail'));
 const FAQList = lazy(() => import('@/pages/Public/FAQList'));
 const LegalPage = lazy(() => import('@/pages/Public/LegalPage'));
 const AccountDeletion = lazy(() => import('@/pages/Public/AccountDeletion'));
+const AuthCallback = lazy(() => import('@/pages/AuthCallback'));
 
 const Signup = lazy(() => import('@/pages/Public/Signup'));
 const Login = lazy(() => import('@/pages/Public/Login'));
@@ -136,6 +137,12 @@ const router = createBrowserRouter([
       {
         path: PATHS.VERIFY_OTP,
         element: <VerifyOTP />,
+      },
+      {
+        // Deliberately outside RequireAuth: the guard would race Supabase's
+        // session detection and bounce the user to /login before it lands.
+        path: PATHS.AUTH_CALLBACK,
+        element: <AuthCallback />,
       },
       {
         path: PATHS.PASSWORD_RESET,

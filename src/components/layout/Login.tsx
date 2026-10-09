@@ -24,7 +24,7 @@ export function LoginLayout() {
             const { error: googleError } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: `${window.location.origin}/auth/callback`,
+                    redirectTo: `${window.location.origin}${PATHS.AUTH_CALLBACK}`,
                 },
             })
             if (googleError) throw googleError
